@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Speech Demo</title>
+</head>
+
+<body>
+
+<style>
+  .speech {border: 1px solid #DDD; width: 300px; padding: 0; margin: 0}
+  .speech input {border: 0; width: 240px; display: inline-block; height: 45px;}
+  .speech img {float: right; width: 45px }
+</style>
+ 
+<div class="speech">
+  <input type="text" name="q" id="transcript" placeholder="Speak" />
+  <img id="microphone" onclick="startDictation()" src="http://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"/>
+</div>
+ 
+<script>
+  function startDictation() { 
+    if (window.hasOwnProperty('webkitSpeechRecognition')) { 
+      var mic_animate = 'http://www.google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif';
+      var mic = 'http://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
+      var recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = "en-US";
+      document.getElementById('microphone').src = mic_animate;
+      recognition.start();
+      recognition.onresult = function(e) {
+        document.getElementById('transcript').value = e.results[0][0].transcript;
+        recognition.stop();
+        document.getElementById('microphone').src = mic;
+      };
+      recognition.onerror = function(e) {
+        recognition.stop();
+        document.getElementById('microphone').src = mic;
+      }
+    }
+  }
+</script>
+
+</body>
+</html>
