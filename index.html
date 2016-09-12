@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Blockly Demo: Speech Blocks</title>
+  <script src="external/blockly/blockly_compressed.js"></script>
+  <script src="external/blockly/blocks_compressed.js"></script>
+  <script src="external/blockly/msg/js/en.js"></script>
+  <script src="external/closure-library/closure/goog/base.js"></script>
+
+  <!-- TODO(evanfredhernandez): Compress SpeechBlocks JavaScript. --> 
+  <script src="workspace_controller.js"></script>
+
+  <style>
+    body {
+      background-color: #fff;
+      font-family: sans-serif;
+    }
+    h1 {
+      font-weight: normal;
+      font-size: 140%;
+    }
+  </style>
+</head>
+<body>
+  <h1><a href="https://developers.google.com/blockly/">Blockly</a> &gt; Speech Blocks</h1>
+
+  <p>This is a simple demo of a speech interface for Blockly.</p>
+
+  <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+
+  <xml id="toolbox" style="display: none">
+    <block type="controls_if"></block>
+    <block type="logic_compare"></block>
+    <block type="controls_repeat_ext"></block>
+    <block type="math_number"></block>
+    <block type="math_arithmetic"></block>
+    <block type="text"></block>
+    <block type="text_print"></block>
+  </xml>
+
+  <button id="add">Add!</button>
+  <button id="moveLeft">&lt;</button>
+  <button id="moveRight">&gt;</button>
+  <button id="moveUp">^</button>
+  <button id="moveDown">v</button>
+  <button id="remove">Remove!</button>
+
+  <script src="speech_blocks.js"></script>
+
+</body>
+</html>
