@@ -34,9 +34,13 @@ class Move extends Command
   decideArguments: (line) ->
     @what = @what.decide(line)
 
+
 class Run extends Command
   constructor: -> super("Run")
 
+
+class Modify extends Command
+  constructor: -> super("Modify")
 
 class Parser
   decideCommand: (line) ->
