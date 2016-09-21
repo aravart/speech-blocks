@@ -25,20 +25,41 @@ Where = position:Position _ block:Block { return {
   } }
   
 Position = "after" / "before" / "in front of" / "behind"
-Number = digits:[0-9]+
+Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 
-Add = AddVerb _ Block
+Add = AddVerb _ block:Block { return {
+   "action": "Add", 
+   "block": block
+   } }
+
 AddVerb = "add" / "insert"
 
-Remove = RemoveVerb _ NumberBlock
+Remove = RemoveVerb _ block:NumberBlock { return {
+   "action": "Delete",
+   "block": block
+   } }
+    
 RemoveVerb = "delete" / "remove"
 
-Change = ChangeVerb _ NumberBlock _ "to" _ Property
+Change = ChangeVerb _ block:NumberBlock _ "to" _ property:Property { return {
+   "action": "Modify",
+   "block": block,
+   "property": property
+   } }
+
 ChangeVerb = "change" / "set"
 Property = Degrees / Direction
-Degrees = Number _ "degrees"
-Direction = "move"? _ ("forwards" / "backwards")
+Degrees = number:Number _ "degrees" { return {
+    "type": "degree",
+    "value": number
+  } }
+Direction = "move"? _ direction:("forwards" / "backwards") { return {
+    "type": "direction",
+    "value": direction
+  } }
 
-Run = "run the program" / "run it"
+Run = ("run the program" / "run it") { return {
+   "action": "Run"
+   } }
 
 _   = ' '*
