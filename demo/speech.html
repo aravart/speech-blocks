@@ -18,7 +18,7 @@
  
 <div class="row form-inline">
   <div class="col-md-12">
-    <img id="microphone" style="width: 5.5%;"onclick="startDictation()" src="http://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"/>
+    <img id="microphone" style="width: 5.5%;" src="http://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"/>
     <input id="q" style="width: 94%;" class="form-control" type="text" name="q" id="transcript" placeholder="Speak" />
   </div>
 </div>
@@ -118,6 +118,9 @@ $(document).ready(function() {
     .keydown(scheduleParse)
     .keyup(scheduleParse)
     .keypress(scheduleParse);
+
+  $("#microphone")
+    .click(startDictation);
 });
 </script>
 </body>
