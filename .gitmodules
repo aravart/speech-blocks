@@ -4,6 +4,3 @@
 [submodule "external/blockly"]
 	path = external/blockly
 	url = https://github.com/google/blockly.git
-[submodule "external/closure-library"]
-	path = external/closure-library
-	url = https://github.com/google/closure-library.git

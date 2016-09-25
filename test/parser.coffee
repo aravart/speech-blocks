@@ -120,8 +120,6 @@ class Delete extends Command
 
 
 class Parser
-  constructor: ->
-
   decideCommand: (line) ->
     if /run/.test(line)
       return new Run

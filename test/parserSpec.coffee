@@ -1,5 +1,5 @@
 describe 'Parser', ->
-    parser = new Parser
+    parser = new Parser()
 
     it 'can recognize run commands', ->
         expect(parser.parse("run it").name).toBe "Run"
