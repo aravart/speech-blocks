@@ -13,7 +13,7 @@ goog.require('Blockly.constants');
 goog.require('Blockly.inject');
 
 /**
- * Inject a Blockly workspace into the given container element
+ * Inject a Blockly workspace into the given container element.
  * @param {!Element|string} container Containing element, or its ID, or a CSS selector.
  * @param {Object=} opt_options Optional dictionary of options.
  * @constructor

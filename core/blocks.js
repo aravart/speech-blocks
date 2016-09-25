@@ -46,6 +46,16 @@ SpeechBlocks.Blocks.getNextConnection = function(blockId, workspace) {
 };
 
 /**
+ * @param {string} blockId
+ * @param {!Blockly.Workspace} workspace
+ * @public
+ */
+SpeechBlocks.Blocks.getChainNextConnection = function(blockId, workspace) {
+  return SpeechBlocks.Blocks.asConnection_(
+      SpeechBlocks.Blocks.getLastBlockInChain_(blockId, workspace).nextConnection);
+};
+
+/**
  * Asserts that the block has an output connection and returns the connection.
  * @param {string} blockId
  * @param {!Blockly.Workspace} workspace
@@ -81,6 +91,20 @@ SpeechBlocks.Blocks.getInput_ = function(blockId, inputName, workspace) {
   return goog.asserts.assertInstanceof(
       SpeechBlocks.Blocks.getBlock(blockId, workspace).getInput(inputName), 
       Blockly.Input);
+};
+
+/**
+ * Traverses the chain of blocks and returns a reference to the last.
+ * @param {string} blockId ID of the first block in the chain.
+ * @return {!Blockly.Block} ID of the last block in the chain.
+ * @private
+ */
+SpeechBlocks.Predecessor.prototype.getLastBlockInChain_ = function(blockId, workspace) {
+  var curr = SpeechBlocks.Blocks.getBlock(blockId, workspace);
+  while (curr.nextConnection && curr.nextConnection.isConnected()) {
+    curr = curr.nextConnection.targetConnection.getSource();
+  }
+  return curr;
 };
 
 /**

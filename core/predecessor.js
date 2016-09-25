@@ -23,11 +23,15 @@ SpeechBlocks.Predecessor = function(successorBlockId) {
  * @override
  */
 SpeechBlocks.Predecessor.prototype.place = function(blockId, workspace) {
-  // TODO(evanfredhernandez): We have to convert this to a Successor Where
-  // so that the predecessor is moved, not the successor.
   var successorPrevConnection =
       SpeechBlocks.Blocks.getPreviousConnection(this.successorBlockId_, workspace);
-  var predecessorNextConnection =
-      SpeechBlocks.Blocks.getNextConnection(blockId, workspace);
-  successorPrevConnection.connect(predecessorNextConnection); 
+  if (successorPrevConnection.isConnected()) {
+    var chainPrevConnection =
+        SpeechBlocks.Blocks.getPreviousConnection(blockId, workspace);
+    successorPrevConnection.targetConnection.connect(chainPrevConnection);
+  }
+  var chainNextConnection =
+      SpeechBlocks.Blocks.getChainNextConnection(blockId, workspace);
+  successorPrevConnection.connect(chainNextConnection); 
 };
+
