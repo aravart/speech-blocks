@@ -35,7 +35,7 @@ SpeechBlocks.Controller = function(container, opt_options) {
 SpeechBlocks.Controller.prototype.addBlock = function(type, blockId, where) {
   var newBlock = this.workspace_.newBlock(type, blockId);
   newBlock.initSvg();
-  this.move(blockId, where);
+  this.moveBlock(blockId, where);
 };
 
 /**

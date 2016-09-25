@@ -3,13 +3,13 @@
  * @author ehernandez4@wisc.edu (Evan Hernandez)
  */
 'use strict';
-var workspaceController = new SpeechBlocks.WorkspaceController('blocklyDiv', 
-    {media: 'external/blockly/media/',
+var workspaceController = new SpeechBlocks.Controller('blocklyDiv', 
+    {media: '../../external/blockly/media/',
      toolbox: document.getElementById('toolbox')});
  
 document.getElementById('addIfSingleton').addEventListener('click', function() {
   var where = new SpeechBlocks.TopLevelPosition(new goog.math.Coordinate(10, -10));
-  workspaceController.add('controls_if', 'if_id', where);
+  workspaceController.addBlock('controls_if', 'if_id', where);
 });
 document.getElementById('addAnotherIfSingleton').addEventListener('click', function() {
   var where = new SpeechBlocks.TopLevelPosition(new goog.math.Coordinate(10, -10));
