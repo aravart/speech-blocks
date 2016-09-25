@@ -6,6 +6,8 @@
 
 goog.provide('SpeechBlocks.StatementInput');
 
+goog.require('SpeechBlocks.Blocks');
+
 /** 
  * @param {string} parentBlockId The ID of the parent block. 
  * @param {string} inputName The name of the statement input.
@@ -22,29 +24,14 @@ SpeechBlocks.StatementInput = function(parentBlockId, inputName) {
 };
 
 /**
- * Places the block as the first statement input of the given parent block field. 
- * Throws an exception if the parent or child block do not exist in this workspace,
- * or if the connection is incompatible.
+ * Places the block as the first statement input of the given parent block field.
  * @override 
  */
 SpeechBlocks.StatementInput.prototype.place = function(blockId, workspace) {
-  var block = workspace.getBlockById(blockId);
-  if (!block) {
-    throw 'No such block: ' + blockId;
-  }
-
-  var parentBlock = workspace.getBlockById(this.parentBlockId_);
-  if (!parentBlock) {
-    throw 'No such block: ' + this.parentBlockId_;
-  }
-
-  // TODO(evanfredhernandez): Handle case where block's output connection is in use.
-  var input = parentBlock.getInput(this.inputName_);
-  if (!input || input.type != Blockly.NEXT_STATEMENT) {
-    throw 'No statement input with name ' + this.inputName_ + ' in block ' + this.parentBlockId_;
-  } else if (!input.connection.isConnectionAllowed(block.previousConnection)) {
-    throw 'Block ' + blockId + ' cannot be a statement input for block ' + this.parentBlockId_;
-  }
-
-  input.connection.connect(block.previousConnection);
-}; 
+  var parentInputConnection =
+      SpeechBlocks.Blocks.getInputConnection(
+          this.parentBlockId, this.inputName_, workspace);
+  var childPreviousConnection =
+      SpeechBlocks.Blocks.getPreviousConnection(blockId, workspace);
+  parentInputConnection.connect(childPreviousConnection);
+};
