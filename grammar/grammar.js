@@ -136,34 +136,23 @@ module.exports = (function(){
       function parse_Article() {
         var result0;
         
-        if (input.substr(pos, 2) === "an") {
-          result0 = "an";
-          pos += 2;
+        if (input.charCodeAt(pos) === 97) {
+          result0 = "a";
+          pos++;
         } else {
           result0 = null;
           if (reportFailures === 0) {
-            matchFailed("\"an\"");
+            matchFailed("\"a\"");
           }
         }
         if (result0 === null) {
-          if (input.charCodeAt(pos) === 97) {
-            result0 = "a";
-            pos++;
+          if (input.substr(pos, 3) === "the") {
+            result0 = "the";
+            pos += 3;
           } else {
             result0 = null;
             if (reportFailures === 0) {
-              matchFailed("\"a\"");
-            }
-          }
-          if (result0 === null) {
-            if (input.substr(pos, 3) === "the") {
-              result0 = "the";
-              pos += 3;
-            } else {
-              result0 = null;
-              if (reportFailures === 0) {
-                matchFailed("\"the\"");
-              }
+              matchFailed("\"the\"");
             }
           }
         }
@@ -183,23 +172,23 @@ module.exports = (function(){
           }
         }
         if (result0 === null) {
-          if (input.substr(pos, 10) === "repeat_for") {
-            result0 = "repeat_for";
-            pos += 10;
+          if (input.substr(pos, 9) === "repeatfor") {
+            result0 = "repeatfor";
+            pos += 9;
           } else {
             result0 = null;
             if (reportFailures === 0) {
-              matchFailed("\"repeat_for\"");
+              matchFailed("\"repeatfor\"");
             }
           }
           if (result0 === null) {
-            if (input.substr(pos, 12) === "repeat_while") {
-              result0 = "repeat_while";
-              pos += 12;
+            if (input.substr(pos, 11) === "repeatwhile") {
+              result0 = "repeatwhile";
+              pos += 11;
             } else {
               result0 = null;
               if (reportFailures === 0) {
-                matchFailed("\"repeat_while\"");
+                matchFailed("\"repeatwhile\"");
               }
             }
             if (result0 === null) {

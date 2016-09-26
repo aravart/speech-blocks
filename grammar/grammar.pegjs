@@ -1,7 +1,7 @@
 Start = Move / Add / Remove / Change / Run
 
-Article = "an" / "a" / "the"
-Command = "if" / "repeat_for" / "repeat_while" / "print"
+Article = "a" / "the"
+Command = "if" / "repeatfor" / "repeatwhile" / "print"
 
 Move = MoveVerb _ block:Block _ where:Where { return {
    "action": "Move",
