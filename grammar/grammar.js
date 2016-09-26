@@ -39,11 +39,11 @@ module.exports = (function(){
       var parseFunctions = {
         "Start": parse_Start,
         "Article": parse_Article,
-        "Color": parse_Color,
+        "Command": parse_Command,
         "Move": parse_Move,
         "MoveVerb": parse_MoveVerb,
         "Block": parse_Block,
-        "ColorBlock": parse_ColorBlock,
+        "CommandBlock": parse_CommandBlock,
         "NumberBlock": parse_NumberBlock,
         "Where": parse_Where,
         "Position": parse_Position,
@@ -159,26 +159,48 @@ module.exports = (function(){
         return result0;
       }
       
-      function parse_Color() {
+      function parse_Command() {
         var result0;
         
-        if (input.substr(pos, 4) === "blue") {
-          result0 = "blue";
-          pos += 4;
+        if (input.substr(pos, 2) === "if") {
+          result0 = "if";
+          pos += 2;
         } else {
           result0 = null;
           if (reportFailures === 0) {
-            matchFailed("\"blue\"");
+            matchFailed("\"if\"");
           }
         }
         if (result0 === null) {
-          if (input.substr(pos, 4) === "pink") {
-            result0 = "pink";
-            pos += 4;
+          if (input.substr(pos, 9) === "repeatfor") {
+            result0 = "repeatfor";
+            pos += 9;
           } else {
             result0 = null;
             if (reportFailures === 0) {
-              matchFailed("\"pink\"");
+              matchFailed("\"repeatfor\"");
+            }
+          }
+          if (result0 === null) {
+            if (input.substr(pos, 11) === "repeatwhile") {
+              result0 = "repeatwhile";
+              pos += 11;
+            } else {
+              result0 = null;
+              if (reportFailures === 0) {
+                matchFailed("\"repeatwhile\"");
+              }
+            }
+            if (result0 === null) {
+              if (input.substr(pos, 5) === "print") {
+                result0 = "print";
+                pos += 5;
+              } else {
+                result0 = null;
+                if (reportFailures === 0) {
+                  matchFailed("\"print\"");
+                }
+              }
             }
           }
         }
@@ -253,14 +275,14 @@ module.exports = (function(){
       function parse_Block() {
         var result0;
         
-        result0 = parse_ColorBlock();
+        result0 = parse_CommandBlock();
         if (result0 === null) {
           result0 = parse_NumberBlock();
         }
         return result0;
       }
       
-      function parse_ColorBlock() {
+      function parse_CommandBlock() {
         var result0, result1, result2, result3, result4;
         var pos0, pos1;
         
@@ -270,7 +292,7 @@ module.exports = (function(){
         if (result0 !== null) {
           result1 = parse__();
           if (result1 !== null) {
-            result2 = parse_Color();
+            result2 = parse_Command();
             if (result2 !== null) {
               result3 = parse__();
               if (result3 !== null) {
@@ -306,8 +328,8 @@ module.exports = (function(){
           pos = pos1;
         }
         if (result0 !== null) {
-          result0 = (function(offset, color) { return {
-          "color": color
+          result0 = (function(offset, command) { return {
+          "command": command
           } })(pos0, result0[2]);
         }
         if (result0 === null) {

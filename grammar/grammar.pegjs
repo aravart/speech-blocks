@@ -1,7 +1,7 @@
 Start = Move / Add / Remove / Change / Run
 
 Article = "a" / "the"
-Color = "blue" / "pink"
+Command = "if" / "repeatfor" / "repeatwhile" / "print"
 
 Move = MoveVerb _ block:Block _ where:Where { return {
    "action": "Move",
@@ -10,9 +10,9 @@ Move = MoveVerb _ block:Block _ where:Where { return {
    } }
 
 MoveVerb = "move"
-Block = ColorBlock / NumberBlock
-ColorBlock = Article _ color:Color _ "block" { return {
-  "color": color
+Block = CommandBlock / NumberBlock
+CommandBlock = Article _ command:Command _ "block" { return {
+  "command": command
   } }
 
 NumberBlock = "block" _ number:Number { return {
