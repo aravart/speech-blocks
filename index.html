@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Speech Demo</title>
+
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="container">
+ 
+<div class="row form-inline">
+  <div class="col-md-12">
+    <img id="microphone" style="width: 5.5%;" src="http://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"/>
+    <input id="q" style="width: 94%;" class="form-control" type="text" name="q" id="transcript" placeholder="Speak" />
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div id="parse-message" class="message disabled"></div>
+  </div>
+</div>
+
+<div class="row form-inline">
+  <div class="col-md-12">
+    <pre id="output" class="disabled">Record some speech or type some text to display parser results.</pre>
+  </div>
+</div>
+
+</div>
+
+<script src="../grammar/grammar.js"></script>
+<script src="../js/jsDump.js"></script>
+<script>
+$(document).ready(function() {
+  var oldQ = null;
+  var parseTimer = null;
+
+  function startDictation() { 
+    if (window.hasOwnProperty('webkitSpeechRecognition')) { 
+      var mic_animate = 'http://www.google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif';
+      var mic = 'http://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
+      var recognition = new webkitSpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = "en-US";
+      document.getElementById('microphone').src = mic_animate;
+      recognition.start();
+      recognition.onresult = function(e) {
+        document.getElementById('q').value = e.results[0][0].transcript;
+        recognition.stop();
+        document.getElementById('microphone').src = mic;
+        parseSpeech();
+      };
+      recognition.onerror = function(e) {
+        recognition.stop();
+        document.getElementById('microphone').src = mic;
+      }
+    }
+  }
+
+  function buildErrorMessage(e) {
+    return e.location !== undefined
+      ? "Line " + e.location.start.line + ", column " + e.location.start.column + ": " + e.message
+      : e.message;
+  }
+
+  function parseSpeech() {
+    oldQ = $("#q").val();
+
+    $("#parse-message").attr("class", "message progress").text("Parsing the input...");
+    $("#output").addClass("disabled").text("Output not available.");
+
+    try {
+      var output = parser.parse($("#q").val().toLowerCase());
+
+      $("#parse-message")
+        .attr("class", "message info")
+        .text("Input parsed successfully.");
+      $("#output").removeClass("disabled").text(jsDump.parse(output));
+
+      var result = true;
+    } catch (e) {
+      $("#parse-message").attr("class", "message error").text(buildErrorMessage(e));
+
+      var result = false;
+    }
+
+    return result;
+  }
+
+  function scheduleParse() {
+    if ($("#q").val() === oldQ) { return; }
+    if (parseTimer !== null) {
+      clearTimeout(parseTimer);
+      parseTimer = null;
+    }
+
+    parseTimer = setTimeout(function() {
+      parseSpeech();
+      parseTimer = null;
+    }, 500);
+  }
+
+  $("#q")
+    .change(scheduleParse)
+    .mousedown(scheduleParse)
+    .mouseup(scheduleParse)
+    .click(scheduleParse)
+    .keydown(scheduleParse)
+    .keyup(scheduleParse)
+    .keypress(scheduleParse);
+
+  $("#microphone")
+    .click(startDictation);
+});
+</script>
+</body>
+</html>
