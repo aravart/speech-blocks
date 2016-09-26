@@ -1,34 +1,34 @@
 Start = Move / Add / Remove / Change / Run
 
-Article = "a" / "the"
-Color = "blue" / "pink"
+Article = "an" / "a" / "the"
+Command = "if" / "repeat_for" / "repeat_while" / "print"
 
 Move = MoveVerb _ block:Block _ where:Where { return {
-   "action": "Move", 
+   "action": "Move",
    "block": block,
    "where": where
    } }
 
 MoveVerb = "move"
-Block = ColorBlock / NumberBlock
-ColorBlock = Article _ color:Color _ "block" { return {
-  "color": color
+Block = CommandBlock / NumberBlock
+CommandBlock = Article _ command:Command _ "block" { return {
+  "command": command
   } }
-  
+
 NumberBlock = "block" _ number:Number { return {
   "number": number
   } }
-  
+
 Where = position:Position _ block:Block { return {
   "block": block,
   "position": position
   } }
-  
+
 Position = "after" / "before" / "in front of" / "behind"
 Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 
 Add = AddVerb _ block:Block { return {
-   "action": "Add", 
+   "action": "Add",
    "block": block
    } }
 
@@ -38,7 +38,7 @@ Remove = RemoveVerb _ block:NumberBlock { return {
    "action": "Delete",
    "block": block
    } }
-    
+
 RemoveVerb = "delete" / "remove"
 
 Change = ChangeVerb _ block:NumberBlock _ "to" _ property:Property { return {
