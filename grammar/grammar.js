@@ -4,7 +4,7 @@ parser = (function(){
    *
    * http://pegjs.majda.cz/
    */
-  
+
   function quote(s) {
     /*
      * ECMA-262, 5th ed., 7.8.4: All characters may appear literally in a
@@ -27,7 +27,7 @@ parser = (function(){
       .replace(/[\x00-\x07\x0B\x0E-\x1F\x80-\uFFFF]/g, escape)
       + '"';
   }
-  
+
   var result = {
     /*
      * Parses the input with a generated parser. If the parsing is successfull,
@@ -60,7 +60,7 @@ parser = (function(){
         "Run": parse_Run,
         "_": parse__
       };
-      
+
       if (startRule !== undefined) {
         if (parseFunctions[startRule] === undefined) {
           throw new Error("Invalid rule name: " + quote(startRule) + ".");
@@ -68,28 +68,28 @@ parser = (function(){
       } else {
         startRule = "Start";
       }
-      
+
       var pos = 0;
       var reportFailures = 0;
       var rightmostFailuresPos = 0;
       var rightmostFailuresExpected = [];
-      
+
       function padLeft(input, padding, length) {
         var result = input;
-        
+
         var padLength = length - input.length;
         for (var i = 0; i < padLength; i++) {
           result = padding + result;
         }
-        
+
         return result;
       }
-      
+
       function escape(ch) {
         var charCode = ch.charCodeAt(0);
         var escapeChar;
         var length;
-        
+
         if (charCode <= 0xFF) {
           escapeChar = 'x';
           length = 2;
@@ -97,26 +97,26 @@ parser = (function(){
           escapeChar = 'u';
           length = 4;
         }
-        
+
         return '\\' + escapeChar + padLeft(charCode.toString(16).toUpperCase(), '0', length);
       }
-      
+
       function matchFailed(failure) {
         if (pos < rightmostFailuresPos) {
           return;
         }
-        
+
         if (pos > rightmostFailuresPos) {
           rightmostFailuresPos = pos;
           rightmostFailuresExpected = [];
         }
-        
+
         rightmostFailuresExpected.push(failure);
       }
-      
+
       function parse_Start() {
         var result0;
-        
+
         result0 = parse_Move();
         if (result0 === null) {
           result0 = parse_Add();
@@ -132,10 +132,10 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Article() {
         var result0;
-        
+
         if (input.substr(pos, 2) === "an") {
           result0 = "an";
           pos += 2;
@@ -169,10 +169,10 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Command() {
         var result0;
-        
+
         if (input.substr(pos, 2) === "if") {
           result0 = "if";
           pos += 2;
@@ -217,11 +217,11 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Move() {
         var result0, result1, result2, result3, result4;
         var pos0, pos1;
-        
+
         pos0 = pos;
         pos1 = pos;
         result0 = parse_MoveVerb();
@@ -267,10 +267,10 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_MoveVerb() {
         var result0;
-        
+
         if (input.substr(pos, 4) === "move") {
           result0 = "move";
           pos += 4;
@@ -282,21 +282,21 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Block() {
         var result0;
-        
+
         result0 = parse_CommandBlock();
         if (result0 === null) {
           result0 = parse_NumberBlock();
         }
         return result0;
       }
-      
+
       function parse_CommandBlock() {
         var result0, result1, result2, result3, result4;
         var pos0, pos1;
-        
+
         pos0 = pos;
         pos1 = pos;
         result0 = parse_Article();
@@ -348,11 +348,11 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_NumberBlock() {
         var result0, result1, result2;
         var pos0, pos1;
-        
+
         pos0 = pos;
         pos1 = pos;
         if (input.substr(pos, 5) === "block") {
@@ -392,11 +392,11 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Where() {
         var result0, result1, result2;
         var pos0, pos1;
-        
+
         pos0 = pos;
         pos1 = pos;
         result0 = parse_Position();
@@ -429,10 +429,10 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Position() {
         var result0;
-        
+
         if (input.substr(pos, 5) === "after") {
           result0 = "after";
           pos += 5;
@@ -477,11 +477,11 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Number() {
         var result0, result1;
         var pos0;
-        
+
         pos0 = pos;
         if (/^[0-9]/.test(input.charAt(pos))) {
           result1 = input.charAt(pos);
@@ -517,11 +517,11 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Add() {
         var result0, result1, result2;
         var pos0, pos1;
-        
+
         pos0 = pos;
         pos1 = pos;
         result0 = parse_AddVerb();
@@ -554,10 +554,10 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_AddVerb() {
         var result0;
-        
+
         if (input.substr(pos, 3) === "add") {
           result0 = "add";
           pos += 3;
@@ -580,11 +580,11 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Remove() {
         var result0, result1, result2;
         var pos0, pos1;
-        
+
         pos0 = pos;
         pos1 = pos;
         result0 = parse_RemoveVerb();
@@ -617,10 +617,10 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_RemoveVerb() {
         var result0;
-        
+
         if (input.substr(pos, 6) === "delete") {
           result0 = "delete";
           pos += 6;
@@ -643,11 +643,11 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Change() {
         var result0, result1, result2, result3, result4, result5, result6;
         var pos0, pos1;
-        
+
         pos0 = pos;
         pos1 = pos;
         result0 = parse_ChangeVerb();
@@ -713,10 +713,10 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_ChangeVerb() {
         var result0;
-        
+
         if (input.substr(pos, 6) === "change") {
           result0 = "change";
           pos += 6;
@@ -739,21 +739,21 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Property() {
         var result0;
-        
+
         result0 = parse_Degrees();
         if (result0 === null) {
           result0 = parse_Direction();
         }
         return result0;
       }
-      
+
       function parse_Degrees() {
         var result0, result1, result2;
         var pos0, pos1;
-        
+
         pos0 = pos;
         pos1 = pos;
         result0 = parse_Number();
@@ -794,11 +794,11 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Direction() {
         var result0, result1, result2;
         var pos0, pos1;
-        
+
         pos0 = pos;
         pos1 = pos;
         if (input.substr(pos, 4) === "move") {
@@ -859,11 +859,11 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse_Run() {
         var result0;
         var pos0;
-        
+
         pos0 = pos;
         if (input.substr(pos, 15) === "run the program") {
           result0 = "run the program";
@@ -895,10 +895,10 @@ parser = (function(){
         }
         return result0;
       }
-      
+
       function parse__() {
         var result0, result1;
-        
+
         result0 = [];
         if (input.charCodeAt(pos) === 32) {
           result1 = " ";
@@ -923,11 +923,11 @@ parser = (function(){
         }
         return result0;
       }
-      
-      
+
+
       function cleanupExpected(expected) {
         expected.sort();
-        
+
         var lastExpected = null;
         var cleanExpected = [];
         for (var i = 0; i < expected.length; i++) {
@@ -938,7 +938,7 @@ parser = (function(){
         }
         return cleanExpected;
       }
-      
+
       function computeErrorPosition() {
         /*
          * The first idea was to use |String.split| to break the input up to the
@@ -946,11 +946,11 @@ parser = (function(){
          * there. However IE's |split| implementation is so broken that it was
          * enough to prevent it.
          */
-        
+
         var line = 1;
         var column = 1;
         var seenCR = false;
-        
+
         for (var i = 0; i < Math.max(pos, rightmostFailuresPos); i++) {
           var ch = input.charAt(i);
           if (ch === "\n") {
@@ -966,13 +966,13 @@ parser = (function(){
             seenCR = false;
           }
         }
-        
+
         return { line: line, column: column };
       }
-      
-      
+
+
       var result = parseFunctions[startRule]();
-      
+
       /*
        * The parser is now in one of the following three states:
        *
@@ -1001,7 +1001,7 @@ parser = (function(){
         var offset = Math.max(pos, rightmostFailuresPos);
         var found = offset < input.length ? input.charAt(offset) : null;
         var errorPosition = computeErrorPosition();
-        
+
         throw new this.SyntaxError(
           cleanupExpected(rightmostFailuresExpected),
           found,
@@ -1010,20 +1010,20 @@ parser = (function(){
           errorPosition.column
         );
       }
-      
+
       return result;
     },
-    
+
     /* Returns the parser source code. */
     toSource: function() { return this._source; }
   };
-  
+
   /* Thrown when a parser encounters a syntax error. */
-  
+
   result.SyntaxError = function(expected, found, offset, line, column) {
     function buildMessage(expected, found) {
       var expectedHumanized, foundHumanized;
-      
+
       switch (expected.length) {
         case 0:
           expectedHumanized = "end of input";
@@ -1036,12 +1036,12 @@ parser = (function(){
             + " or "
             + expected[expected.length - 1];
       }
-      
+
       foundHumanized = found ? quote(found) : "end of input";
-      
+
       return "Expected " + expectedHumanized + " but " + foundHumanized + " found.";
     }
-    
+
     this.name = "SyntaxError";
     this.expected = expected;
     this.found = found;
@@ -1050,8 +1050,8 @@ parser = (function(){
     this.line = line;
     this.column = column;
   };
-  
+
   result.SyntaxError.prototype = Error.prototype;
-  
+
   return result;
 })();
