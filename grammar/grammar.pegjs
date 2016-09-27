@@ -1,6 +1,6 @@
 Start = Move / Add / Remove / Change / Run
 
-Article = "a" / "the"
+Article = "an" / "a" / "the"
 Command = "if" / "repeatfor" / "repeatwhile" / "print"
 
 Move = MoveVerb _ block:Block _ where:Where { return {
