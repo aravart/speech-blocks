@@ -22,7 +22,9 @@
       expect(parser.parse("in block number 5 change the comparison to equals").property).toBe("comparison");
       expect(parser.parse("in block number 5 change the comparison to equals").value).toBe("==");
       expect(parser.parse("in block number 5 change the number to 50").property).toBe("number");
-      return expect(parser.parse("in block number 5 change the number to 50").value).toBe(50);
+      expect(parser.parse("in block number 5 change the number to 50").value).toBe(50);
+      expect(parser.parse("in block number 5 change the text to foo bar baz").property).toBe("text");
+      return expect(parser.parse("in block number 5 change the text to foo bar baz").value).toBe("foo bar baz");
     });
     it('can recognize move commands', function() {
       expect(parser.parse("move block 3 before block 5").action).toBe("move");

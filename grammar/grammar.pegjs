@@ -28,6 +28,7 @@ Position = "after" / "before" / "inside" / "to the right of" / LefthandSide / Ri
 
 Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 Word = value:[a-zA-Z]+ { return value.join("") }
+Words = car:Word cdr:(" " w:Word { return w })* { return [car].concat(cdr).join(" ") }
 
 Add = AddVerb _ type:BlockType { return { 
    "action": "add",
@@ -51,7 +52,7 @@ Change = "in" _ block:BlockToken _ ChangeVerb _ pair:PropertyValuePair {
 
 ChangeVerb = "change" / "set"
 
-PropertyValuePair = OperationPair / ComparisonPair / NamePair / NumberPair
+PropertyValuePair = OperationPair / ComparisonPair / NamePair / NumberPair / TextPair
 
 OperationPair = ("the" _)? (OperationName / OperationValue) _ "to" _ value:OperationValue { return {
   "property": "operation",
@@ -89,6 +90,11 @@ NumberPair = ("the" _)? (NumberName / Number) _ "to" _ number:Number { return {
   "value": number
   } }
 NumberName = "number"
+
+TextPair = ("the" _)? "text" _ "to" _ text:Words { return {
+  "property": "text",
+  "value": text
+  } }
 
 LefthandSide = ("to" / "into") _ "the" _ ("first blank" / "first field" / "lefthand side") _ "of" { return "lhs" }
 RighthandSide = ("to" / "into") _ "the" _ ("second blank" / "second field" / "righthand side") _ "of" { return "rhs" }
