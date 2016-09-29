@@ -1,53 +1,78 @@
-Start = Move / Add / Remove / Change / Run
+Start = Move / Add / Change / Run
 
 Article = "an" / "a" / "the"
-Command = "if" / "repeatfor" / "repeatwhile" / "print"
+Command = "set" / "if" / "repeat" / "comparison" / "arithmetic" / "print" / "text" / "number" / "variable"
 
-Move = MoveVerb _ block:Block _ where:Where { return {
+Move = MoveVerb _ block:BlockToken _ where:Where { return {
    "action": "Move",
    "block": block,
    "where": where
    } }
 
-MoveVerb = "move"
-Block = CommandBlock / NumberBlock
-CommandBlock = Article _ command:Command _ "block" { return {
+MoveVerb = "move" / "attach"
+
+BlockType = Article _ command:Command _ "block" { return {
   "command": command
   } }
 
-NumberBlock = "block" _ number:Number { return {
+BlockToken = "block" _ ("number" _)? number:Number { return {
   "number": number
   } }
 
-Where = position:Position _ block:Block { return {
+Where = BlockPosition / Trash
+
+BlockPosition = position:Position _ block:BlockToken { return {
   "block": block,
   "position": position
   } }
 
-Position = "after" / "before" / "in front of" / "behind"
-Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
+Trash = "to the trash"
 
-Add = AddVerb _ block:Block { return {
+Position = "after" / "before" / "inside" / "to the right of" / LefthandSide / RighthandSide
+
+Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
+Word = value:[a-zA-Z]+ { return value.join("") }
+
+Add = AddVerb _ block:BlockType { return {
    "action": "Add",
    "block": block
    } }
 
 AddVerb = "add" / "insert"
 
-Remove = RemoveVerb _ block:NumberBlock { return {
+Remove = RemoveVerb _ block:BlockToken { return {
    "action": "Delete",
    "block": block
    } }
 
 RemoveVerb = "delete" / "remove"
 
-Change = ChangeVerb _ block:NumberBlock _ "to" _ property:Property { return {
-   "action": "Modify",
-   "block": block,
-   "property": property
-   } }
-
+Change = "in" _ block:BlockToken _ ChangeVerb _ PropertyValuePair
 ChangeVerb = "change" / "set"
+
+PropertyValuePair = OperationPair / ComparisonPair / NamePair / NumberPair
+
+OperationPair = ("the" _)? (OperationName / OperationValue) _ "to" _ OperationValue
+OperationName = "operation" / "operator"
+OperationValue = 
+  "add" / "plus" / "addition" / 
+  "subtract" / "minus" / "subtraction" / 
+  "multiply" / "times" / "multiplication"
+  "divide" / "division" /
+  "power" / "exponentiation"
+
+NamePair = ("the" _)? "variable name to" _ Word
+
+ComparisonPair = ("the" _)? (ComparisonName / ComparisonValue) _ "to" _ ComparisonValue
+ComparisonName = "comparison"
+ComparisonValue = "equals" / "not equals" / "less than" / "greater than" / "less than or equal to" / "greater than or equal to"
+
+NumberPair = ("the" _)? (NumberName / Number) _ "to" _ Number
+NumberName = "number"
+
+LefthandSide = ("to" / "into") _ "the" _ ("first blank" / "first field" / "lefthand side") _ "of"
+RighthandSide = ("to" / "into") _ "the" _ ("second blank" / "second field" / "righthand side") _ "of"
+
 Property = Degrees / Direction
 Degrees = number:Number _ "degrees" { return {
     "type": "degree",
