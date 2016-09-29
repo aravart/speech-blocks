@@ -73,16 +73,6 @@ NumberName = "number"
 LefthandSide = ("to" / "into") _ "the" _ ("first blank" / "first field" / "lefthand side") _ "of"
 RighthandSide = ("to" / "into") _ "the" _ ("second blank" / "second field" / "righthand side") _ "of"
 
-Property = Degrees / Direction
-Degrees = number:Number _ "degrees" { return {
-    "type": "degree",
-    "value": number
-  } }
-Direction = "move"? _ direction:("forwards" / "backwards") { return {
-    "type": "direction",
-    "value": direction
-  } }
-
 Run = ("run the program" / "run it") { return {
    "action": "Run"
    } }
