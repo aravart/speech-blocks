@@ -2,35 +2,42 @@
 (function() {
   describe('Parser', function() {
     it('can recognize run commands', function() {
-      expect(parser.parse("run it").action).toBe("Run");
-      return expect(parser.parse("run the program").action).toBe("Run");
+      expect(parser.parse("run it").action).toBe("run");
+      return expect(parser.parse("run the program").action).toBe("run");
     });
     it('can recognize add block', function() {
-      expect(parser.parse("add a blue block").action).toBe("Add");
-      return expect(parser.parse("add a blue block").block.color).toBe("blue");
+      expect(parser.parse("add an if block").action).toBe("add");
+      expect(parser.parse("add an if block").type).toBe("if");
+      return expect(parser.parse("add a repeat block").type).toBe("repeat");
     });
     it('can recognize change commands', function() {
-      expect(parser.parse("change block 1 to 50 degrees").action).toBe("Modify");
-      expect(parser.parse("change block 1 to 50 degrees").block.number).toBe(1);
-      expect(parser.parse("change block 1 to 50 degrees").property.type).toBe("degree");
-      expect(parser.parse("change block 1 to 50 degrees").property.value).toBe(50);
-      expect(parser.parse("change block 1 to move backwards").action).toBe("Modify");
-      expect(parser.parse("change block 1 to move backwards").block.number).toBe(1);
-      expect(parser.parse("change block 1 to move backwards").property.type).toBe("direction");
-      return expect(parser.parse("change block 1 to move backwards").property.value).toBe("backwards");
+      expect(parser.parse("in block 5 change the operation to multiply").action).toBe("modify");
+      expect(parser.parse("in block 5 change the operation to multiply").block).toBe(5);
+      expect(parser.parse("in block 5 change the operation to multiply").property).toBe("operation");
+      expect(parser.parse("in block 5 change the operation to multiply").value).toBe("*");
+      expect(parser.parse("in block 5 change the plus to multiply").property).toBe("operation");
+      expect(parser.parse("in block 5 change the plus to multiply").value).toBe("*");
+      expect(parser.parse("in block 5 change the variable name to foo").property).toBe("name");
+      expect(parser.parse("in block 5 change the variable name to foo").value).toBe("foo");
+      expect(parser.parse("in block number 5 change the comparison to equals").property).toBe("comparison");
+      expect(parser.parse("in block number 5 change the comparison to equals").value).toBe("==");
+      expect(parser.parse("in block number 5 change the number to 50").property).toBe("number");
+      return expect(parser.parse("in block number 5 change the number to 50").value).toBe(50);
     });
     it('can recognize move commands', function() {
-      expect(parser.parse("move block 3 before block 5").action).toBe("Move");
-      expect(parser.parse("move block 3 before block 5").block.number).toBe(3);
-      expect(parser.parse("move block 3 before block 5").where.block.number).toBe(5);
+      expect(parser.parse("move block 3 before block 5").action).toBe("move");
+      expect(parser.parse("move block 3 before block 5").block).toBe(3);
+      expect(parser.parse("move block 3 before block 5").where.block).toBe(5);
       expect(parser.parse("move block 3 before block 5").where.position).toBe("before");
-      return expect(parser.parse("move block 3 after block 5").where.position).toBe("after");
+      expect(parser.parse("move block 3 after block 5").where.position).toBe("after");
+      expect(parser.parse("move block 6 into the lefthand side of block 8").where.position).toBe("lhs");
+      expect(parser.parse("move block 6 into the first field of block 8").where.position).toBe("lhs");
+      return expect(parser.parse("move block 6 into the lefthand side of block 8").where.block).toBe(8);
     });
     return it('can recognize delete commands', function() {
-      expect(parser.parse("delete block 3").action).toBe("Delete");
-      expect(parser.parse("delete block 3").block.number).toBe(3);
-      expect(parser.parse("remove block 3").action).toBe("Delete");
-      return expect(parser.parse("remove block 10").block.number).toBe(10);
+      expect(parser.parse("move block 3 to the trash").action).toBe("move");
+      expect(parser.parse("move block 3 to the trash").block).toBe(3);
+      return expect(parser.parse("move block 3 to the trash").where).toBe("trash");
     });
   });
 
