@@ -15,7 +15,7 @@
 <body>
 
 <div class="container">
- 
+
 <div class="row form-inline">
   <div class="col-md-12">
     <img id="microphone" style="width: 5.5%;" src="http://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"/>
@@ -39,13 +39,15 @@
 
 <script src="../grammar/grammar.js"></script>
 <script src="../js/jsDump.js"></script>
+<script src="../test/Interpreter.js"
 <script>
 $(document).ready(function() {
   var oldQ = null;
   var parseTimer = null;
+  var output = null;
 
-  function startDictation() { 
-    if (window.hasOwnProperty('webkitSpeechRecognition')) { 
+  function startDictation() {
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
       var mic_animate = 'http://www.google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif';
       var mic = 'http://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif';
       var recognition = new webkitSpeechRecognition();
@@ -58,7 +60,9 @@ $(document).ready(function() {
         document.getElementById('q').value = e.results[0][0].transcript;
         recognition.stop();
         document.getElementById('microphone').src = mic;
-        parseSpeech();
+        if (parseSpeech()) {
+          interpretSpeech();
+        }
       };
       recognition.onerror = function(e) {
         recognition.stop();
@@ -80,7 +84,7 @@ $(document).ready(function() {
     $("#output").addClass("disabled").text("Output not available.");
 
     try {
-      var output = parser.parse($("#q").val().toLowerCase());
+      output = parser.parse($("#q").val().toLowerCase());
 
       $("#parse-message")
         .attr("class", "message info")
@@ -95,6 +99,12 @@ $(document).ready(function() {
     }
 
     return result;
+  }
+
+  function interpretSpeech() {
+    if (output !== null) {
+      Interpreter.interpret(output);
+    }
   }
 
   function scheduleParse() {

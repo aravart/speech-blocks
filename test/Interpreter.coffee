@@ -20,15 +20,15 @@ class Interpreter
   addBlock: (command) ->
     # add block
     # figure out the type of block from the command
-    controller.addBlock(type, id++, commmand.where)
+    console.log "controller.addBlock(type, id++, commmand.where)"
 
   moveBlock: (command) ->
     # move block
-    controller.moveBlock(command.block.number, command.where)
+    console.log "controller.moveBlock(command.block.number, command.where)"
 
   modifyBlock: (command) ->
     # modify block
 
   deleteBlock: (command) ->
     # delete
-    controller.removeBlock(command.block.number)
+    console.log "controller.removeBlock(command.block.number)"
