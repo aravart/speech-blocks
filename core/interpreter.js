@@ -46,7 +46,7 @@ SpeechBlocks.Interpreter.prototype.interpret = function(command) {
 
 SpeechBlocks.Interpreter.prototype.run = function(command) {
   Blockly.JavaScript.addReservedWords('code');
-  var code = Blockly.JavaScript.workspaceToCode(workspace);
+  var code = Blockly.JavaScript.workspaceToCode(this.controller.workspace);
   try {
     eval(code);
   } catch (e) {
