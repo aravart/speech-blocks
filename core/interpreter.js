@@ -7,12 +7,25 @@ goog.provide('SpeechBlocks.Interpreter');
 goog.require('goog.structs.Map');
 
 var blockTypeMap = new goog.structs.Map();
-blockTypeMap.set('if', 'controls_if');
 
 SpeechBlocks.Interpreter = function(controller) {
   this.controller = controller;
   this.id = 1;
+  SpeechBlocks.Interpreter.createBlockTypeMap();
 }
+
+SpeechBlocks.Interpreter.createBlockTypeMap = function() {
+  blockTypeMap.set('if','controls_if');
+  blockTypeMap.set('comparison','logic_compare');
+  blockTypeMap.set('repeat','controls_repeat_ext');
+  blockTypeMap.set('number','math_number');
+  blockTypeMap.set('arithmetic','math_arithmetic');
+  blockTypeMap.set('text','text');
+  blockTypeMap.set('print','text_print');
+  blockTypeMap.set('set','variables_set');
+  blockTypeMap.set('variable','variables_get');
+}
+
 
 SpeechBlocks.Interpreter.prototype.interpret = function(command) {
   if (command.action == "run") {
