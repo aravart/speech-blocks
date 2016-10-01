@@ -60,9 +60,7 @@ $(document).ready(function() {
         document.getElementById('q').value = e.results[0][0].transcript;
         recognition.stop();
         document.getElementById('microphone').src = mic;
-        if (parseSpeech()) {
-          interpretSpeech();
-        }
+        parseSpeech();
       };
       recognition.onerror = function(e) {
         recognition.stop();
@@ -90,7 +88,7 @@ $(document).ready(function() {
         .attr("class", "message info")
         .text("Input parsed successfully.");
       $("#output").removeClass("disabled").text(jsDump.parse(output));
-
+      interpretSpeech();
       var result = true;
     } catch (e) {
       $("#parse-message").attr("class", "message error").text(buildErrorMessage(e));
