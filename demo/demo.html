@@ -58,11 +58,12 @@
   </div>
   <script src="../grammar/grammar.js"></script>
   <script src="../js/jsDump.js"></script>
-  <script src="parser.js"></script>
-
 
   <!-- Blockly. -->
   <div id="blocklyDiv" style="height: 480px; width: 1000px; margin: auto;"></div>
+
+  <script src="../test/Interpreter.js"></script>
+  <script src="parser.js"></script>
 
   <script src="../test/Interpreter.js"></script>
 
@@ -98,8 +99,8 @@
   <span style="float: left; margin-right: 60px;">
     <h4>Move an existing block!</h4>
     Which block?
-    <select id="moveWhat"></select><br><br> 
- 
+    <select id="moveWhat"></select><br><br>
+
     Where?
     <select id="moveWhere">
       <option value="predecessor">before block...</option>
@@ -110,14 +111,14 @@
       <option value="text">text</option>
       <option value="text_print">print</option>
     </select><br><br>
-    <button id="moveBlock">Move!</button> 
+    <button id="moveBlock">Move!</button>
   </span>
 
   <span>
     <h4>Remove an existing block!</h4>
     Which block?
-    <select id="removeWhat"></select><br><br> 
-    <button id="removeBlock">Remove!</button> 
+    <select id="removeWhat"></select><br><br>
+    <button id="removeBlock">Remove!</button>
   </span>
 
   <!-- Code for initializing this page. -->
