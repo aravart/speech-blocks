@@ -8,11 +8,7 @@ $(document).ready(function() {
   var oldQ = null;
   var parseTimer = null;
   var output = null;
-  var controller = new SpeechBlocks.Controller(document.getElementById("blocklyDiv"),
-  {media: '../external/blockly/media/',
-  toolbox: document.getElementById('toolbox')});
   var interpreter = new SpeechBlocks.Interpreter(controller);
-
 
   function startDictation() {
     if (window.hasOwnProperty('webkitSpeechRecognition')) {
