@@ -1,13 +1,18 @@
-/** 
- * @fileoverview Initializes the microphone and parses the speech. 
- * @author aravart@cs.wisc.edu (Ara Vartanian)
- */
+/**
+* @fileoverview Initializes the microphone and parses the speech.
+* @author aravart@cs.wisc.edu (Ara Vartanian)
+*/
 'use strict';
 
 $(document).ready(function() {
   var oldQ = null;
   var parseTimer = null;
   var output = null;
+  var controller = new SpeechBlocks.Controller(document.getElementById("blocklyDiv"),
+  {media: '../external/blockly/media/',
+  toolbox: document.getElementById('toolbox')});
+  var interpreter = new SpeechBlocks.Interpreter(controller);
+
 
   function startDictation() {
     if (window.hasOwnProperty('webkitSpeechRecognition')) {
@@ -34,8 +39,8 @@ $(document).ready(function() {
 
   function buildErrorMessage(e) {
     return e.location !== undefined
-      ? "Line " + e.location.start.line + ", column " + e.location.start.column + ": " + e.message
-      : e.message;
+    ? "Line " + e.location.start.line + ", column " + e.location.start.column + ": " + e.message
+    : e.message;
   }
 
   function parseSpeech() {
@@ -48,10 +53,13 @@ $(document).ready(function() {
       output = parser.parse($("#q").val().toLowerCase());
 
       $("#parse-message")
-        .attr("class", "message info")
-        .text("Input parsed successfully.");
+      .attr("class", "message info")
+      .text("Input parsed successfully.");
       $("#output").removeClass("disabled").text(jsDump.parse(output));
       interpretSpeech();
+      $("#parse-message")
+      .attr("class", "message info")
+      .text("Command deployed successfully.");
       var result = true;
     } catch (e) {
       $("#parse-message").attr("class", "message error").text(buildErrorMessage(e));
@@ -64,7 +72,7 @@ $(document).ready(function() {
 
   function interpretSpeech() {
     if (output !== null) {
-      Interpreter.interpret(output);
+      interpreter.interpret(output);
     }
   }
 
@@ -82,14 +90,14 @@ $(document).ready(function() {
   }
 
   $("#q")
-    .change(scheduleParse)
-    .mousedown(scheduleParse)
-    .mouseup(scheduleParse)
-    .click(scheduleParse)
-    .keydown(scheduleParse)
-    .keyup(scheduleParse)
-    .keypress(scheduleParse);
+  .change(scheduleParse)
+  .mousedown(scheduleParse)
+  .mouseup(scheduleParse)
+  .click(scheduleParse)
+  .keydown(scheduleParse)
+  .keyup(scheduleParse)
+  .keypress(scheduleParse);
 
   $("#microphone")
-    .click(startDictation);
+  .click(startDictation);
 });
