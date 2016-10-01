@@ -4,7 +4,7 @@
  */
 'use strict';
 var controller = new SpeechBlocks.Controller('blocklyDiv', 
-    {media: '../../external/blockly/media/',
+    {media: '../external/blockly/media/',
      toolbox: document.getElementById('toolbox')}); 
 
 // Provide easy access to error message.

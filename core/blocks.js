@@ -99,7 +99,7 @@ SpeechBlocks.Blocks.getInput_ = function(blockId, inputName, workspace) {
  * @return {!Blockly.Block} ID of the last block in the chain.
  * @private
  */
-SpeechBlocks.Predecessor.prototype.getLastBlockInChain_ = function(blockId, workspace) {
+SpeechBlocks.Blocks.getLastBlockInChain_ = function(blockId, workspace) {
   var curr = SpeechBlocks.Blocks.getBlock(blockId, workspace);
   while (curr.nextConnection && curr.nextConnection.isConnected()) {
     curr = curr.nextConnection.targetConnection.getSource();
