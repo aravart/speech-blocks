@@ -15,6 +15,8 @@ SpeechBlocks.Interpreter = function(controller) {
 }
 
 SpeechBlocks.Interpreter.prototype.interpret = function(command) {
+  console.log("interpreting");
+  console.log(command.action);
   if (command.action == "run") {
     this.run(command);
   } else if (command.action == "add") {
@@ -27,7 +29,7 @@ SpeechBlocks.Interpreter.prototype.interpret = function(command) {
     this.deleteBlock(command);
   }
   else {
-    console.log("improper command");
+    console.log("NO COMMAND FOUND");
   }
 };
 
