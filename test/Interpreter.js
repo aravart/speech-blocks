@@ -5,7 +5,9 @@
   Interpreter = (function() {
     function Interpreter() {}
 
-    Interpreter.prototype.controller = new Controller;
+    Interpreter.prototype.controller = new SpeechBlocks.Controller(document.getElementById("blocklyDiv"),
+    {media: '../external/blockly/media/',
+     toolbox: document.getElementById('toolbox')});
 
     Interpreter.prototype.id = 0;
 
@@ -23,7 +25,9 @@
       }
     };
 
-    Interpreter.prototype.run = function(command) {};
+    Interpreter.prototype.run = function(command) {
+      
+    };
 
     Interpreter.prototype.addBlock = function(command) {
       return console.log("controller.addBlock(type, id++, commmand.where)");

@@ -14,6 +14,7 @@
 
   <!-- Blockly. -->
   <script src="../external/blockly/blockly_compressed.js"></script>
+  <script src="../external/blockly/javascript_compressed.js"></script>
   <script src="../external/blockly/blocks_compressed.js"></script>
   <script src="../external/blockly/msg/js/en.js"></script>
 
@@ -59,8 +60,11 @@
   <script src="../js/jsDump.js"></script>
   <script src="parser.js"></script>
 
+
   <!-- Blockly. -->
   <div id="blocklyDiv" style="height: 480px; width: 1000px; margin: auto;"></div>
+
+  <script src="../test/Interpreter.js"></script>
 
   <xml id="toolbox" style="display: none">
     <block type="controls_if"></block>
@@ -78,9 +82,9 @@
   <span style="float: left; margin-right: 60px;">
     <h4>Create a new block!</h4>
     Block ID: <input id="newBlockId" type="text" name="id"><br><br>
-    Block Type: 
+    Block Type:
     <select id="newBlockType">
-      <option value="controls_if">if</option> 
+      <option value="controls_if">if</option>
       <option value="logic_compare">logical equals</option>
       <option value="controls_repeat_ext">repeat</option>
       <option value="math_number">number</option>
@@ -88,7 +92,7 @@
       <option value="text">text</option>
       <option value="text_print">print</option>
     </select><br><br>
-    <button id="createNewBlock">Create!</button> 
+    <button id="createNewBlock">Create!</button>
   </span>
 
   <span style="float: left; margin-right: 60px;">
@@ -98,7 +102,7 @@
  
     Where?
     <select id="moveWhere">
-      <option value="predecessor">before block...</option> 
+      <option value="predecessor">before block...</option>
       <option value="successor">after block...</option>
       <option value="translation">translate it...</option>
       <option value="statement_input">statement input of block...</option>

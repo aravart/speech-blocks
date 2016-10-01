@@ -203,7 +203,7 @@
         peg$c52 = peg$literalExpectation(" ", false),
         peg$c53 = function(car, w) { return w },
         peg$c54 = function(car, cdr) { return [car].concat(cdr).join(" ") },
-        peg$c55 = function(type) { return { 
+        peg$c55 = function(type) { return {
            "action": "add",
            "type": type
            } },
@@ -326,7 +326,9 @@
         peg$c150 = peg$literalExpectation("run the program", false),
         peg$c151 = "run it",
         peg$c152 = peg$literalExpectation("run it", false),
-        peg$c153 = function() { return {
+        peg$c153 = "run",
+        peg$c154 = peg$literalExpectation("run", false),
+        peg$c155 = function() { return {
            "action": "run"
            } },
 
@@ -2183,10 +2185,19 @@
           s1 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c152); }
         }
+        if (s1 === peg$FAILED) {
+          if (input.substr(peg$currPos, 3) === peg$c153) {
+            s1 = peg$c153;
+            peg$currPos += 3;
+          } else {
+            s1 = peg$FAILED;
+            if (peg$silentFails === 0) { peg$fail(peg$c154); }
+          }
+        }
       }
       if (s1 !== peg$FAILED) {
         peg$savedPos = s0;
-        s1 = peg$c153();
+        s1 = peg$c155();
       }
       s0 = s1;
 
