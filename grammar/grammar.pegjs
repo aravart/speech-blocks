@@ -30,7 +30,7 @@ Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 Word = value:[a-zA-Z]+ { return value.join("") }
 Words = car:Word cdr:(" " w:Word { return w })* { return [car].concat(cdr).join(" ") }
 
-Add = AddVerb _ type:BlockType { return { 
+Add = AddVerb _ type:BlockType { return {
    "action": "add",
    "type": type
    } }
@@ -78,11 +78,11 @@ ComparisonPair = ("the" _)? (ComparisonName / ComparisonValue) _ "to" _ comparis
   } }
 
 ComparisonName = "comparison"
-ComparisonValue = "equals" { return "==" } / 
-  "not equals" { return "!=" } / 
-  "less than" { return "<" } / 
-  "greater than" { return ">" } / 
-  "less than or equal to" { return "<=" } / 
+ComparisonValue = "equals" { return "==" } /
+  "not equals" { return "!=" } /
+  "less than" { return "<" } /
+  "greater than" { return ">" } /
+  "less than or equal to" { return "<=" } /
   "greater than or equal to" { return ">=" }
 
 NumberPair = ("the" _)? (NumberName / Number) _ "to" _ number:Number { return {
@@ -99,7 +99,7 @@ TextPair = ("the" _)? "text" _ "to" _ text:Words { return {
 LefthandSide = ("to" / "into") _ "the" _ ("first blank" / "first field" / "lefthand side") _ "of" { return "lhs" }
 RighthandSide = ("to" / "into") _ "the" _ ("second blank" / "second field" / "righthand side") _ "of" { return "rhs" }
 
-Run = ("run the program" / "run it") { return {
+Run = ("run the program" / "run it" / "run") { return {
    "action": "run"
    } }
 
