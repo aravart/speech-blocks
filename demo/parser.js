@@ -1,48 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Speech Demo</title>
+/** 
+ * @fileoverview Initializes the microphone and parses the speech. 
+ * @author aravart@cs.wisc.edu (Ara Vartanian)
+ */
+'use strict';
 
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" rel="stylesheet">
-
-</head>
-
-<body>
-
-<div class="container">
-
-<div class="row form-inline">
-  <div class="col-md-12">
-    <img id="microphone" style="width: 5.5%;" src="http://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"/>
-    <input id="q" style="width: 94%;" class="form-control" type="text" name="q" id="transcript" placeholder="Speak" />
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-12">
-    <div id="parse-message" class="message disabled"></div>
-  </div>
-</div>
-
-<div class="row form-inline">
-  <div class="col-md-12">
-    <pre id="output" class="disabled">Record some speech or type some text to display parser results.</pre>
-  </div>
-</div>
-
-</div>
-
-<script src="grammar/grammar.js"></script>
-<script src="js/jsDump.js"></script>
-<script>
 $(document).ready(function() {
   var oldQ = null;
   var parseTimer = null;
+  var output = null;
 
   function startDictation() {
     if (window.hasOwnProperty('webkitSpeechRecognition')) {
@@ -80,13 +45,13 @@ $(document).ready(function() {
     $("#output").addClass("disabled").text("Output not available.");
 
     try {
-      var output = parser.parse($("#q").val().toLowerCase());
+      output = parser.parse($("#q").val().toLowerCase());
 
       $("#parse-message")
         .attr("class", "message info")
         .text("Input parsed successfully.");
       $("#output").removeClass("disabled").text(jsDump.parse(output));
-
+      interpretSpeech();
       var result = true;
     } catch (e) {
       $("#parse-message").attr("class", "message error").text(buildErrorMessage(e));
@@ -95,6 +60,12 @@ $(document).ready(function() {
     }
 
     return result;
+  }
+
+  function interpretSpeech() {
+    if (output !== null) {
+      Interpreter.interpret(output);
+    }
   }
 
   function scheduleParse() {
@@ -122,6 +93,3 @@ $(document).ready(function() {
   $("#microphone")
     .click(startDictation);
 });
-</script>
-</body>
-</html>

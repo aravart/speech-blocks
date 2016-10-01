@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Speech Demo</title>
+
+  <!-- Clousre. -->
+  <script src="../external/closure-library/closure/goog/base.js"></script>
+
+  <!-- JQuery. -->
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+  <!-- Blockly. -->
+  <script src="../external/blockly/blockly_compressed.js"></script>
+  <script src="../external/blockly/blocks_compressed.js"></script>
+  <script src="../external/blockly/msg/js/en.js"></script>
+
+  <!-- Speech blocks. -->
+  <!-- TODO(evanfredhernandez): Compress SpeechBlocks JavaScript. -->
+  <script src="../core/controller.js"></script>
+  <script src="../core/blocks.js"></script>
+  <script src="../core/where.js"></script>
+  <script src="../core/top_level_position.js"></script>
+  <script src="../core/statement_input.js"></script>
+  <script src="../core/value_input.js"></script>
+  <script src="../core/successor.js"></script>
+  <script src="../core/predecessor.js"></script>
+
+  <!-- Styles -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- Mic input. -->
+  <div class="container">
+    <div class="row form-inline">
+      <div class="col-md-12">
+        <img id="microphone" style="width: 5.5%;" src="http://www.google.com/intl/en/chrome/assets/common/images/content/mic.gif"
+        />
+        <input id="q" style="width: 94%;" class="form-control" type="text" name="q" id="transcript" placeholder="Speak" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div id="parse-message" class="message disabled"></div>
+      </div>
+    </div>
+
+    <div class="row form-inline">
+      <div class="col-md-12">
+        <pre id="output" class="disabled">Record some speech or type some text to display parser results.</pre>
+      </div>
+    </div>
+  </div>
+  <script src="../grammar/grammar.js"></script>
+  <script src="../js/jsDump.js"></script>
+  <script src="parser.js"></script>
+
+  <!-- Blockly. -->
+  <div id="blocklyDiv" style="height: 480px; width: 1000px; margin: auto;"></div>
+
+  <xml id="toolbox" style="display: none">
+    <block type="controls_if"></block>
+    <block type="logic_compare"></block>
+    <block type="controls_repeat_ext"></block>
+    <block type="math_number"></block>
+    <block type="math_arithmetic"></block>
+    <block type="text"></block>
+    <block type="text_print"></block>
+  </xml>
+
+  <!-- Manually create blocks. -->
+  <span id="errorMessage" style="display:hidden; color: red;"></span>
+
+  <span style="float: left; margin-right: 60px;">
+    <h3>Create a new block!</h3>
+    Block ID: <input id="newBlockId" type="text" name="id"><br><br>
+    Block Type: 
+    <select id="newBlockType">
+      <option value="controls_if">if</option> 
+      <option value="logic_compare">logical equals</option>
+      <option value="controls_repeat_ext">repeat</option>
+      <option value="math_number">number</option>
+      <option value="math_arithmetic">arithmetic</option>
+      <option value="text">text</option>
+      <option value="text_print">print</option>
+    </select><br><br>
+    <button id="createNewBlock">Create!</button> 
+  </span>
+
+  <span style="float: left; margin-right: 60px;">
+    <h3>Move an existing block!</h3>
+    Which block?
+    <select id="existingBlockIds"></select><br><br> 
+ 
+    Where?
+    <select id="moveWhere">
+      <option value="predecessor">before block...</option> 
+      <option value="successor">after block...</option>
+      <option value="translation">translate it...</option>
+      <option value="statement_input">statement input of block...</option>
+      <option value="math_arithmetic">value input of block...</option>
+      <option value="text">text</option>
+      <option value="text_print">print</option>
+    </select><br><br>
+    <button id="createNewBlock">Move!</button> 
+  </span>
+
+  <span>
+    <h3>Remove an existing block!</h3>
+    Which block?
+    <select id="existingBlockIds">
+    </select><br><br> 
+    <button id="createNewBlock">Remove!</button> 
+  </span>
+
+  <!-- Code for initializing this page. -->
+  <script src="main.js"></script>
+</body>
+
+</html>
