@@ -35,6 +35,7 @@
 </head>
 
 <body>
+
   <!-- Mic input. -->
   <div class="container">
     <div class="row form-inline">
@@ -56,14 +57,9 @@
       </div>
     </div>
   </div>
-  <script src="../grammar/grammar.js"></script>
-  <script src="../js/jsDump.js"></script>
 
   <!-- Blockly. -->
   <div id="blocklyDiv" style="height: 480px; width: 1000px; margin: auto;"></div>
-
-  <script src="../test/Interpreter.js"></script>
-  <script src="parser.js"></script>
 
   <xml id="toolbox" style="display: none">
     <block type="controls_if"></block>
@@ -118,6 +114,11 @@
     <select id="removeWhat"></select><br><br>
     <button id="removeBlock">Remove!</button>
   </span>
+
+  <script src="../grammar/grammar.js"></script>
+  <script src="../js/jsDump.js"></script>
+  <script src="../core/Interpreter.js"></script>
+  <script src="parser.js"></script>
 
   <!-- Code for initializing this page. -->
   <script src="main.js"></script>
