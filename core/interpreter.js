@@ -89,7 +89,7 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
     if (command.where = "trash")
     this.deleteBlock(command.block);
     else
-    controller.moveBlock(command.block.number, command.where);
+    controller.moveBlock(command.block, command.where);
   }
   else {
     console.log("Block to be moved cannot be found");
