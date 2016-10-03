@@ -1,8 +1,8 @@
 /**
- * @fileoverview High-level view of a Blockly Workspace that allows 
+ * @fileoverview High-level view of a Blockly Workspace that allows
  * for programmatically adding, moving, and deleting blocks. Does NOT
  * provide error checking.
- * @author ehernandez4@wisc.edu (Evan Hernandez)  
+ * @author ehernandez4@wisc.edu (Evan Hernandez)
  */
 'use strict';
 
@@ -39,7 +39,7 @@ SpeechBlocks.Controller.prototype.addBlock = function(type, blockId, where) {
 };
 
 /**
- * Moves the lock with the given ID. All child blocks are moved as well.
+ * Moves the block with the given ID. All child blocks are moved as well.
  * @param {string} blockId ID of the block to move.
  * @param {!SpeechBlocks.Where} where Location on the workspace
  *    to place the new block.
@@ -56,7 +56,7 @@ SpeechBlocks.Controller.prototype.moveBlock = function(blockId, where) {
  * @public
  */
 SpeechBlocks.Controller.prototype.removeBlock = function(blockId) {
-  var block = this.workspace_.getBlockById(blockId);  
+  var block = this.workspace_.getBlockById(blockId);
   block.unplug(true /* Heal the stack! */);
   block.dispose();
 };
@@ -69,12 +69,12 @@ SpeechBlocks.Controller.prototype.removeBlock = function(blockId) {
 SpeechBlocks.Controller.prototype.getAllBlockIds = function() {
   var blockIds = [];
   this.workspace_.getAllBlocks().forEach(function(block) {
-    blockIds.add(block.id);
+    blockIds.push(block.id);
   });
   return blockIds;
 };
 
-/** 
+/**
  * Checks whether the block with the given ID has a "next block" connection.
  * @param {string} blockId ID of the block.
  * @return {boolean} True if block has next connection, false otherwise.
@@ -82,10 +82,10 @@ SpeechBlocks.Controller.prototype.getAllBlockIds = function() {
  */
 SpeechBlocks.Controller.prototype.hasNextConnection = function(blockId) {
   var block = this.workspace_.getBlockById(blockId);
-  return !goog.isNull(block) && !goog.isNull(block.nextConnection); 
+  return !goog.isNull(block) && !goog.isNull(block.nextConnection);
 };
 
-/** 
+/**
  * Checks whether the block with the given ID has a "previous block" connection.
  * @param {string} blockId ID of the block.
  * @return {boolean} True if block has previous connection, false otherwise.
@@ -93,10 +93,10 @@ SpeechBlocks.Controller.prototype.hasNextConnection = function(blockId) {
  */
 SpeechBlocks.Controller.prototype.hasPreviousConnection = function(blockId) {
   var block = this.workspace_.getBlockById(blockId);
-  return !goog.isNull(block) && !goog.isNull(block.previousConnection); 
+  return !goog.isNull(block) && !goog.isNull(block.previousConnection);
 };
 
-/** 
+/**
  * Checks whether the block with the given ID has a value output connection.
  * @param {string} blockId ID of the block.
  * @return {boolean} True if block has output connection, false otherwise.
@@ -104,7 +104,7 @@ SpeechBlocks.Controller.prototype.hasPreviousConnection = function(blockId) {
  */
 SpeechBlocks.Controller.prototype.hasOutputConnection = function(blockId) {
   var block = this.workspace_.getBlockById(blockId);
-  return !goog.isNull(block) && !goog.isNull(block.outputConnection); 
+  return !goog.isNull(block) && !goog.isNull(block.outputConnection);
 };
 
 /**
@@ -122,11 +122,11 @@ SpeechBlocks.Controller.prototype.getBlockValueInputs = function(blockId) {
  * Returns the list of statement input labels for the block.
  * @param {string} blockId ID of the block.
  * @return {!Array<string>} List of statement input labels for this block.
- * @public 
+ * @public
  */
 SpeechBlocks.Controller.prototype.getBlockStatementInputs = function(blockId) {
   // Eventually, we might also want to include Blockly.PREVIOUS_STATEMENT
-  // input types, but it's not clear where this is used. 
+  // input types, but it's not clear where this is used.
   return this.getBlockXInputs_(blockId, Blockly.NEXT_STATEMENT);
 };
 
