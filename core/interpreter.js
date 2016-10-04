@@ -93,7 +93,7 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
         case "inside": controller.moveBlock(command.block, command.where.block); break;
         case "to the right of": controller.moveBlock(command.block, command.where.block); break;
         case "lhs": controller.moveBlock(command.block, command.where.block); break;
-        case "rhs": controller.moveBlock(command.block, command.where.block); break;
+        case "rhs": controller.moveBlock(command.block, command.where.block); break
       }
     }
   }
