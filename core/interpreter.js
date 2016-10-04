@@ -44,41 +44,28 @@ SpeechBlocks.Interpreter.createBlockTypeMap = function() {
 */
 SpeechBlocks.Interpreter.prototype.interpret = function(command) {
   if (command.action == "run") {
-    try {
-      this.run(command);
-    }
-    catch(e) {
-      console.log(e.message);
-      console.log(e.stack);
-    }
+    try { this.run(command); }
+    catch(e) { console.log(e.message.cat(e.stack)) };
   } else if (command.action == "add") {
     this.addBlock(command);
   } else if (command.action == "move") {
-    if (this.validBlockID(command.block)) {
-      this.moveBlock(command);
-    }
+    this.moveBlock(command);
   } else if (command.action == "modify") {
-    if (this.validBlockID(command.block)) {
-      this.modifyBlock(command);
-    }
+    this.modifyBlock(command);
   } else if (command.action == "delete") {
-    if (this.validBlockID(command.block)) {
-      this.deleteBlock(command);
-    }
+    this.deleteBlock(command);
   }
 };
 
 /**
-* Compiles the code into JavaScript and runs it.
+* Compiles the Blockly code into JavaScript and runs it.
 * @param {Object=} command Object with command specifics from the parser.
 */
 SpeechBlocks.Interpreter.prototype.run = function(command) {
   Blockly.JavaScript.addReservedWords('code');
   var code = Blockly.JavaScript.workspaceToCode(this.controller.workspace);
-  try {
-    eval(code);
-  }
-  catch() {};
+  try { eval(code); }
+  catch(err) {};
 };
 
 /**
@@ -101,12 +88,12 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
     if (this.validBlockID(command.where.block)) { // moving after a block, NEED A JOIN METHOD
       switch(command.where.position) {
         // modify these so the "where" field is right
-        case "after": controller.moveBlock(command.block, command.where.block);
-        case "before": controller.moveBlock(command.block, command.where.block);
-        case "inside": controller.moveBlock(command.block, command.where.block);
-        case "to the right of": controller.moveBlock(command.block, command.where.block);
-        case "lhs": controller.moveBlock(command.block, command.where.block);
-        case "rhs": controller.moveBlock(command.block, command.where.block);
+        case "after": controller.moveBlock(command.block, command.where.block); break;
+        case "before": controller.moveBlock(command.block, command.where.block); break;
+        case "inside": controller.moveBlock(command.block, command.where.block); break;
+        case "to the right of": controller.moveBlock(command.block, command.where.block); break;
+        case "lhs": controller.moveBlock(command.block, command.where.block); break;
+        case "rhs": controller.moveBlock(command.block, command.where.block); break;
       }
     }
   }
@@ -118,8 +105,7 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
-  if (this.validBlockID(command.block))
-  throw new Error("MODIFY NOT SUPPORTED");
+  if (this.validBlockID(command.block)) { throw new Error("MODIFY NOT SUPPORTED"); }
 };
 
 /**
@@ -127,7 +113,7 @@ SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.deleteBlock = function(command) {
-  controller.removeBlock(command.block);
+  if (this.validBlockID(command.block)) { controller.removeBlock(command.block); }
 };
 
 /**
@@ -137,8 +123,7 @@ SpeechBlocks.Interpreter.prototype.deleteBlock = function(command) {
 SpeechBlocks.Interpreter.prototype.validBlockID = function(blockRequestID) {
   var found = false;
   this.controller.getAllBlockIds().forEach(function(id) {
-    if (blockRequestID == id)
-    found = true;
+    if (blockRequestID == id) { found = true; }
   });
   return found;
 }

@@ -53,9 +53,6 @@ $(document).ready(function() {
       .text("Input parsed successfully.");
       $("#output").removeClass("disabled").text(jsDump.parse(output));
       interpretSpeech();
-      $("#parse-message")
-      .attr("class", "message info")
-      .text("Command deployed successfully.");
       var result = true;
     } catch (e) {
       $("#parse-message").attr("class", "message error").text(buildErrorMessage(e));
