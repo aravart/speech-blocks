@@ -7,10 +7,8 @@
 'use strict';
 
 goog.provide('SpeechBlocks.Interpreter');
-goog.require('goog.structs.Map');
 
-// maps block types to Blockly's specific names
-var blockTypeMap = new goog.structs.Map();
+goog.require('goog.structs.Map');
 
 /**
 * Constructs an interpreter that takes actions as input and controls the Blockly Workspace.
@@ -18,8 +16,10 @@ var blockTypeMap = new goog.structs.Map();
 */
 SpeechBlocks.Interpreter = function(controller) {
   this.controller = controller;
+  // id associated with each Block, assigned at creation
   this.id = 1;
-  SpeechBlocks.Interpreter.createBlockTypeMap();
+  // map from types given by parser to types used by Blockly
+  this.blockTypeMap = SpeechBlocks.Interpreter.createBlockTypeMap();
 }
 
 /**
@@ -27,6 +27,7 @@ SpeechBlocks.Interpreter = function(controller) {
 * Creates the blockTypeMap to map command block types to actual names used by Blockly.
 */
 SpeechBlocks.Interpreter.createBlockTypeMap = function() {
+  var blockTypeMap = new goog.structs.Map();
   blockTypeMap.set('if','controls_if');
   blockTypeMap.set('comparison','logic_compare');
   blockTypeMap.set('repeat','controls_repeat_ext');
@@ -36,6 +37,7 @@ SpeechBlocks.Interpreter.createBlockTypeMap = function() {
   blockTypeMap.set('print','text_print');
   blockTypeMap.set('set','variables_set');
   blockTypeMap.set('variable','variables_get');
+  return blockTypeMap;
 }
 
 /**
@@ -43,18 +45,11 @@ SpeechBlocks.Interpreter.createBlockTypeMap = function() {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.interpret = function(command) {
-  if (command.action == "run") {
-    try { this.run(command); }
-    catch(e) { console.log(e.message.cat(e.stack)) };
-  } else if (command.action == "add") {
-    this.addBlock(command);
-  } else if (command.action == "move") {
-    this.moveBlock(command);
-  } else if (command.action == "modify") {
-    this.modifyBlock(command);
-  } else if (command.action == "delete") {
-    this.deleteBlock(command);
-  }
+  if (command.action == "run") { this.run(command); }
+  else if (command.action == "add") { this.addBlock(command); }
+  else if (command.action == "move") { this.moveBlock(command); }
+  else if (command.action == "modify") { this.modifyBlock(command); }
+  else if (command.action == "delete") { this.deleteBlock(command); }
 };
 
 /**
@@ -64,8 +59,7 @@ SpeechBlocks.Interpreter.prototype.interpret = function(command) {
 SpeechBlocks.Interpreter.prototype.run = function(command) {
   Blockly.JavaScript.addReservedWords('code');
   var code = Blockly.JavaScript.workspaceToCode(this.controller.workspace);
-  try { eval(code); }
-  catch(err) {};
+  eval(code);
 };
 
 /**
@@ -73,7 +67,8 @@ SpeechBlocks.Interpreter.prototype.run = function(command) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.addBlock = function(command) {
-  controller.addBlock(blockTypeMap.get(command.type), this.id++, new SpeechBlocks.Translation(0,0));
+  var type = this.blockTypeMap.get(command.type);
+  if (type != null) { controller.addBlock(type, this.id++, new SpeechBlocks.Translation(0,0)); }
 };
 
 /**
@@ -82,18 +77,20 @@ SpeechBlocks.Interpreter.prototype.addBlock = function(command) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
-  if (command.where = "trash") {
-    this.deleteBlock(command.block);
-  } else {
-    if (this.validBlockID(command.where.block)) { // moving after a block, NEED A JOIN METHOD
-      switch(command.where.position) {
-        // modify these so the "where" field is right
-        case "after": controller.moveBlock(command.block, command.where.block); break;
-        case "before": controller.moveBlock(command.block, command.where.block); break;
-        case "inside": controller.moveBlock(command.block, command.where.block); break;
-        case "to the right of": controller.moveBlock(command.block, command.where.block); break;
-        case "lhs": controller.moveBlock(command.block, command.where.block); break;
-        case "rhs": controller.moveBlock(command.block, command.where.block); break
+  if (this.validBlockID(command.block)) {
+    if (command.where = "trash") {
+      this.deleteBlock(command.block);
+    } else {
+      if (this.validBlockID(command.where.block)) { // moving after a block, NEED A JOIN METHOD
+        switch(command.where.position) {
+          // modify these so the "where" field is right
+          case "after": controller.moveBlock(command.block, command.where.block); break;
+          case "before": controller.moveBlock(command.block, command.where.block); break;
+          case "inside": controller.moveBlock(command.block, command.where.block); break;
+          case "to the right of": controller.moveBlock(command.block, command.where.block); break;
+          case "lhs": controller.moveBlock(command.block, command.where.block); break;
+          case "rhs": controller.moveBlock(command.block, command.where.block); break
+        }
       }
     }
   }
