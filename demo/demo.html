@@ -35,7 +35,6 @@
 </head>
 
 <body>
-
   <!-- Mic input. -->
   <div class="container">
     <div class="row form-inline">
@@ -59,9 +58,11 @@
   </div>
 
   <!-- Blockly. -->
-  <div id="blocklyDiv" style="height: 480px; width: 1000px; margin-left: 50px;"></div>
+  <div id="blocklyDiv" style="height: 580px; width: 1000px; margin-left: 50px;"></div>
 
   <xml id="toolbox" style="display: none">
+    <block type="variables_get"></block>
+    <block type="variables_set"></block>
     <block type="controls_if"></block>
     <block type="logic_compare"></block>
     <block type="controls_repeat_ext"></block>
@@ -79,6 +80,8 @@
     Block ID: <input id="newBlockId" type="text" name="id"><br><br>
     Block Type:
     <select id="newBlockType">
+      <option value="variables_set">set variable</option>
+      <option value="variables_get">get variable</option>
       <option value="controls_if">if</option>
       <option value="logic_compare">logical equals</option>
       <option value="controls_repeat_ext">repeat</option>
