@@ -53,16 +53,16 @@ SpeechBlocks.Interpreter = function(controller) {
             this.inputReceived = true;
           }
         }
-      
+
       }
       rawFile.send();
     }
 
-  } catch(err) { //console.log(err.message); }
+  } catch(err) {  }
   try {
     rawFile.onreadystatechange();
   }
-  catch(err) {//console.log(err.message);}
+  catch(err) { }
   if (this.inputReceived) {
     this.inputText = this.inputText.split(/\r\n|\r|\n/g);
     for (var i = 0; i < this.inputText.length; i++) {
