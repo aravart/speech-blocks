@@ -43,6 +43,10 @@ SpeechBlocks.Interpreter = function(controller) {
       if(rawFile.readyState == 4) {
         if(rawFile.status == 200 || rawFile.status == 0) {
           var allText = rawFile.responseText;
+          console.log(allText);
+          console.log(typeof(allText));
+          console.log(allText.length);
+          console.log(allText[0]);
           allText = allText.split(/\r\n|\r|\n/g);
           console.log(allText);
           console.log(typeof(allText));
@@ -53,7 +57,7 @@ SpeechBlocks.Interpreter = function(controller) {
       rawFile.send(null);
     }
     rawFile.onreadystatechange();
-  } catch(err) { console.log(err.stack); }
+  } catch(err) { console.log(err.message); }
 
 }
 
