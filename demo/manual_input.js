@@ -59,6 +59,7 @@ var addId = function(id) {
   removeBlockIdInput.add(removeBlockIdOption);
 };
 
+// TODO(evanfredhernandez): Handle case where removed ID is selected.
 var removeId = function(id) {
   var moveIdElement = document.getElementById(id + moveTag);
   moveIdElement.parentNode.removeChild(moveIdElement);
@@ -66,11 +67,7 @@ var removeId = function(id) {
   
   var moveTargetIdElement = document.getElementById(id + targetTag);
   moveTargetIdElement.parentNode.removeChild(moveTargetIdElement);
-  var text = '';
-  if(moveBlockTargetBlockInput.hasChildNodes()) {
-    text = moveBlockTargetBlockInput.children[0];
-  }
-  moveBlockTargetBlockInput.value = text;
+  moveBlockTargetBlockInput.value = '';
 
   var removeIdElement = document.getElementById(id + removeTag);
   removeIdElement.parentNode.removeChild(removeIdElement);
@@ -143,9 +140,10 @@ var showValueInputTargets = function() {
   if (!moveBlockTargetBlockInput.value) {
     return;
   }
-  controller.getValueInputs(moveBlockTargetBlockInput.value).forEach(function(label) {
+  controller.getBlockValueInputs(moveBlockTargetBlockInput.value).forEach(function(label) {
     var targetBlockInputOption = document.createElement('option');
     targetBlockInputOption.text = targetBlockInputOption.value = targetBlockInputOption.id = label;
+    moveBlockTargetInputInput.add(targetBlockInputOption);
   });
   moveBlockTargetBlockDiv.style.display = 'block';
   moveBlockTargetInputDiv.style.display = 'block';
@@ -155,9 +153,10 @@ var showStatementInputTargets = function() {
   if (!moveBlockTargetBlockInput.value) {
     return;
   }
-  controller.getStatementInputs(moveBlockTargetBlockInput.value).forEach(function(label) {
+  controller.getBlockStatementInputs(moveBlockTargetBlockInput.value).forEach(function(label) {
     var targetBlockInputOption = document.createElement('option');
     targetBlockInputOption.text = targetBlockInputOption.value = targetBlockInputOption.id = label;
+    moveBlockTargetInputInput.add(targetBlockInputOption);
   });
   moveBlockTargetBlockDiv.style.display = 'block';
   moveBlockTargetInputDiv.style.display = 'block';
@@ -184,12 +183,12 @@ moveBlockButton.addEventListener('click', function() {
   }
   switch (moveBlockWhereInput.value) {
     case 'translation': 
-      var dx, dy = 0;
+      var dx = 0, dy = 0;
       switch (moveBlockTranslationInput.value) {
-        case 'up': dy = -75;
-        case 'down': dy = 75;
-        case 'left': dx = 150;
-        case 'right': dy = -150;
+        case 'up': dy = -75; break;
+        case 'down': dy = 75; break;
+        case 'left': dx = 150; break;
+        case 'right': dy = -150; break;
         default: setErrorMessage('An error occurred (should never happen)!');
       }
       controller.moveBlock(targetBlockId, new SpeechBlocks.Translation(dx, dy));
@@ -234,7 +233,7 @@ moveBlockButton.addEventListener('click', function() {
       break;
     default: setErrorMessage('An error occurred (should never happen)!');
   }
-  hideAllInputs();
+  // TODO(evanfredhernandez): Reset to translate.
 });
 
 // Create handlers for removing blocks.
