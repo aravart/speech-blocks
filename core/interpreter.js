@@ -26,6 +26,7 @@ SpeechBlocks.Interpreter = function(controller) {
   this.id_ = 1;
   /** @private */
   this.blockTypeMap_ = new goog.structs.Map();
+
   this.blockTypeMap_.set('if','controls_if');
   this.blockTypeMap_.set('comparison','logic_compare');
   this.blockTypeMap_.set('repeat','controls_repeat_ext');
@@ -35,10 +36,10 @@ SpeechBlocks.Interpreter = function(controller) {
   this.blockTypeMap_.set('print','text_print');
   this.blockTypeMap_.set('set','variables_set');
   this.blockTypeMap_.set('variable','variables_get');
-  
-  //this.blockTypeMap_ = this.initializeBlockTypeMap();
+
+  this.blockTypeMap_ = this.initializeBlockTypeMap();
   setTimeout(function() {
-    // console.log(inputReceived);
+    console.log(inputReceived);
     if (this.blockTypeMap_ != null) {
       console.log(this.blockTypeMap_.isEmpty());
       console.log(this.blockTypeMap_.getValues())
@@ -50,7 +51,6 @@ SpeechBlocks.Interpreter = function(controller) {
 
 var inputReceived = false;
 SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
-return;
   // temporary
   var inputText;
   var rawFile;
@@ -80,9 +80,12 @@ return;
                 blockTypeMap.set(keyValuePair[0], keyValuePair[1]);
               }
             }
+            blockTypeMap.set("hi","bye");
+            // save
             this.blockTypeMap_ = blockTypeMap;
             console.log("SAVED");
             console.log(this.blockTypeMap_.get('if'))
+            console.log(blockTypeMap.get('if'))
             return;
           }
           else {console.log('input already set');}
@@ -92,11 +95,12 @@ return;
       if (rawFile.status == 200 || rawFile.status == 0) {rawFile.send();}
     }
   } catch(err) { console.log(err.stack) }
+  finally {this.blockTypeMap_ = blockTypeMap;}
 
   try {
     setTimeout(function() {rawFile.onreadystatechange();},3000);
   }
-  catch(err) {console.log(err.stack) }
+  catch(err) { console.log(err.stack) }
 
 }
 
