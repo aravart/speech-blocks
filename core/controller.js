@@ -115,7 +115,7 @@ SpeechBlocks.Controller.prototype.hasOutputConnection = function(blockId) {
  * @public
  */
 SpeechBlocks.Controller.prototype.getBlockValueInputs = function(blockId) {
-  return this.getBlockXInputs_(blockId, Blockly.VALUE_INPUT);
+  return this.getBlockXInputs_(blockId, Blockly.INPUT_VALUE);
 };
 
 /**
@@ -134,11 +134,13 @@ SpeechBlocks.Controller.prototype.getBlockStatementInputs = function(blockId) {
  * Gets the labels for inputs of the given type from the given block.
  * @param {string} blockId ID of the block.
  * @param {number} type Input type to get.
+ * @return {!Array<string>} Array of input labels of the given type.
  * @private
  */
 SpeechBlocks.Controller.prototype.getBlockXInputs_ = function (blockId, type) {
   var inputLabels = [];
   this.workspace_.getBlockById(blockId).inputList.forEach(function(input) {
+    console.log(input.type);
     if (input.type == type) { inputLabels.push(input.name); }
   });
   return inputLabels;
