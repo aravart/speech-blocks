@@ -8,9 +8,14 @@
 
 goog.provide('SpeechBlocks.Controller');
 
+goog.require('Blockly.Field');
+goog.require('Blockly.FieldColour');
 goog.require('Blockly.Workspace');
 goog.require('Blockly.constants');
 goog.require('Blockly.inject');
+goog.require('SpeechBlocks.Blocks');
+goog.require('SpeechBlocks.FieldTypes');
+goog.require('goog.structs.Map');
 goog.require('goog.structs.Set');
 
 /**
@@ -57,13 +62,13 @@ SpeechBlocks.Controller.prototype.moveBlock = function(blockId, where) {
  * @public
  */
 SpeechBlocks.Controller.prototype.removeBlock = function(blockId) {
-  var block = this.workspace_.getBlockById(blockId);
+  var block = SpeechBlocks.Blocks.getBlock(blockId, this.workspace_);
   block.unplug(true /* Heal the stack! */);
   block.dispose();
 };
 
 /**
- * Returns the array of IDs for all blocks in the workspace.
+ * Returns the set of IDs for all blocks in the workspace.
  * @return {!goog.structs.Set<string>} The array of all IDs.
  * @public
  */
@@ -82,8 +87,8 @@ SpeechBlocks.Controller.prototype.getAllBlockIds = function() {
  * @public
  */
 SpeechBlocks.Controller.prototype.hasNextConnection = function(blockId) {
-  var block = this.workspace_.getBlockById(blockId);
-  return !goog.isNull(block) && !goog.isNull(block.nextConnection);
+  return !goog.isNull(
+      SpeechBlocks.Blocks.getBlock(blockId, this.workspace_).nextConnection);
 };
 
 /**
@@ -93,8 +98,8 @@ SpeechBlocks.Controller.prototype.hasNextConnection = function(blockId) {
  * @public
  */
 SpeechBlocks.Controller.prototype.hasPreviousConnection = function(blockId) {
-  var block = this.workspace_.getBlockById(blockId);
-  return !goog.isNull(block) && !goog.isNull(block.previousConnection);
+  return !goog.isNull(
+      SpeechBlocks.Blocks.getBlock(blockId, this.workspace_).previousConnection);
 };
 
 /**
@@ -104,8 +109,8 @@ SpeechBlocks.Controller.prototype.hasPreviousConnection = function(blockId) {
  * @public
  */
 SpeechBlocks.Controller.prototype.hasOutputConnection = function(blockId) {
-  var block = this.workspace_.getBlockById(blockId);
-  return !goog.isNull(block) && !goog.isNull(block.outputConnection);
+  return !goog.isNull(
+      SpeechBlocks.Blocks.getBlock(blockId, this.workspace_).outputConnection);
 };
 
 /**
@@ -140,8 +145,53 @@ SpeechBlocks.Controller.prototype.getBlockStatementInputs = function(blockId) {
  */
 SpeechBlocks.Controller.prototype.getBlockXInputs_ = function (blockId, type) {
   var inputLabels = [];
-  this.workspace_.getBlockById(blockId).inputList.forEach(function(input) {
+  SpeechBlocks.Blocks.getBlock(blockId, this.workspace_).inputList.forEach(function(input) {
     if (input.type == type) { inputLabels.push(input.name); }
   });
   return inputLabels;
+};
+
+/**
+ * Returns a mapping from field names to field types for the given block. 
+ * Note that all field types are enumerated in SpeechBlocks.FieldTypes.
+ * @param {string} blockId The ID of the block.
+ * @return {!goog.structs.Map<string, number>} A mapping of field names to field types.
+ * @public
+ */
+SpeechBlocks.Controller.prototype.getFieldsForBlock = function(blockId) {
+  var blockFields = new goog.structs.Map();
+  SpeechBlocks.Blocks.getBlock(blockId, this.workspace_).inputList.forEach(function(input) {
+    input.fieldRow.forEach(function(field) {
+      var type = SpeechBlocks.FieldTypes.getFieldType(field);
+      if (field.name && type != SpeechBlocks.FieldTypes.IRRELEVANT) {
+        blockFields.set(field.name, type);
+      }
+    });
+  });
+  return blockFields;
+};
+
+/**
+ * Sets the field with the given name to the given value.
+ * 
+ * Formatting of the value is very important:
+ * 
+ * _______________________________________
+ * FIELD TYPE         | VALUE FORMAT
+ * ___________________|___________________
+ * Text Input         | '*' (any text)
+ * Number Input       | '[0-9]+' (any number)
+ * Drop-Down          | existing drop-down value
+ * Date Picker        | 'yyyy-mm-dd'
+ * Angle Picker       | 'x' where 0 <= x <= 360
+ * Colour Picker      | '#HHH' where H is a hex digit
+ * Variable Picker    | existing variable name
+ * 
+ * @param {string} blockId ID of the block.
+ * @param {string} fieldName Name of the field.
+ * @param {string} fieldValue New value for the field.
+ * @public
+ */
+SpeechBlocks.Controller.prototype.setBlockField = function(blockId, fieldName, fieldValue) {
+  SpeechBlocks.Blocks.getBlock(blockId, this.workspace_).setFieldValue(fieldValue, fieldName);
 };
