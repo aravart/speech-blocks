@@ -25,8 +25,8 @@ SpeechBlocks.Interpreter = function(controller) {
   /** @private */
   this.id_ = 1;
   /** @private */
-  /**
   this.blockTypeMap_ = new goog.structs.Map();
+  /**
   this.blockTypeMap_.set('if','controls_if');
   this.blockTypeMap_.set('comparison','logic_compare');
   this.blockTypeMap_.set('repeat','controls_repeat_ext');
@@ -46,7 +46,7 @@ SpeechBlocks.Interpreter = function(controller) {
         if(rawFile.status == 200 || rawFile.status == 0) {
           var inputText = rawFile.responseText;
           inputText = inputText.split(/\r\n|\r|\n/g);
-          for (var i = 0; i < allText.length; i++) {
+          for (var i = 0; i < inputText.length; i++) {
             var keyValuePair = inputText[i].split(":");
             this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
           }
