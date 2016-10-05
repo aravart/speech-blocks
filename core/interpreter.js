@@ -46,7 +46,7 @@ SpeechBlocks.Interpreter = function(controller) {
         if(rawFile.status == 200 || rawFile.status == 0) {
           var inputText = rawFile.responseText;
           inputText = inputText.split(/\r\n|\r|\n/g);
-          for (var i = 0; i < allText.length) {
+          for (var i = 0; i < allText.length; i++) {
             var keyValuePair = inputText[i].split(":");
             this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
           }
