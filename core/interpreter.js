@@ -64,16 +64,16 @@ SpeechBlocks.Interpreter = function(controller) {
 }
 
 SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
-  //this.rawFile.onreadystatechange();
+  //rawFile.onreadystatechange();
 }
 
 SpeechBlocks.Interpreter.prototype.initializeXMLHttpRequest = function() {
-  this.rawFile = new XMLHttpRequest();
-  this.rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
-  this.rawFile.onreadystatechange = function () {
-    if(this.rawFile.readyState == 4) {
-      if(this.rawFile.status == 200 || this.rawFile.status == 0) {
-        var inputText = this.rawFile.responseText;
+  var rawFile = new XMLHttpRequest();
+  rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
+  rawFile.onreadystatechange = function () {
+    if(rawFile.readyState == 4) {
+      if(rawFile.status == 200 || rawFile.status == 0) {
+        var inputText = rawFile.responseText;
         inputText = inputText.split(/\r\n|\r|\n/g);
         for (var i = 0; i < inputText.length; i++) {
           var keyValuePair = inputText[i].split(":");
@@ -82,10 +82,10 @@ SpeechBlocks.Interpreter.prototype.initializeXMLHttpRequest = function() {
         console.log(inputText);
       }
     }
-    this.rawFile.send(null);
+    rawFile.send(null);
   }
-  
-  this.rawFile.onreadystatechange();
+
+  rawFile.onreadystatechange();
 }
 
 /**
