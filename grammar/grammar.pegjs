@@ -24,7 +24,7 @@ BlockPosition = position:Position _ block:BlockToken { return {
 
 Trash = "to the trash" { return "trash" }
 
-Position = "after" / "before" / "inside" / "to the right of" / LefthandSide / RighthandSide
+Position = "after" / "before" / "inside" / 'inside of' / "to the right of" / LefthandSide / RighthandSide
 
 Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 Word = value:[a-zA-Z]+ { return value.join("") }
@@ -80,10 +80,10 @@ ComparisonPair = ("the" _)? (ComparisonName / ComparisonValue) _ "to" _ comparis
 ComparisonName = "comparison"
 ComparisonValue = "equals" { return "==" } /
   "not equals" { return "!=" } /
-  "less than" { return "<" } /
-  "greater than" { return ">" } /
+  "greater than or equal to" { return ">=" } /
   "less than or equal to" { return "<=" } /
-  "greater than or equal to" { return ">=" }
+  "greater than" { return ">" } /
+  "less than" { return "<" }
 
 NumberPair = ("the" _)? (NumberName / Number) _ "to" _ number:Number { return {
   "property": "number",

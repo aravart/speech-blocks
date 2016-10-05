@@ -35,22 +35,22 @@ SpeechBlocks.Interpreter = function(controller) {
   this.blockTypeMap_.set('print','text_print');
   this.blockTypeMap_.set('set','variables_set');
   this.blockTypeMap_.set('variable','variables_get');
-  
+
   //this.blockTypeMap_ = this.initializeBlockTypeMap();
-  setTimeout(function() {
-    // console.log(inputReceived);
-    if (this.blockTypeMap_ != null) {
-      console.log(this.blockTypeMap_.isEmpty());
-      console.log(this.blockTypeMap_.getValues())
-      console.log(this.blockTypeMap_.get('if'));
-    }
-    else {console.log("BLOCKTYPEMAP IS NULL")}
-  },5000);
+  //setTimeout(function() {
+  // console.log(inputReceived);
+  // if (this.blockTypeMap_ != null) {
+  // console.log(this.blockTypeMap_.isEmpty());
+  // console.log(this.blockTypeMap_.getValues())
+  // console.log(this.blockTypeMap_.get('if'));
+  // }
+  // else {console.log("BLOCKTYPEMAP IS NULL")}
+  // },5000);
 }
 
-var inputReceived = false;
+//var inputReceived = false;
 SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
-return;
+  return;
   // temporary
   var inputText;
   var rawFile;
@@ -179,27 +179,31 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
+  command.block = command.block.toString();
   if (this.isBlockIdValid(command.block)) {
+    var fields = this.controller_.getFieldsForBlock(command.block).getKeys();
+    // console.log(fields);
+    // console.log(this.controller_.getFieldsForBlock(command.block).getValues());
     switch(command.property) {
       case 'number':
       command.value = Number(command.value);
-      this.controller.setBlockField(command.block, fieldName, command.value);
+
+      this.controller_.setBlockField(command.block, fields[0], command.value);
       break;
       case 'text':
 
-      this.controller.setBlockField(command.block, fieldName, command.value);
+      this.controller_.setBlockField(command.block, fields[0], command.value);
       break;
       case 'comparison':
-
-      this.controller.setBlockField(command.block, fieldName, command.value);
+      this.controller_.setBlockField(command.block, fields[0], command.value);
       break;
       case 'operation':
 
-      this.controller.setBlockField(command.block, fieldName, command.value);
+      this.controller_.setBlockField(command.block, fields[0], command.value);
       break;
       case 'name':
 
-      this.controller.setBlockField(command.block, fieldName, command.value);
+      this.controller_.setBlockField(command.block, fields[0], command.value);
       break;
       default:
       console.log('Unsupported property');
