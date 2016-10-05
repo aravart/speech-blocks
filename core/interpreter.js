@@ -25,6 +25,7 @@ SpeechBlocks.Interpreter = function(controller) {
   /** @private */
   this.id_ = 1;
   /** @private */
+  /**
   this.blockTypeMap_ = new goog.structs.Map();
   this.blockTypeMap_.set('if','controls_if');
   this.blockTypeMap_.set('comparison','logic_compare');
@@ -35,6 +36,7 @@ SpeechBlocks.Interpreter = function(controller) {
   this.blockTypeMap_.set('print','text_print');
   this.blockTypeMap_.set('set','variables_set');
   this.blockTypeMap_.set('variable','variables_get');
+  */
   // temporary
   try {
     var rawFile = new XMLHttpRequest();
@@ -42,23 +44,20 @@ SpeechBlocks.Interpreter = function(controller) {
     rawFile.onreadystatechange = function () {
       if(rawFile.readyState == 4) {
         if(rawFile.status == 200 || rawFile.status == 0) {
-          var allText = rawFile.responseText;
-          console.log(allText);
-          console.log(typeof(allText));
-          console.log(allText.length);
-          console.log(allText[0]);
-          allText = allText.split(/\r\n|\r|\n/g);
-          console.log(allText);
-          console.log(typeof(allText));
-          console.log(allText.length);
-          console.log(allText[0]);
+          var inputText = rawFile.responseText;
+          inputText = inputText.split(/\r\n|\r|\n/g);
+          for (var i = 0; i < allText.length) {
+            var keyValuePair = inputText[i].split(":");
+            this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
+          }
+          console.log(inputText);
         }
       }
       rawFile.send(null);
     }
     rawFile.onreadystatechange();
   } catch(err) { console.log(err.message); }
-
+  console.log(this.blockTypeMap_.get('set');
 }
 
 /**

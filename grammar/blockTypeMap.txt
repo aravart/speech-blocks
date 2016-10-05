@@ -1,7 +1,7 @@
-if : controls_if
-comparison : logic_compare
-repeat for : controls_repeat_ext
-number : math_number
-arithmetic : math_arithmetic
-text : text
-print : text_print
+if:controls_if
+comparison:logic_compare
+repeat for:controls_repeat_ext
+number:math_number
+arithmetic:math_arithmetic
+text:text
+print:text_print
