@@ -24,8 +24,8 @@ SpeechBlocks.Successor = function(predecessorBlockId) {
  */
 SpeechBlocks.Successor.prototype.place = function(blockId, workspace) {
   var predecessorNextConnection =
-      SpeechBlocks.Blocks.getNextConnection(blockId, workspace);
-  var successorsPrevConnection =
+      SpeechBlocks.Blocks.getNextConnection(this.predecessorBlockId_, workspace);
+  var successorPrevConnection =
       SpeechBlocks.Blocks.getPreviousConnection(blockId, workspace);
-  predecessorNextConnection.connect(block.previousConnection);
+  predecessorNextConnection.connect(successorPrevConnection);
 };

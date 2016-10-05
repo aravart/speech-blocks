@@ -140,7 +140,6 @@ SpeechBlocks.Controller.prototype.getBlockStatementInputs = function(blockId) {
 SpeechBlocks.Controller.prototype.getBlockXInputs_ = function (blockId, type) {
   var inputLabels = [];
   this.workspace_.getBlockById(blockId).inputList.forEach(function(input) {
-    console.log(input.type);
     if (input.type == type) { inputLabels.push(input.name); }
   });
   return inputLabels;
