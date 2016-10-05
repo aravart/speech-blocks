@@ -97,12 +97,29 @@
 
     Where?
     <select id="moveWhere">
+      <option value="translation">translate it...</option>
       <option value="predecessor">before block...</option>
       <option value="successor">after block...</option>
-      <option value="translation">translate it...</option>
       <option value="statement_input">statement input of block...</option>
       <option value="value_input">value input of block...</option>
     </select><br><br>
+    <div id="moveWhereTranslationDiv"> <!-- Display by default. -->
+      Which direction?
+      <select id="moveWhereTranslationTarget">
+        <option value="up">up</option>
+        <option value="down">down</option>
+        <option value="left">left</option>
+        <option value="right">right</option>
+      </select><br><br>
+    </div>
+    <div id="moveWhereBlockTargetDiv" style="display:none">
+      Which block?
+      <select id="moveWhereBlockTarget"></select><br><br>
+    </div>
+    <div id="moveWhereBlockInputTargetDiv" style="display:none">
+      Which input?
+      <select id="moveWhereBlockInputTarget"></select><br><br>
+    </div>
     <button id="moveBlock">Move!</button>
   </span>
 
@@ -116,10 +133,12 @@
   <script src="../grammar/grammar.js"></script>
   <script src="../js/jsDump.js"></script>
   <script src="../core/interpreter.js"></script>
-  <script src="parser.js"></script>
+  
+  <!-- Code for initializing the speech input components. -->
+  <script src="speech_input.js"></script>
 
-  <!-- Code for initializing this page. -->
-  <script src="main.js"></script>
+  <!-- Code for initializing the manual input components. -->
+  <script src="manual_input.js"></script>
 </body>
 
 </html>

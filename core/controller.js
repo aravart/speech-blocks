@@ -11,6 +11,7 @@ goog.provide('SpeechBlocks.Controller');
 goog.require('Blockly.Workspace');
 goog.require('Blockly.constants');
 goog.require('Blockly.inject');
+goog.require('goog.structs.Set');
 
 /**
  * Inject a Blockly workspace into the given container element.
@@ -69,7 +70,7 @@ SpeechBlocks.Controller.prototype.removeBlock = function(blockId) {
 SpeechBlocks.Controller.prototype.getAllBlockIds = function() {
   var blockIds = new goog.structs.Set();
   this.workspace_.getAllBlocks().forEach(function(block) {
-    blockIds.add(block.id);
+    blockIds.add(block.id); 
   });
   return blockIds;
 };
