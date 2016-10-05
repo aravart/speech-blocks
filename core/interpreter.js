@@ -58,8 +58,32 @@ SpeechBlocks.Interpreter = function(controller) {
     }
   } catch(err) { console.log(err.message); }
 
-  rawFile.onreadystatechange();
+  this.initializeXMLHttpRequest();
+  this.initializeBlockTypeMap();
   console.log(this.blockTypeMap_.get('set'));
+}
+
+SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap() {
+  this.rawFile.onreadstatechange();
+}
+
+SpeechBlocks.Interpreter.prototype.initializeXMLHttpRequest() {
+  this.rawFile = new XMLHttpRequest();
+  this.rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
+  this.rawFile.onreadystatechange = function () {
+    if(this.rawFile.readyState == 4) {
+      if(this.rawFile.status == 200 || this.rawFile.status == 0) {
+        var inputText = this.rawFile.responseText;
+        inputText = inputText.split(/\r\n|\r|\n/g);
+        for (var i = 0; i < inputText.length; i++) {
+          var keyValuePair = inputText[i].split(":");
+          this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
+        }
+        console.log(inputText);
+      }
+    }
+    this.rawFile.send(null);
+  }
 }
 
 /**
