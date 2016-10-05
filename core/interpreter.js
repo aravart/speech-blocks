@@ -55,7 +55,7 @@ SpeechBlocks.Interpreter = function(controller) {
       }
       rawFile.send(null);
     }
-    rawFile.onreadstatechange();
+    rawFile.onreadystatechange();
   } catch(err) { console.log(err.message); }
 
   console.log(this.blockTypeMap_.get('set'));
