@@ -45,24 +45,23 @@ SpeechBlocks.Interpreter = function(controller) {
     rawFile.onreadystatechange = function () {
       console.log(rawFile.readyState);
       if(rawFile.readyState == 4 && rawFile.status == 200) {
-        console.log('b');
         if(rawFile.status == 200 || rawFile.status == 0) {
-          console.log('c');
           if (!this.inputReceived) {
+            console.log('INPUT BEING SET');
             this.inputText = rawFile.responseText;
             this.inputReceived = true;
           }
         }
-
       }
       rawFile.send();
     }
-
   } catch(err) {  }
+
   try {
     rawFile.onreadystatechange();
   }
   catch(err) { }
+
   if (this.inputReceived) {
     this.inputText = this.inputText.split(/\r\n|\r|\n/g);
     for (var i = 0; i < this.inputText.length; i++) {
@@ -75,6 +74,7 @@ SpeechBlocks.Interpreter = function(controller) {
     console.log(this.blockTypeMap_.getValues())
     console.log(this.blockTypeMap_.get('if'));
   }
+  else {console.log('no input!');}
 }
 
 
