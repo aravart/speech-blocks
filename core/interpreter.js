@@ -40,7 +40,7 @@ SpeechBlocks.Interpreter = function(controller) {
     console.log('a');
     var rawFile = new XMLHttpRequest();
     console.log('b');
-    rawFile.open("GET", 'http://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
+    rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
     console.log('c');
     rawFile.onreadystatechange = function ()
     {
