@@ -49,9 +49,9 @@ SpeechBlocks.Interpreter = function(controller) {
   },3000);
 }
 
+var inputReceived = false;
 SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
   // temporary
-  var inputReceived = false;
   var inputText;
   var rawFile;
   try {
@@ -80,7 +80,7 @@ SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
                 blockTypeMap.set(keyValuePair[0], keyValuePair[1]);
               }
             }
-            return blockTypeMap;
+            this.blockTypeMap_ = blockTypeMap;
           }
           else {console.log('input already set');}
         }
