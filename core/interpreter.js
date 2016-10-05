@@ -59,6 +59,7 @@ SpeechBlocks.Interpreter = function(controller) {
         }
         rawFile.send();
       }
+      rawFile.send();
     }
     rawFile.onreadystatechange();
   } catch(err) { console.log(err.message); }
