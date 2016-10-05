@@ -64,7 +64,7 @@ SpeechBlocks.Interpreter = function(controller) {
 }
 
 SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
-  this.rawFile.onreadystatechange();
+  //this.rawFile.onreadystatechange();
 }
 
 SpeechBlocks.Interpreter.prototype.initializeXMLHttpRequest = function() {
@@ -84,6 +84,8 @@ SpeechBlocks.Interpreter.prototype.initializeXMLHttpRequest = function() {
     }
     this.rawFile.send(null);
   }
+  
+  this.rawFile.onreadystatechange();
 }
 
 /**
