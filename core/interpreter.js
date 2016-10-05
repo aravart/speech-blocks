@@ -38,9 +38,8 @@ SpeechBlocks.Interpreter = function(controller) {
   this.blockTypeMap_.set('variable','variables_get');
   */
   // temporary
-  var rawFile;
   try {
-    rawFile = new XMLHttpRequest();
+    var rawFile = new XMLHttpRequest();
     rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
     rawFile.onreadystatechange = function () {
       if(rawFile.readyState == 4) {
@@ -56,37 +55,12 @@ SpeechBlocks.Interpreter = function(controller) {
       }
       rawFile.send(null);
     }
+    rawFile.onreadstatechange();
   } catch(err) { console.log(err.message); }
 
-  this.initializeXMLHttpRequest();
-  this.initializeBlockTypeMap();
   console.log(this.blockTypeMap_.get('set'));
 }
 
-SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
-  //rawFile.onreadystatechange();
-}
-
-SpeechBlocks.Interpreter.prototype.initializeXMLHttpRequest = function() {
-  var rawFile = new XMLHttpRequest();
-  rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
-  rawFile.onreadystatechange = function () {
-    if(rawFile.readyState == 4) {
-      if(rawFile.status == 200 || rawFile.status == 0) {
-        var inputText = rawFile.responseText;
-        inputText = inputText.split(/\r\n|\r|\n/g);
-        for (var i = 0; i < inputText.length; i++) {
-          var keyValuePair = inputText[i].split(":");
-          this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
-        }
-        console.log(inputText);
-      }
-    }
-    rawFile.send(null);
-  }
-
-  rawFile.onreadystatechange();
-}
 
 /**
 * Interprets a given command by calling the corresponding action function.
