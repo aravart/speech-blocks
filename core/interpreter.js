@@ -43,7 +43,7 @@ SpeechBlocks.Interpreter = function(controller) {
     rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
     rawFile.onreadystatechange = function () {
       console.log(rawFile.readyState);
-      if(rawFile.readyState == 4) {
+      if(rawFile.readyState == 4 && rawFile.status == 200) {
           console.log('b');
         if(rawFile.status == 200 || rawFile.status == 0) {
             console.log('c');
