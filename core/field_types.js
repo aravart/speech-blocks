@@ -15,45 +15,45 @@ goog.require('Blockly.FieldAngle');
 goog.require('Blockly.FieldColour');
 goog.require('Blockly.FieldVariable');
 
-/** 
+/**
  * Enum for text input FieldTypes.
- * @public @const 
+ * @public @const
  */
 SpeechBlocks.FieldTypes.TEXT_INPUT = 1;
 
-/** 
+/**
  * Enum for number input FieldTypes.
  * @public @const
  */
 SpeechBlocks.FieldTypes.NUMBER_INPUT = 2;
 
-/** 
+/**
  * Enum for drop-down FieldTypes.
- * @public @const 
+ * @public @const
  */
 SpeechBlocks.FieldTypes.DROP_DOWN = 3;
 
-/** 
+/**
  * Enum for date picker FieldTypes.
  * @public @const
  */
 SpeechBlocks.FieldTypes.DATE_PICKER = 4;
 
-/** 
+/**
  * Enum for angle picker FieldTypes.
- * @public @const 
+ * @public @const
  */
 SpeechBlocks.FieldTypes.ANGLE_PICKER = 5;
 
-/** 
+/**
  * Enum for color picker FieldTypes.
- * @public @const 
+ * @public @const
  */
 SpeechBlocks.FieldTypes.COLOUR_PICKER = 6;
 
-/** 
- * Enum for variable picker FieldTypes. 
- * @public @const 
+/**
+ * Enum for variable picker FieldTypes.
+ * @public @const
  */
 SpeechBlocks.FieldTypes.VARIABLE_PICKER = 7;
 
@@ -74,7 +74,7 @@ SpeechBlocks.FieldTypes.getFieldType = function(field) {
     return SpeechBlocks.FieldTypes.TEXT_INPUT;
   } else if (field instanceof Blockly.FieldNumber) {
     return SpeechBlocks.FieldTypes.NUMBER_INPUT;
-  } else if (field instanceof Blockly.FieldDropDown) {
+  } else if (field instanceof Blockly.FieldDropdown) {
     return SpeechBlocks.FieldTypes.DROP_DOWN;
   } else if (field instanceof Blockly.FieldDate) {
     return SpeechBlocks.FieldTypes.DATE_PICKER;
