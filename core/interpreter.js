@@ -37,23 +37,16 @@ SpeechBlocks.Interpreter = function(controller) {
 	this.blockTypeMap_.set('variable','variables_get');
   // temporary
   try {
-    console.log('a');
     var rawFile = new XMLHttpRequest();
-    console.log('b');
     rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
-    console.log('c');
     rawFile.onreadystatechange = function ()
     {
-      console.log(rawFile.readyState);
       if(rawFile.readyState == 4)
       {
-        console.log('e');
         if(rawFile.status == 200 || rawFile.status == 0)
         {
-          console.log('f');
           var allText = rawFile.responseText;
           console.log(allText);
-          console.log('g');
         }
       }
       rawFile.send(null);
