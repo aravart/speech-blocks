@@ -59,7 +59,8 @@ SpeechBlocks.Interpreter = function(controller) {
     }
     rawFile.onreadystatechange();
   } catch(err) { console.log(err.message); }
-
+  console.log(this.blockTypeMap_.isEmpty());
+  console.log(this.blockTypeMap_.getValues())
   console.log(this.blockTypeMap_.get('if'));
 }
 
