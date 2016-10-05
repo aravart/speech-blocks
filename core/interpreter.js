@@ -44,6 +44,9 @@ SpeechBlocks.Interpreter = function(controller) {
         if(rawFile.status == 200 || rawFile.status == 0) {
           var allText = rawFile.responseText;
           console.log(allText);
+          console.log(typeof(allText));
+          console.log(allText.length);
+          console.log(allText[0]);
         }
       }
       rawFile.send(null);
