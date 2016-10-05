@@ -38,8 +38,9 @@ SpeechBlocks.Interpreter = function(controller) {
   this.blockTypeMap_.set('variable','variables_get');
   */
   // temporary
+  var rawFile;
   try {
-    var rawFile = new XMLHttpRequest();
+    rawFile = new XMLHttpRequest();
     rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
     rawFile.onreadystatechange = function () {
       if(rawFile.readyState == 4) {
@@ -55,8 +56,9 @@ SpeechBlocks.Interpreter = function(controller) {
       }
       rawFile.send(null);
     }
-    rawFile.onreadystatechange();
   } catch(err) { console.log(err.message); }
+
+  rawFile.onreadystatechange();
   console.log(this.blockTypeMap_.get('set'));
 }
 
