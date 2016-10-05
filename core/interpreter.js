@@ -62,7 +62,9 @@ SpeechBlocks.Interpreter = function(controller) {
               var keyValuePair = this.inputText[i].split(":");
               console.log(keyValuePair[0]);
               console.log(keyValuePair[1]);
-              this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
+              if (keyValuePair[0] != null && keyValuePair[1] != null) {
+                this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
+              }
             }
           }
           else {console.log('input already set');}
@@ -71,12 +73,12 @@ SpeechBlocks.Interpreter = function(controller) {
       else {console.log('--b');}
       rawFile.send();
     }
-  } catch(err) {  }
+  } catch(err) { console.log(err.stack) }
 
   try {
     setTimeout(function() {rawFile.onreadystatechange();},2000);
   }
-  catch(err) { }
+  catch(err) {console.log(err.stack) }
   console.log(this.blockTypeMap_.isEmpty());
   console.log(this.blockTypeMap_.getValues())
   console.log(this.blockTypeMap_.get('if'));
