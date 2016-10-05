@@ -63,11 +63,11 @@ SpeechBlocks.Interpreter = function(controller) {
   console.log(this.blockTypeMap_.get('set'));
 }
 
-SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap() {
+SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
   this.rawFile.onreadstatechange();
 }
 
-SpeechBlocks.Interpreter.prototype.initializeXMLHttpRequest() {
+SpeechBlocks.Interpreter.prototype.initializeXMLHttpRequest = function() {
   this.rawFile = new XMLHttpRequest();
   this.rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
   this.rawFile.onreadystatechange = function () {
