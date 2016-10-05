@@ -9,7 +9,7 @@ goog.provide('SpeechBlocks.Successor');
 goog.require('SpeechBlocks.Blocks');
 
 /**
- * @param {string} predecessorBlockId The ID of the predecessor block. 
+ * @param {string} predecessorBlockId The ID of the predecessor block.
  * @extends {SpeechBlocks.Where}
  * @constructor
  */
@@ -24,8 +24,8 @@ SpeechBlocks.Successor = function(predecessorBlockId) {
  */
 SpeechBlocks.Successor.prototype.place = function(blockId, workspace) {
   var predecessorNextConnection =
-      SpeechsBlocks.Blocks.getNextConnection(blockId, workspace);
-  var successorsPrevConnection =
+      SpeechBlocks.Blocks.getNextConnection(this.predecessorBlockId_, workspace);
+  var successorPrevConnection =
       SpeechBlocks.Blocks.getPreviousConnection(blockId, workspace);
-  predecessorNextConnection.connect(block.previousConnection); 
+  predecessorNextConnection.connect(successorPrevConnection);
 };

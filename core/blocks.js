@@ -36,7 +36,7 @@ SpeechBlocks.Blocks.getPreviousConnection = function(blockId, workspace) {
 /**
  * Asserts that the block has a next connections and returns the connection.
  * @param {string} blockId
- * @param {!Blockly.Workspace} workspace 
+ * @param {!Blockly.Workspace} workspace
  * @return {!Blockly.Connection}
  * @public
  */
@@ -64,7 +64,7 @@ SpeechBlocks.Blocks.getChainNextConnection = function(blockId, workspace) {
  */
 SpeechBlocks.Blocks.getOutputConnection = function(blockId, workspace) {
   return SpeechBlocks.Blocks.asConnection_(
-      SpeechBlocks.Blocks.getBlock(blockId, workspace).outputConnetion);
+      SpeechBlocks.Blocks.getBlock(blockId, workspace).outputConnection);
 };
 
 /**
@@ -77,19 +77,19 @@ SpeechBlocks.Blocks.getOutputConnection = function(blockId, workspace) {
  */
 SpeechBlocks.Blocks.getInputConnection = function(blockId, inputName, workspace) {
   return SpeechBlocks.Blocks.asConnection_(
-    SpeechBlocks.Blocks.getInput_(blockId, inputName, workspace).connection); 
+    SpeechBlocks.Blocks.getInput_(blockId, inputName, workspace).connection);
 };
 
 /**
  * Gets the input object for the given block.
  * @param {string} blockId
  * @param {stirng} inputName
- * @return {!Blockly.Input} 
+ * @return {!Blockly.Input}
  * @private
  */
 SpeechBlocks.Blocks.getInput_ = function(blockId, inputName, workspace) {
   return goog.asserts.assertInstanceof(
-      SpeechBlocks.Blocks.getBlock(blockId, workspace).getInput(inputName), 
+      SpeechBlocks.Blocks.getBlock(blockId, workspace).getInput(inputName),
       Blockly.Input);
 };
 

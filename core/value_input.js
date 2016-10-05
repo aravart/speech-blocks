@@ -10,7 +10,7 @@ goog.require('Blockly.constants');
 goog.require('SpeechBlocks.Blocks');
 
 /**
- * @param {string} parentBlockId The ID of the parent block. 
+ * @param {string} parentBlockId The ID of the parent block.
  * @param {string} inputName The name of the value input.
  * @extends {SpeechBlocks.Where}
  * @constructor
@@ -18,7 +18,7 @@ goog.require('SpeechBlocks.Blocks');
 SpeechBlocks.ValueInput = function(parentBlockId, inputName) {
   /** @private @const */
   this.parentBlockId_ = parentBlockId;
-  
+
   /** @private @const */
   this.inputName_ = inputName;
 };
