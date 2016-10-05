@@ -48,7 +48,7 @@ SpeechBlocks.Interpreter.prototype.interpret = function(command) {
 	case 'move': this.moveBlock(command); break;
 	case 'modify': this.modifyBlock(command); break;
 	case 'delete': this.deleteBlock(command); break;
-	default: throw 'Unsupported command';
+	default: console.log('Unsupported command');
 	}
 };
 
@@ -91,23 +91,22 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
 				case 'before': this.controller_.moveBlock(command.block, new SpeechBlocks.Predecessor(command.where.block)); break;
 				case 'lhs': case 'rhs': case 'to the right of':
 					var inputList_ = this.controller_.getBlockValueInputs(command.where.block);
-					if (inputList_.length < 1) { throw 'NO VALUE INPUTS FOR SPECIFIED BLOCK'; }
+					if (inputList_.length < 1) { console.log('NO VALUE INPUTS FOR SPECIFIED BLOCK'); }
 					else if (command.where.position == 'rhs' || command.where.position == 'to the right of') { this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList_[inputList_.length-1]));	}
 					else { this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList_[0])); }
 				case 'inside':
 					var statementList_ = this.controller_.getBlockStatementInputs(command.where.block);
-					if (statementList_.length < 1) { throw 'NO VALUE INPUTS FOR SPECIFIED BLOCK'; }
+					if (statementList_.length < 1) { console.log('NO STATEMENT INPUTS FOR SPECIFIED BLOCK'); }
 					else { this.controller_.moveBlock(command.block, new SpeechBlocks.StatementInput(command.where.block, statementList_[statementList_.length-1])); }
 					break;
-				}
 				default:
-					throw 'Unsupported position';
+					console.log('Unsupported position');
+				}
 			}
 		}
 	}
 	else {
 		console.log('Invalid block Id');
-		throw 'Invalid block Id';
 	}
 };
 
@@ -136,9 +135,12 @@ SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
 
 			break;
 		default:
-			throw 'Unsupported property';
+			console.log('Unsupported property');
 		}
-		throw new Error('MODIFY NOT YET SUPPORTED');
+		console.log('MODIFY NOT YET SUPPORTED');
+	}
+	else {
+		console.log('Invalid block Id');
 	}
 };
 
