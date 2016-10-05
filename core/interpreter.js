@@ -38,7 +38,8 @@ SpeechBlocks.Interpreter = function(controller) {
   this.blockTypeMap_.set('variable','variables_get');
   */
   // temporary
-  this.inputReceived = false;
+  var inputReceived = false;
+  var inputText;
   var rawFile;
   try {
     console.log('a');
@@ -50,16 +51,16 @@ SpeechBlocks.Interpreter = function(controller) {
         console.log('b')
         if(rawFile.status == 200 || rawFile.status == 0) {
           console.log('c');
-          if (!this.inputReceived) {
+          if (!inputReceived) {
             console.log('INPUT BEING SET');
-            this.inputText = rawFile.responseText;
-            this.inputReceived = true;
+            inputText = rawFile.responseText;
+            inputReceived = true;
             console.log('INPUT SET');
-            console.log(this.inputText);
-            this.inputText = this.inputText.split(/\r\n|\r|\n/g);
+            console.log(inputText);
+            inputText = inputText.split(/\r\n|\r|\n/g);
             this.blockTypeMap_ = new goog.structs.Map();
-            for (var i = 0; i < this.inputText.length; i++) {
-              var keyValuePair = this.inputText[i].split(":");
+            for (var i = 0; i < inputText.length; i++) {
+              var keyValuePair = inputText[i].split(":");
               console.log(keyValuePair[0]);
               console.log(keyValuePair[1]);
               if (keyValuePair[0] != null && keyValuePair[1] != null) {
