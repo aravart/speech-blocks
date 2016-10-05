@@ -40,12 +40,9 @@ SpeechBlocks.Interpreter = function(controller) {
   this.blockTypeMap_ = this.initializeBlockTypeMap();
   setTimeout(function() {
     console.log(inputReceived);
-    if (this.blockTypeMap_ != null) {
-      console.log(this.blockTypeMap_.isEmpty());
-      console.log(this.blockTypeMap_.getValues())
-      console.log(this.blockTypeMap_.get('if'));
-    }
-    else {console.log("BLOCKTYPEMAP IS NULL")}
+    console.log(this.blockTypeMap_.isEmpty());
+    console.log(this.blockTypeMap_.getValues())
+    console.log(this.blockTypeMap_.get('if'));
   },5000);
 }
 
