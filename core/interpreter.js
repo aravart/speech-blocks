@@ -39,7 +39,7 @@ SpeechBlocks.Interpreter = function(controller) {
   */
   this.blockTypeMap_ = this.initializeBlockTypeMap();
   setTimeout(function() {
-    console.log(inputReceived);
+    // console.log(inputReceived);
     if (this.blockTypeMap_ != null) {
       console.log(this.blockTypeMap_.isEmpty());
       console.log(this.blockTypeMap_.getValues())
@@ -71,13 +71,13 @@ SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
             console.log('INPUT SET');
             console.log(inputText);
             inputText = inputText.split(/\r\n|\r|\n/g);
-            var blockTypeMap_ = new goog.structs.Map();
+            var blockTypeMap = new goog.structs.Map();
             for (var i = 0; i < inputText.length; i++) {
               var keyValuePair = inputText[i].split(":");
               console.log(keyValuePair[0]);
               console.log(keyValuePair[1]);
               if (keyValuePair[0] != null && keyValuePair[1] != null) {
-                blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
+                blockTypeMap.set(keyValuePair[0], keyValuePair[1]);
               }
             }
             return blockTypeMap;
