@@ -53,6 +53,8 @@ SpeechBlocks.Interpreter = function(controller) {
             console.log('INPUT BEING SET');
             this.inputText = rawFile.responseText;
             this.inputReceived = true;
+            console.log('INPUT SET');
+            console.log(inputText);
           }
         }
       }
