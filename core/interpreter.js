@@ -58,23 +58,23 @@ SpeechBlocks.Interpreter = function(controller) {
   } catch(err) {  }
 
   try {
-    rawFile.onreadystatechange();
+    setTimeout(function() {
+      if (this.inputReceived) {
+        this.inputText = this.inputText.split(/\r\n|\r|\n/g);
+        for (var i = 0; i < this.inputText.length; i++) {
+          var keyValuePair = this.inputText[i].split(":");
+          console.log(keyValuePair[0]);
+          console.log(keyValuePair[1]);
+          this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
+        }
+        console.log(this.blockTypeMap_.isEmpty());
+        console.log(this.blockTypeMap_.getValues())
+        console.log(this.blockTypeMap_.get('if'));
+      }
+      else {console.log('no input!');}
+    }, 2000);
   }
   catch(err) { }
-
-  if (this.inputReceived) {
-    this.inputText = this.inputText.split(/\r\n|\r|\n/g);
-    for (var i = 0; i < this.inputText.length; i++) {
-      var keyValuePair = this.inputText[i].split(":");
-      console.log(keyValuePair[0]);
-      console.log(keyValuePair[1]);
-      this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
-    }
-    console.log(this.blockTypeMap_.isEmpty());
-    console.log(this.blockTypeMap_.getValues())
-    console.log(this.blockTypeMap_.get('if'));
-  }
-  else {console.log('no input!');}
 }
 
 
