@@ -37,7 +37,16 @@ SpeechBlocks.Interpreter = function(controller) {
   this.blockTypeMap_.set('set','variables_set');
   this.blockTypeMap_.set('variable','variables_get');
   */
-  this.initializeBlockTypeMap();
+  this.blockTypeMap_ = this.initializeBlockTypeMap();
+  setTimeout(function() {
+    console.log(inputReceived);
+    if (this.blockTypeMap_ != null) {
+      console.log(this.blockTypeMap_.isEmpty());
+      console.log(this.blockTypeMap_.getValues())
+      console.log(this.blockTypeMap_.get('if'));
+    }
+    else {console.log("BLOCKTYPEMAP IS NULL")}
+  },3000);
 }
 
 SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
@@ -62,15 +71,16 @@ SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
             console.log('INPUT SET');
             console.log(inputText);
             inputText = inputText.split(/\r\n|\r|\n/g);
-            this.blockTypeMap_ = new goog.structs.Map();
+            var blockTypeMap_ = new goog.structs.Map();
             for (var i = 0; i < inputText.length; i++) {
               var keyValuePair = inputText[i].split(":");
               console.log(keyValuePair[0]);
               console.log(keyValuePair[1]);
               if (keyValuePair[0] != null && keyValuePair[1] != null) {
-                this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
+                blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
               }
             }
+            return blockTypeMap;
           }
           else {console.log('input already set');}
         }
@@ -85,15 +95,6 @@ SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
   }
   catch(err) {console.log(err.stack) }
 
-  setTimeout(function() {
-    console.log(inputReceived);
-    if (this.blockTypeMap_ != null) {
-      console.log(this.blockTypeMap_.isEmpty());
-      console.log(this.blockTypeMap_.getValues())
-      console.log(this.blockTypeMap_.get('if'));
-    }
-    else {console.log("BLOCKTYPEMAP IS NULL")}
-  },3000);
 }
 
 /**
