@@ -68,6 +68,18 @@ SpeechBlocks.Controller.prototype.removeBlock = function(blockId) {
 };
 
 /**
+ * Undos the last action.
+ * @public
+ */
+SpeechBlocks.Controller.prototype.undo = function() { this.workspace_.undo(false); };
+
+/**
+ * Redos the last undo.
+ * @public
+ */
+SpeechBlocks.Controller.prototype.redo = function() { this.workspace_.undo(true); };
+
+/**
  * Returns the set of IDs for all blocks in the workspace.
  * @return {!goog.structs.Set<string>} The array of all IDs.
  * @public
