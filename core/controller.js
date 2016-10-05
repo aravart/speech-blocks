@@ -63,13 +63,13 @@ SpeechBlocks.Controller.prototype.removeBlock = function(blockId) {
 
 /**
  * Returns the array of IDs for all blocks in the workspace.
- * @return {!Array<string>} The array of all IDs.
+ * @return {!goog.structs.Set<string>} The array of all IDs.
  * @public
  */
 SpeechBlocks.Controller.prototype.getAllBlockIds = function() {
-  var blockIds = [];
+  var blockIds = new goog.structs.Set();
   this.workspace_.getAllBlocks().forEach(function(block) {
-    blockIds.push(block.id);
+    blockIds.add(block.id);
   });
   return blockIds;
 };
