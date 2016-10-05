@@ -56,6 +56,8 @@ SpeechBlocks.Interpreter = function(controller) {
             console.log('INPUT SET');
             console.log(this.inputText);
             this.inputText = this.inputText.split(/\r\n|\r|\n/g);
+            this.blockTypeMap_ = new goog.structs.Map();
+            
             for (var i = 0; i < this.inputText.length; i++) {
               var keyValuePair = this.inputText[i].split(":");
               console.log(keyValuePair[0]);
