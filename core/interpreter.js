@@ -68,8 +68,8 @@ SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
             //console.log('INPUT BEING SET');
             inputText = rawFile.responseText;
             inputReceived = true;
-            console.log('INPUT SET');
-            //console.log(inputText);
+            // console.log('INPUT SET');
+            console.log(inputText);
             inputText = inputText.split(/\r\n|\r|\n/g);
             var blockTypeMap = new goog.structs.Map();
             for (var i = 0; i < inputText.length; i++) {
@@ -81,12 +81,13 @@ SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
               }
             }
             this.blockTypeMap_ = blockTypeMap;
+            console.log("SAVED");
             return;
           }
           else {console.log('input already set');}
         }
       }
-      else {console.log('--b');}
+      else {}
       if (rawFile.status == 200 || rawFile.status == 0) {rawFile.send();}
     }
   } catch(err) { console.log(err.stack) }
