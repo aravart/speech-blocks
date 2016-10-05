@@ -25,7 +25,7 @@ SpeechBlocks.Interpreter = function(controller) {
   /** @private */
   this.id_ = 1;
   /** @private */
-  this.blockTypeMap_ = new goog.structs.Map();
+  //this.blockTypeMap_ = new goog.structs.Map();
   /**
   this.blockTypeMap_.set('if','controls_if');
   this.blockTypeMap_.set('comparison','logic_compare');
@@ -57,7 +57,7 @@ SpeechBlocks.Interpreter = function(controller) {
             console.log(this.inputText);
             this.inputText = this.inputText.split(/\r\n|\r|\n/g);
             this.blockTypeMap_ = new goog.structs.Map();
-            
+
             for (var i = 0; i < this.inputText.length; i++) {
               var keyValuePair = this.inputText[i].split(":");
               console.log(keyValuePair[0]);
@@ -73,18 +73,18 @@ SpeechBlocks.Interpreter = function(controller) {
 
   try {
     rawFile.onreadystatechange();
-    setTimeout(function() {
-      if (this.inputReceived) {
-        this.inputText = this.inputText.split(/\r\n|\r|\n/g);
-        for (var i = 0; i < this.inputText.length; i++) {
-          var keyValuePair = this.inputText[i].split(":");
-          console.log(keyValuePair[0]);
-          console.log(keyValuePair[1]);
-          this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
-        }
-      }
-      else {console.log('no input!');}
-    }, 2000);
+    // setTimeout(function() {
+    //   if (this.inputReceived) {
+    //     this.inputText = this.inputText.split(/\r\n|\r|\n/g);
+    //     for (var i = 0; i < this.inputText.length; i++) {
+    //       var keyValuePair = this.inputText[i].split(":");
+    //       console.log(keyValuePair[0]);
+    //       console.log(keyValuePair[1]);
+    //       this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
+    //     }
+    //   }
+    //   else {console.log('no input!');}
+    // }, 2000);
   }
   catch(err) { }
   console.log(this.blockTypeMap_.isEmpty());
