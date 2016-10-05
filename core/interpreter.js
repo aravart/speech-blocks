@@ -59,23 +59,23 @@ SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
     rawFile = new XMLHttpRequest();
     rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
     rawFile.onreadystatechange = function () {
-      console.log(rawFile.readyState);
+      //console.log(rawFile.readyState);
       if(rawFile.readyState == 4) {
-        console.log('b')
+        //console.log('b')
         if(rawFile.status == 200 || rawFile.status == 0) {
-          console.log('c');
+          //console.log('c');
           if (!inputReceived) {
-            console.log('INPUT BEING SET');
+            //console.log('INPUT BEING SET');
             inputText = rawFile.responseText;
             inputReceived = true;
             console.log('INPUT SET');
-            console.log(inputText);
+            //console.log(inputText);
             inputText = inputText.split(/\r\n|\r|\n/g);
             var blockTypeMap = new goog.structs.Map();
             for (var i = 0; i < inputText.length; i++) {
               var keyValuePair = inputText[i].split(":");
-              console.log(keyValuePair[0]);
-              console.log(keyValuePair[1]);
+              //console.log(keyValuePair[0]);
+              //console.log(keyValuePair[1]);
               if (keyValuePair[0] != null && keyValuePair[1] != null) {
                 blockTypeMap.set(keyValuePair[0], keyValuePair[1]);
               }
