@@ -9,7 +9,7 @@ goog.provide('SpeechBlocks.FieldTypes');
 goog.require('Blockly.Field');
 goog.require('Blockly.FieldTextInput');
 goog.require('Blockly.FieldNumber');
-goog.require('Blockly.FieldDropDown');
+goog.require('Blockly.FieldDropdown');
 goog.require('Blockly.FieldDate');
 goog.require('Blockly.FieldAngle');
 goog.require('Blockly.FieldColour');
@@ -76,8 +76,8 @@ SpeechBlocks.FieldTypes.getFieldType = function(field) {
     return SpeechBlocks.FieldTypes.TEXT_INPUT;
   } else if (field instanceof Blockly.FieldNumber) {
     return SpeechBlocks.FieldTypes.NUMBER_INPUT;
-  } else if (field instanceof Blockly.FieldDate) {
-    return SpeechBlocks.FieldTypes.DATE_PICKER;
+  // } else if (field instanceof Blockly.FieldDate) {
+  //   return SpeechBlocks.FieldTypes.DATE_PICKER;
   } else if (field instanceof Blockly.FieldAngle) {
     return SpeechBlocks.FieldTypes.ANGLE_PICKER;
   } else if (field instanceof Blockly.FieldColour) {

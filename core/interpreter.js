@@ -121,8 +121,10 @@ SpeechBlocks.Interpreter.prototype.interpret = function(command) {
 */
 SpeechBlocks.Interpreter.prototype.run = function(command) {
   Blockly.JavaScript.addReservedWords('code');
-  var code = Blockly.JavaScript.workspaceToCode(this.controller_.workspace);
-  eval(code);
+  try {
+    var code = Blockly.JavaScript.workspaceToCode(this.controller_.workspace);
+    eval(code);
+  } catch (err) { console.log(err.message); }
 };
 
 /**
@@ -142,11 +144,12 @@ SpeechBlocks.Interpreter.prototype.addBlock = function(command) {
 SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
   // ensure these fields are strings, so validity checking works properly
   command.block = command.block.toString();
-  command.where.block = command.where.block.toString();
   if (this.isBlockIdValid(command.block)) {
     if (command.where == 'trash') {
       this.deleteBlock(command.block);
-    } else {
+      return;
+      if (command.where.block == null) { return; }
+      else { command.where.block = command.where.block.toString(); }
       if (this.isBlockIdValid(command.where.block)) {
         switch (command.where.position) {
           // modify these so the 'where' field is right
@@ -167,67 +170,65 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
         }
       }
     }
-  }
-  else {
-    console.log('Invalid block Id');
-  }
-};
-
-/**
-* @TODO Implement each case of property
-* Modifies a specified block.
-* @param {Object=} command Command object from parser.
-*/
-SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
-  command.block = command.block.toString();
-  if (this.isBlockIdValid(command.block)) {
-    var fields = this.controller_.getFieldsForBlock(command.block).getKeys();
-    // console.log(fields);
-    // console.log(this.controller_.getFieldsForBlock(command.block).getValues());
-    switch(command.property) {
-      case 'number':
-      command.value = Number(command.value);
-
-      this.controller_.setBlockField(command.block, fields[0], command.value);
-      break;
-      case 'text':
-
-      this.controller_.setBlockField(command.block, fields[0], command.value);
-      break;
-      case 'comparison':
-      this.controller_.setBlockField(command.block, fields[0], command.value);
-      break;
-      case 'operation':
-
-      this.controller_.setBlockField(command.block, fields[0], command.value);
-      break;
-      case 'name':
-
-      this.controller_.setBlockField(command.block, fields[0], command.value);
-      break;
-      default:
-      console.log('Unsupported property');
+    else {
+      console.log('Invalid block Id');
     }
-    console.log('MODIFY NOT YET SUPPORTED');
-  }
-  else {
-    console.log('Invalid block Id');
-  }
-};
+  };
 
-/**
-* Delete a specified block.
-* @param {Object=} command Command object from parser.
-*/
-SpeechBlocks.Interpreter.prototype.deleteBlock = function(blockId) {
-  if (this.isBlockIdValid(blockId)) { this.controller_.removeBlock(blockId); }
-  else { console.log('Invalid block Id'); }
-};
+  /**
+  * @TODO Implement each case of property
+  * Modifies a specified block.
+  * @param {Object=} command Command object from parser.
+  */
+  SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
+    command.block = command.block.toString();
+    if (this.isBlockIdValid(command.block)) {
+      var fields = this.controller_.getFieldsForBlock(command.block).getKeys();
+      if (fields.length == 1) {
+        this.controller_.setBlockField(command.block, fields[0], command.value);
+        return;
+      }
+      // console.log(fields);
+      // console.log(this.controller_.getFieldsForBlock(command.block).getValues());
+      switch(command.property) {
+        case 'number':
+        command.value = Number(command.value);
+        this.controller_.setBlockField(command.block, fields[0], command.value);
+        break;
+        case 'text':
+        this.controller_.setBlockField(command.block, fields[0], command.value);
+        break;
+        case 'comparison':
+        this.controller_.setBlockField(command.block, fields[0], command.value);
+        break;
+        case 'operation':
+        this.controller_.setBlockField(command.block, fields[0], command.value);
+        break;
+        case 'name':
+        this.controller_.setBlockField(command.block, fields[0], command.value);
+        break;
+        default:
+        console.log('Unsupported property');
+      }
+    }
+    else {
+      console.log('Invalid block Id');
+    }
+  };
 
-/**
-* Checks to see if a block Id is valid.
-* @param {!String=} blockId as string.
-*/
-SpeechBlocks.Interpreter.prototype.isBlockIdValid = function(blockRequestId) {
-  return this.controller_.getAllBlockIds().contains(blockRequestId);
-}
+  /**
+  * Delete a specified block.
+  * @param {Object=} command Command object from parser.
+  */
+  SpeechBlocks.Interpreter.prototype.deleteBlock = function(blockId) {
+    if (this.isBlockIdValid(blockId)) { this.controller_.removeBlock(blockId); }
+    else { console.log('Invalid block Id'); }
+  };
+
+  /**
+  * Checks to see if a block Id is valid.
+  * @param {!String=} blockId as string.
+  */
+  SpeechBlocks.Interpreter.prototype.isBlockIdValid = function(blockRequestId) {
+    return this.controller_.getAllBlockIds().contains(blockRequestId);
+  }
