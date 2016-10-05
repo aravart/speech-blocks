@@ -82,6 +82,7 @@ SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
             }
             this.blockTypeMap_ = blockTypeMap;
             console.log("SAVED");
+            console.log(this.blockTypeMap_.get('if'))
             return;
           }
           else {console.log('input already set');}
