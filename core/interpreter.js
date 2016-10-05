@@ -42,8 +42,11 @@ SpeechBlocks.Interpreter = function(controller) {
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
     rawFile.onreadystatechange = function () {
+      console.log('a');
       if(rawFile.readyState == 4) {
+          console.log('b');
         if(rawFile.status == 200 || rawFile.status == 0) {
+            console.log('c');
           var inputText = rawFile.responseText;
           inputText = inputText.split(/\r\n|\r|\n/g);
           for (var i = 0; i < inputText.length; i++) {
