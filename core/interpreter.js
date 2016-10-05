@@ -37,6 +37,10 @@ SpeechBlocks.Interpreter = function(controller) {
   this.blockTypeMap_.set('set','variables_set');
   this.blockTypeMap_.set('variable','variables_get');
   */
+  this.initializeBlockTypeMap();
+}
+
+SpeechBlocs.Interpreter.prototype.initializeBlockTypeMap = function() {
   // temporary
   var inputReceived = false;
   var inputText;
@@ -80,7 +84,9 @@ SpeechBlocks.Interpreter = function(controller) {
     setTimeout(function() {rawFile.onreadystatechange();},2000);
   }
   catch(err) {console.log(err.stack) }
+
   setTimeout(function() {
+    console.log(inputReceived);
     if (this.blockTypeMap_ != null) {
       console.log(this.blockTypeMap_.isEmpty());
       console.log(this.blockTypeMap_.getValues())
@@ -89,7 +95,6 @@ SpeechBlocks.Interpreter = function(controller) {
     else {console.log("BLOCKTYPEMAP IS NULL")}
   },3000);
 }
-
 
 /**
 * Interprets a given command by calling the corresponding action function.
