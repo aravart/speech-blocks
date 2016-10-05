@@ -25,8 +25,7 @@ SpeechBlocks.Interpreter = function(controller) {
   /** @private */
   this.id_ = 1;
   /** @private */
-  //this.blockTypeMap_ = new goog.structs.Map();
-  /**
+  this.blockTypeMap_ = new goog.structs.Map();
   this.blockTypeMap_.set('if','controls_if');
   this.blockTypeMap_.set('comparison','logic_compare');
   this.blockTypeMap_.set('repeat','controls_repeat_ext');
@@ -36,8 +35,8 @@ SpeechBlocks.Interpreter = function(controller) {
   this.blockTypeMap_.set('print','text_print');
   this.blockTypeMap_.set('set','variables_set');
   this.blockTypeMap_.set('variable','variables_get');
-  */
-  this.blockTypeMap_ = this.initializeBlockTypeMap();
+  
+  //this.blockTypeMap_ = this.initializeBlockTypeMap();
   setTimeout(function() {
     // console.log(inputReceived);
     if (this.blockTypeMap_ != null) {
@@ -51,6 +50,7 @@ SpeechBlocks.Interpreter = function(controller) {
 
 var inputReceived = false;
 SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
+return;
   // temporary
   var inputText;
   var rawFile;
