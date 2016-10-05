@@ -1,4 +1,4 @@
-Start = Move / Add / Change / Run
+Start = ("please" _)? command:(Move / Add / Change / Run) { return command }
 
 Article = "an" / "a" / "the"
 Type = "set" / "if" / "repeat" / "comparison" / "arithmetic" / "print" / "text" / "number" / "variable"
@@ -44,7 +44,7 @@ Remove = RemoveVerb _ block:BlockToken { return {
 
 RemoveVerb = "delete" / "remove"
 
-Change = "in" _ block:BlockToken _ ChangeVerb _ pair:PropertyValuePair {
+Change = "in" _ block:BlockToken _ ("please" _)? ChangeVerb _ pair:PropertyValuePair {
    pair["action"] = "modify"
    pair["block"] = block
    return pair
@@ -61,7 +61,7 @@ OperationPair = ("the" _)? (OperationName / OperationValue) _ "to" _ value:Opera
 
 OperationName = ("operation" / "operator") { return "operation" }
 OperationValue = Addition / Subtraction / Multiplication / Division / Exponentiation
-Addition = ("add" / "plus" / "addition") { return "+" }
+Addition = ("addition" / "add" / "plus") { return "+" }
 Subtraction = ("subtract" / "minus" / "subtraction") { return "-" }
 Multiplication = ("multiply" / "times" / "multiplication") { return "*" }
 Division = ("divide" / "division") { return "/" }
