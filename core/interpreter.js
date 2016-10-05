@@ -46,7 +46,7 @@ SpeechBlocks.Interpreter = function(controller) {
       console.log(this.blockTypeMap_.get('if'));
     }
     else {console.log("BLOCKTYPEMAP IS NULL")}
-  },3000);
+  },5000);
 }
 
 var inputReceived = false;
@@ -81,6 +81,7 @@ SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
               }
             }
             this.blockTypeMap_ = blockTypeMap;
+            return;
           }
           else {console.log('input already set');}
         }
@@ -91,7 +92,7 @@ SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
   } catch(err) { console.log(err.stack) }
 
   try {
-    setTimeout(function() {rawFile.onreadystatechange();},2000);
+    setTimeout(function() {rawFile.onreadystatechange();},3000);
   }
   catch(err) {console.log(err.stack) }
 
