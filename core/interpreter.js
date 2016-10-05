@@ -48,6 +48,8 @@ SpeechBlocks.Interpreter = function(controller) {
           inputText = inputText.split(/\r\n|\r|\n/g);
           for (var i = 0; i < inputText.length; i++) {
             var keyValuePair = inputText[i].split(":");
+            console.log(keyValuePair[0]);
+            console.log(keyValuePair[1]);
             this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
           }
           console.log(inputText);
@@ -58,7 +60,7 @@ SpeechBlocks.Interpreter = function(controller) {
     rawFile.onreadystatechange();
   } catch(err) { console.log(err.message); }
 
-  console.log(this.blockTypeMap_.get('set'));
+  console.log(this.blockTypeMap_.get('if'));
 }
 
 
