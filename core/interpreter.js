@@ -52,14 +52,6 @@ SpeechBlocks.Interpreter = function(controller) {
             this.inputText = rawFile.responseText;
             this.inputReceived = true;
           }
-          inputText = inputText.split(/\r\n|\r|\n/g);
-          for (var i = 0; i < inputText.length; i++) {
-            var keyValuePair = inputText[i].split(":");
-            console.log(keyValuePair[0]);
-            console.log(keyValuePair[1]);
-            this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
-          }
-          console.log(inputText);
         }
         rawFile.send();
       }
@@ -67,6 +59,13 @@ SpeechBlocks.Interpreter = function(controller) {
     }
     rawFile.onreadystatechange();
   } catch(err) { console.log(err.message); }
+  this.inputText = this.inputText.split(/\r\n|\r|\n/g);
+  for (var i = 0; i < this.inputText.length; i++) {
+    var keyValuePair = this.inputText[i].split(":");
+    console.log(keyValuePair[0]);
+    console.log(keyValuePair[1]);
+    this.blockTypeMap_.set(keyValuePair[0], keyValuePair[1]);
+  }
   console.log(this.blockTypeMap_.isEmpty());
   console.log(this.blockTypeMap_.getValues())
   console.log(this.blockTypeMap_.get('if'));
