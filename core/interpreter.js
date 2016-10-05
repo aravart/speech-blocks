@@ -40,7 +40,7 @@ SpeechBlocks.Interpreter = function(controller) {
   this.initializeBlockTypeMap();
 }
 
-SpeechBlocs.Interpreter.prototype.initializeBlockTypeMap = function() {
+SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
   // temporary
   var inputReceived = false;
   var inputText;
