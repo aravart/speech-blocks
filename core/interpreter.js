@@ -40,12 +40,15 @@ SpeechBlocks.Interpreter = function(controller) {
   // temporary
   this.inputReceived = false;
   try {
+    console.log('a');
     var rawFile = new XMLHttpRequest();
     rawFile.open("GET", 'https://aravart.github.io/speech-blocks/grammar/blockTypeMap.txt', true);
     rawFile.onreadystatechange = function () {
       console.log(rawFile.readyState);
       if(rawFile.readyState == 4 && rawFile.status == 200) {
+        console.log('b')
         if(rawFile.status == 200 || rawFile.status == 0) {
+          console.log('c');
           if (!this.inputReceived) {
             console.log('INPUT BEING SET');
             this.inputText = rawFile.responseText;
