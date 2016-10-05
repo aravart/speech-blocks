@@ -61,6 +61,7 @@ SpeechBlocks.Interpreter = function(controller) {
   } catch(err) {  }
 
   try {
+    rawFile.onreadystatechange();
     setTimeout(function() {
       if (this.inputReceived) {
         this.inputText = this.inputText.split(/\r\n|\r|\n/g);
