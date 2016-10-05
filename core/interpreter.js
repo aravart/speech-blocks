@@ -80,12 +80,14 @@ SpeechBlocks.Interpreter = function(controller) {
     setTimeout(function() {rawFile.onreadystatechange();},2000);
   }
   catch(err) {console.log(err.stack) }
-  if (this.blockTypeMap_ != null) {
-    console.log(this.blockTypeMap_.isEmpty());
-    console.log(this.blockTypeMap_.getValues())
-    console.log(this.blockTypeMap_.get('if'));
-  }
-  else {console.log("BLOCKTYPEMAP IS NULL")}
+  setTimeout(function() {
+    if (this.blockTypeMap_ != null) {
+      console.log(this.blockTypeMap_.isEmpty());
+      console.log(this.blockTypeMap_.getValues())
+      console.log(this.blockTypeMap_.get('if'));
+    }
+    else {console.log("BLOCKTYPEMAP IS NULL")}
+  },3000);
 }
 
 
