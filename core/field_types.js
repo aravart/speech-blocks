@@ -76,8 +76,6 @@ SpeechBlocks.FieldTypes.getFieldType = function(field) {
     return SpeechBlocks.FieldTypes.TEXT_INPUT;
   } else if (field instanceof Blockly.FieldNumber) {
     return SpeechBlocks.FieldTypes.NUMBER_INPUT;
-  // } else if (field instanceof Blockly.FieldDate) {
-  //   return SpeechBlocks.FieldTypes.DATE_PICKER;
   } else if (field instanceof Blockly.FieldAngle) {
     return SpeechBlocks.FieldTypes.ANGLE_PICKER;
   } else if (field instanceof Blockly.FieldColour) {
