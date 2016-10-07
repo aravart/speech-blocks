@@ -10,7 +10,6 @@ goog.require('Blockly.Field');
 goog.require('Blockly.FieldTextInput');
 goog.require('Blockly.FieldNumber');
 goog.require('Blockly.FieldDropdown');
-goog.require('Blockly.FieldDate');
 goog.require('Blockly.FieldAngle');
 goog.require('Blockly.FieldColour');
 goog.require('Blockly.FieldVariable');
