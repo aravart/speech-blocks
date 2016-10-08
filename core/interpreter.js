@@ -148,8 +148,7 @@ SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
             return this.controller_.setBlockField(command.block, fields[0], command.value);
         switch(command.property) {
             case 'number':
-                command.value = Number(command.value);
-                break;
+                command.value = Number(command.value); // no break so fall through
             case 'text':
             case 'comparison':
             case 'operation':
