@@ -37,11 +37,9 @@ SpeechBlocks.Controller = function(workspace) {
   // Listen for create events and tag the block with its ID.
   this.workspace_.addChangeListener(function(event) {
     if (event.type == Blockly.Events.CREATE) {
-      var newBlock = 
-          SpeechBlocks.Controller.addIdFieldToBlock_(
-              SpeechBlocks.Blocks.getBlock(event.blockId, this.workspace_));
-      newBlock.initSvg();
-      this.workspace_.render();
+      var newBlock =
+          SpeechBlocks.Blocks.getBlock(event.blockId, this.workspace_);
+      newBlock.appendDummyInput().appendField('id').appendField(newBlock.id);
     }
   }.bind(this));
 };
@@ -80,21 +78,9 @@ SpeechBlocks.Controller.constructFromXml = function(xml) {
  * @public
  */
 SpeechBlocks.Controller.prototype.addBlock = function(type, blockId, where) {
-  var newBlock = 
-      SpeechBlocks.Controller.addIdFieldToBlock_(
-          this.workspace_.newBlock(type, blockId));
+  var newBlock = this.workspace_.newBlock(type, blockId);
   newBlock.initSvg();
   this.moveBlock(blockId, where);
-};
-
-/**
- * Appends a dummy input, containing only an ID label, to the given block.
- * @param {!Blockly.Block} block The block to append the ID to.
- * @private
- */
-SpeechBlocks.Controller.addIdFieldToBlock_ = function(block) {
-  block.appendDummyInput().appendField('id').appendField(block.id);
-  return block;
 };
 
 /**
