@@ -30,6 +30,17 @@ SpeechBlocks.Controller = function(container, opt_options) {
 };
 
 /**
+ * Parses the headless XML into a Blockly workspace and returns 
+ * a corresponding SpeechBlocks controller.
+ * @param {!Element} xml XML element to convert to workspace.
+ * @return {!SpeechBlocks.Controller} Controller for the Blockly workspace.
+ */
+SpeechBlocks.Controller.fromXml = function(xml) {
+  return new SpeechBlocks.Controller(
+      Blockly.Xml.domToWorkspace(xml), new Blockly.Workspace());
+};
+
+/**
  * Adds and renders a new block to the workspace.
  * @param {string} type Name of the language object containing
  *     type-specific functions for this block.
