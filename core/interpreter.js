@@ -47,7 +47,7 @@ SpeechBlocks.Interpreter.prototype.interpret = function(command) {
         case 'add': this.addBlock(command); break;
         case 'move': this.moveBlock(command); break;
         case 'modify': this.modifyBlock(command); break;
-        case 'delete': this.deleteBlock(command.block.); break;
+        case 'delete': this.deleteBlock(command.block); break;
         case 'undo': this.undo(); break;
         case 'redo': this.redo(); break;
     }
