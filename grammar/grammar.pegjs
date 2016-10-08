@@ -79,7 +79,7 @@ ComparisonPair = ("the" _)? (ComparisonName / ComparisonValue) _ "to" _ comparis
 
 ComparisonName = "comparison"
 ComparisonValue = "equals" { return "==" } /
-  "not equals" { return "!=" } /
+  ("not equals" / "not equal to") { return "≠" } /
   "greater than or equal to" { return ">=" } /
   "less than or equal to" { return "<=" } /
   "greater than" { return ">" } /

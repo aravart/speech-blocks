@@ -62,7 +62,7 @@ SpeechBlocks.Interpreter.prototype.run = function(command) {
     try {
         var code = Blockly.JavaScript.workspaceToCode(this.controller_.workspace);
         eval(code);
-    } catch (err) { console.log(err.message); throw err; }
+    } catch (err) { console.log(err.message); }
 };
 
 /**
