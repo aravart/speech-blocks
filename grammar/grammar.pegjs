@@ -1,4 +1,4 @@
-Start = ("please" _)? command:(Move / Add / Change / Run) { return command }
+Start = ("please" _)? command:( Move / Add / Change / Run / Undo / Redo ) { return command }
 
 Article = "an" / "a" / "the"
 Type = "set" / "if" / "repeat" / "comparison" / "arithmetic" / "print" / "text" / "number" / "variable"
@@ -17,14 +17,14 @@ BlockToken = "block" _ ("number" _)? number:Number { return number }
 
 Where = BlockPosition / Trash
 
-BlockPosition = position:Position _ "of"? _ block:BlockToken { return {
+BlockPosition = position:Position _ block:BlockToken { return {
   "block": block,
   "position": position
   } }
 
 Trash = "to the trash" { return "trash" }
 
-Position = "after" / "before" / "inside" / 'inside of' / "to the right of" / LefthandSide / RighthandSide
+Position = "after" / "before" / "inside of" / "inside" / "to the right of" / LefthandSide / RighthandSide / Top / Away
 
 Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 Word = value:[a-zA-Z]+ { return value.join("") }
@@ -35,7 +35,7 @@ Add = AddVerb _ type:BlockType { return {
    "type": type
    } }
 
-AddVerb = "add" / "insert" / "make" / "create"
+AddVerb = "add" / "insert" / "make"
 
 Remove = RemoveVerb _ block:BlockToken { return {
    "action": "Delete",
@@ -98,9 +98,13 @@ TextPair = ("the" _)? "text" _ "to" _ text:Words { return {
 
 LefthandSide = ("to" / "into") _ "the" _ ("first blank" / "first field" / "lefthand side") _ "of" { return "lhs" }
 RighthandSide = ("to" / "into") _ "the" _ ("second blank" / "second field" / "righthand side") _ "of" { return "rhs" }
+Top = ("to" / "into") _ "the" _ "top" _ "of" { return "top" }
+Away = "away"? _ "from" { return "separate" }
 
 Run = ("run the program" / "run it" / "run") { return {
    "action": "run"
    } }
 
+Undo = "undo" { return { "action": "undo" } }
+Redo = "redo" { return { "action": "redo" } }
 _   = ' '*
