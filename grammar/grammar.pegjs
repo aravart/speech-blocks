@@ -17,7 +17,7 @@ BlockToken = "block" _ ("number" _)? number:Number { return number }
 
 Where = BlockPosition / Trash
 
-BlockPosition = position:Position _ block:BlockToken { return {
+BlockPosition = position:Position _ "of"? _ block:BlockToken { return {
   "block": block,
   "position": position
   } }
@@ -35,7 +35,7 @@ Add = AddVerb _ type:BlockType { return {
    "type": type
    } }
 
-AddVerb = "add" / "insert"
+AddVerb = "add" / "insert" / "make" / "create"
 
 Remove = RemoveVerb _ block:BlockToken { return {
    "action": "Delete",
