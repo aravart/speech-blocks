@@ -105,6 +105,10 @@ Run = ("run the program" / "run it" / "run") { return {
    "action": "run"
    } }
 
-Undo = "undo" { return { "action": "undo" } }
-Redo = "redo" { return { "action": "redo" } }
+Undo = "undo" { return {
+   "action": "undo"
+   } }
+Redo = "redo" { return {
+   "action": "redo"
+   } }
 _   = ' '*

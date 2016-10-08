@@ -348,10 +348,14 @@
            } },
         peg$c171 = "undo",
         peg$c172 = peg$literalExpectation("undo", false),
-        peg$c173 = function() { return { "action": "undo" } },
+        peg$c173 = function() { return {
+           "action": "undo"
+           } },
         peg$c174 = "redo",
         peg$c175 = peg$literalExpectation("redo", false),
-        peg$c176 = function() { return { "action": "redo" } },
+        peg$c176 = function() { return {
+           "action": "redo"
+           } },
 
         peg$currPos          = 0,
         peg$savedPos         = 0,
