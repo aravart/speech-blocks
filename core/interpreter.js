@@ -79,18 +79,14 @@ SpeechBlocks.Interpreter.prototype.addBlock = function(command) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
-
     if (this.isBlockIdValid(command.block.toString())) {
-
         command.block = command.block.toString();
-
         if (command.where == 'trash')
             return this.deleteBlock(command.block);
         else if (command.where.block == null || !this.isBlockIdValid(command.where.block.toString()))
             return;
-
-        command.where.block = command.where.block.toString();
-
+        else
+            command.where.block = command.where.block.toString();
         switch (command.where.position) {
             case 'after':
                 this.controller_.moveBlock(command.block, new SpeechBlocks.Successor(command.where.block));
@@ -114,7 +110,6 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
                 var statementList = this.controller_.getBlockStatementInputs(command.where.block);
                 if (statementList.length < 1) { // try add it to input list
                     var inputList = this.controller_.getBlockValueInputs(command.where.block);
-                    console.log(inputList);
                     if (inputList.length < 1)
                         console.log('NO INPUTS FOR SPECIFIED BLOCK')
                     else
@@ -122,7 +117,6 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
                 }
                 else
                     this.controller_.moveBlock(command.block, new SpeechBlocks.StatementInput(command.where.block, statementList[statementList.length-1]));
-
                 break;
             case 'separate': // not yet done; need API functions
                 var statementList, inputList, connectionsList;
@@ -147,16 +141,11 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
-
     if (this.isBlockIdValid(command.block.toString())) {
-
         command.block = command.block.toString();
-
         var fields = this.controller_.getFieldsForBlock(command.block).getKeys();
-
         if (fields.length == 1)
             return this.controller_.setBlockField(command.block, fields[0], command.value);
-
         switch(command.property) {
             case 'number':
                 command.value = Number(command.value);
