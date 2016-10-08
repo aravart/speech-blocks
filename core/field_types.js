@@ -27,28 +27,22 @@ SpeechBlocks.FieldTypes.TEXT_INPUT = 1;
 SpeechBlocks.FieldTypes.NUMBER_INPUT = 2;
 
 /**
- * Enum for date picker FieldTypes.
- * @public @const
- */
-SpeechBlocks.FieldTypes.DATE_PICKER = 3;
-
-/**
  * Enum for angle picker FieldTypes.
  * @public @const
  */
-SpeechBlocks.FieldTypes.ANGLE_PICKER = 4;
+SpeechBlocks.FieldTypes.ANGLE_PICKER = 3;
 
 /**
  * Enum for color picker FieldTypes.
  * @public @const
  */
-SpeechBlocks.FieldTypes.COLOUR_PICKER = 5;
+SpeechBlocks.FieldTypes.COLOUR_PICKER = 4;
 
 /**
  * Enum for variable picker FieldTypes.
  * @public @const
  */
-SpeechBlocks.FieldTypes.VARIABLE_PICKER = 6;
+SpeechBlocks.FieldTypes.VARIABLE_PICKER = 5;
 
 /**
  * Enum for drop-down FieldTypes.
@@ -56,13 +50,13 @@ SpeechBlocks.FieldTypes.VARIABLE_PICKER = 6;
  * Prefer specificity where possible.
  * @public @const
  */
-SpeechBlocks.FieldTypes.DROP_DOWN = 7;
+SpeechBlocks.FieldTypes.DROP_DOWN = 6;
 
 /**
  * Enum for an irrelevant field type.
  * @public @const
  */
-SpeechBlocks.FieldTypes.IRRELEVANT = 8;
+SpeechBlocks.FieldTypes.IRRELEVANT = 7;
 
 /**
  * Returns the corresponding type enum for the given field.
