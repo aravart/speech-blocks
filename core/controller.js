@@ -8,9 +8,16 @@
 
 goog.provide('SpeechBlocks.Controller');
 
+goog.require('Blockly.Events');
 goog.require('Blockly.Field');
+goog.require('Blockly.FieldAngle');
 goog.require('Blockly.FieldColour');
+goog.require('Blockly.FieldDropdown');
+goog.require('Blockly.FieldNumber');
+goog.require('Blockly.FieldTextInput');
+goog.require('Blockly.FieldVariable');
 goog.require('Blockly.Workspace');
+goog.require('Blockly.Xml');
 goog.require('Blockly.constants');
 goog.require('Blockly.inject');
 goog.require('SpeechBlocks.Blocks');
@@ -18,15 +25,37 @@ goog.require('SpeechBlocks.FieldTypes');
 goog.require('goog.structs.Map');
 goog.require('goog.structs.Set');
 
+/** 
+ * @param {!Blockly.Workspace} workspace
+ * @private  
+ * @constructor 
+ */
+SpeechBlocks.Controller = function(workspace) {
+  /** @private @const {!Blockly.Workspace} */
+  this.workspace_ = workspace;
+
+  // Listen for create events and tag the block with its ID.
+  this.workspace_.addChangeListener(function(event) {
+    if (event.type == Blockly.Events.CREATE) {
+      var newBlock = 
+          SpeechBlocks.Controller.addIdFieldToBlock_(
+              SpeechBlocks.Blocks.getBlock(event.blockId, this.workspace_));
+      newBlock.initSvg();
+      this.workspace_.render();
+    }
+  }.bind(this));
+};
+
 /**
- * Inject a Blockly workspace into the given container element.
+ * Injects Blockly into the given container using the given options, and returns
+ * the corresponding SpeechBlocks controller.
  * @param {!Element|string} container Containing element, or its ID, or a CSS selector.
  * @param {Object=} opt_options Optional dictionary of options.
- * @constructor
+ * @return {!SpeechBlocks.Controller} Controller for the Blockly workspace.
+ * @public
  */
-SpeechBlocks.Controller = function(container, opt_options) {
-  /** @private @const {!Blockly.Workspace} */
-  this.workspace_ = Blockly.inject('blocklyDiv', opt_options);
+SpeechBlocks.Controller.injectIntoDiv = function(container, opt_options) {
+  return new SpeechBlocks.Controller(Blockly.inject(container, opt_options));
 };
 
 /**
@@ -34,10 +63,11 @@ SpeechBlocks.Controller = function(container, opt_options) {
  * a corresponding SpeechBlocks controller.
  * @param {!Element} xml XML element to convert to workspace.
  * @return {!SpeechBlocks.Controller} Controller for the Blockly workspace.
+ * @public
  */
-SpeechBlocks.Controller.fromXml = function(xml) {
+SpeechBlocks.Controller.constructFromXml = function(xml) {
   return new SpeechBlocks.Controller(
-      Blockly.Xml.domToWorkspace(xml), new Blockly.Workspace());
+      Blockly.Xml.domToWorkspace(xml, new Blockly.Workspace()));
 };
 
 /**
@@ -50,9 +80,21 @@ SpeechBlocks.Controller.fromXml = function(xml) {
  * @public
  */
 SpeechBlocks.Controller.prototype.addBlock = function(type, blockId, where) {
-  var newBlock = this.workspace_.newBlock(type, blockId);
+  var newBlock = 
+      SpeechBlocks.Controller.addIdFieldToBlock_(
+          this.workspace_.newBlock(type, blockId));
   newBlock.initSvg();
   this.moveBlock(blockId, where);
+};
+
+/**
+ * Appends a dummy input, containing only an ID label, to the given block.
+ * @param {!Blockly.Block} block The block to append the ID to.
+ * @private
+ */
+SpeechBlocks.Controller.addIdFieldToBlock_ = function(block) {
+  block.appendDummyInput().appendField('id').appendField(block.id);
+  return block;
 };
 
 /**
@@ -185,13 +227,37 @@ SpeechBlocks.Controller.prototype.getFieldsForBlock = function(blockId) {
   var blockFields = new goog.structs.Map();
   SpeechBlocks.Blocks.getBlock(blockId, this.workspace_).inputList.forEach(function(input) {
     input.fieldRow.forEach(function(field) {
-      var type = SpeechBlocks.FieldTypes.getFieldType(field);
+      var type = SpeechBlocks.Controller.getFieldType_(field);
       if (field.name && type != SpeechBlocks.FieldTypes.IRRELEVANT) {
         blockFields.set(field.name, type);
       }
     });
   });
   return blockFields;
+};
+
+/**
+ * Returns the corresponding type enum for the given field.
+ * @param {!Blockly.Field} field Field to get type for.
+ * @return {number} Enum value for field type.
+ * @private
+ */
+SpeechBlocks.Controller.getFieldType_ = function(field) {
+  if (field instanceof Blockly.FieldTextInput) {
+    return SpeechBlocks.FieldTypes.TEXT_INPUT;
+  } else if (field instanceof Blockly.FieldNumber) {
+    return SpeechBlocks.FieldTypes.NUMBER_INPUT;
+  } else if (field instanceof Blockly.FieldAngle) {
+    return SpeechBlocks.FieldTypes.ANGLE_PICKER;
+  } else if (field instanceof Blockly.FieldColour) {
+    return SpeechBlocks.FieldTypes.COLOUR_PICKER;
+  } else if (field instanceof Blockly.FieldVariable) {
+    return SpeechBlocks.FieldTypes.VARIABLE_PICKER;
+  } else if (field instanceof Blockly.FieldDropdown) {
+    return SpeechBlocks.FieldTypes.DROP_DOWN;
+  } else {
+    return SpeechBlocks.FieldTypes.IRRELEVANT;
+  }
 };
 
 /**

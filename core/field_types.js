@@ -1,83 +1,40 @@
 /**
- * @fileoverview Enumeration for field types and utilities.
+ * @fileoverview Enumeration for relevant field types.
  * @author ehernandez4@wisc.edu (Evan Hernandez)
  */
 'use strict';
 
 goog.provide('SpeechBlocks.FieldTypes');
 
-goog.require('Blockly.Field');
-goog.require('Blockly.FieldTextInput');
-goog.require('Blockly.FieldNumber');
-goog.require('Blockly.FieldDropdown');
-goog.require('Blockly.FieldAngle');
-goog.require('Blockly.FieldColour');
-goog.require('Blockly.FieldVariable');
-
 /**
- * Enum for text input FieldTypes.
- * @public @const
+ * Relevant field types for SpeechBlocks.
+ * @enum {number}
  */
-SpeechBlocks.FieldTypes.TEXT_INPUT = 1;
+SpeechBlocks.FieldTypes = {
+  /** Textual input, e.g. for print string literals. */
+  TEXT_INPUT: 1,
 
-/**
- * Enum for number input FieldTypes.
- * @public @const
- */
-SpeechBlocks.FieldTypes.NUMBER_INPUT = 2;
+  /** Numerical input, e.g. for number blocks. */
+  NUMBER_INPUT: 2,
 
-/**
- * Enum for angle picker FieldTypes.
- * @public @const
- */
-SpeechBlocks.FieldTypes.ANGLE_PICKER = 3;
+  /** Radial angle picker, allows user to select value from 0-360 degrees. */
+  ANGLE_PICKER: 3,
 
-/**
- * Enum for color picker FieldTypes.
- * @public @const
- */
-SpeechBlocks.FieldTypes.COLOUR_PICKER = 4;
+  /** 
+   * Colour grid, allows user to select one of several colours from 
+   * a (predefined) palette. 
+   */
+  COLOUR_PICKER: 4,
 
-/**
- * Enum for variable picker FieldTypes.
- * @public @const
- */
-SpeechBlocks.FieldTypes.VARIABLE_PICKER = 5;
+  /** 
+   * Drop-down that allows user to select existing variable, 
+   * rename it, and/or create a new one. 
+   */
+  VARIABLE_PICKER: 5,
 
-/**
- * Enum for drop-down FieldTypes.
- * Note: Technically, variable pickers ARE drop-down fields.
- * Prefer specificity where possible.
- * @public @const
- */
-SpeechBlocks.FieldTypes.DROP_DOWN = 6;
+  /** A generic drop-down with predefined selections. */
+  DROP_DOWN: 6,
 
-/**
- * Enum for an irrelevant field type.
- * @public @const
- */
-SpeechBlocks.FieldTypes.IRRELEVANT = 7;
-
-/**
- * Returns the corresponding type enum for the given field.
- * @param {!Blockly.Field} field Field to get type for.
- * @return {number} Enum value for field type.
- * @public
- */
-SpeechBlocks.FieldTypes.getFieldType = function(field) {
-  if (field instanceof Blockly.FieldTextInput) {
-    return SpeechBlocks.FieldTypes.TEXT_INPUT;
-  } else if (field instanceof Blockly.FieldNumber) {
-    return SpeechBlocks.FieldTypes.NUMBER_INPUT;
-  } else if (field instanceof Blockly.FieldAngle) {
-    return SpeechBlocks.FieldTypes.ANGLE_PICKER;
-  } else if (field instanceof Blockly.FieldColour) {
-    return SpeechBlocks.FieldTypes.COLOUR_PICKER;
-  } else if (field instanceof Blockly.FieldVariable) {
-    return SpeechBlocks.FieldTypes.VARIABLE_PICKER;
-  } else if (field instanceof Blockly.FieldDropdown) {
-    return SpeechBlocks.FieldTypes.DROP_DOWN;
-  } else {
-    return SpeechBlocks.FieldTypes.IRRELEVANT;
-  }
+  /** Field types that we do not support. */
+  IRRELEVANT: 7
 };

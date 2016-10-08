@@ -73,76 +73,10 @@
     <block type="text_print"></block>
   </xml>
 
-  <!-- Manually create blocks. -->
-  <span id="errorMessage" style="display:hidden; color: red;"></span>
-
-  <span style="float: left; margin-left: 50px; margin-right: 60px;">
-    <h4>Create a new block!</h4>
-    Block ID: <input id="newBlockId" type="text" name="id"><br><br>
-    Block Type:
-    <select id="newBlockType">
-      <option value="variables_set">set variable</option>
-      <option value="variables_get">get variable</option>
-      <option value="controls_if">if</option>
-      <option value="logic_compare">logical equals</option>
-      <option value="controls_repeat_ext">repeat</option>
-      <option value="math_number">number</option>
-      <option value="math_arithmetic">arithmetic</option>
-      <option value="text">text</option>
-      <option value="text_print">print</option>
-    </select><br><br>
-    <button id="createNewBlock">Create!</button>
-  </span>
-
-  <span style="float: left; margin-right: 60px;">
-    <h4>Move an existing block!</h4>
-    Which block?
-    <select id="moveWhat"></select><br><br>
-
-    Where?
-    <select id="moveWhere">
-      <option value="translation">translate it...</option>
-      <option value="predecessor">before block...</option>
-      <option value="successor">after block...</option>
-      <option value="statement_input">statement input of block...</option>
-      <option value="value_input">value input of block...</option>
-    </select><br><br>
-    <div id="moveWhereTranslationDiv"> <!-- Display by default. -->
-      Which direction?
-      <select id="moveWhereTranslationTarget">
-        <option value="up">up</option>
-        <option value="down">down</option>
-        <option value="left">left</option>
-        <option value="right">right</option>
-      </select><br><br>
-    </div>
-    <div id="moveWhereBlockTargetDiv" style="display:none">
-      Which block?
-      <select id="moveWhereBlockTarget"></select><br><br>
-    </div>
-    <div id="moveWhereBlockInputTargetDiv" style="display:none">
-      Which input?
-      <select id="moveWhereBlockInputTarget"></select><br><br>
-    </div>
-    <button id="moveBlock">Move!</button>
-  </span>
-
-  <span>
-    <h4>Remove an existing block!</h4>
-    Which block?
-    <select id="removeWhat"></select><br><br>
-    <button id="removeBlock">Remove!</button>
-  </span>
-
   <script src="../grammar/grammar.js"></script>
   <script src="../js/jsDump.js"></script>
   <script src="../core/interpreter.js"></script>
-
-  <!-- Code for initializing the speech input components. -->
-  <script src="speech_input.js"></script>
-
-  <!-- Code for initializing the manual input components. -->
-  <script src="manual_input.js"></script>
+  <script src="init.js"></script>
 </body>
 
 </html>
