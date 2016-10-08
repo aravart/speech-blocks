@@ -1,4 +1,4 @@
-Start = ("please" _)? command:( Move / Add / Change / Run / Undo / Redo ) { return command }
+Start = ("please" _)? command:( Move / Add / Remove / Change / Run / Undo / Redo ) { return command }
 
 Article = "an" / "a" / "the"
 Type = "set" / "if" / "repeat" / "comparison" / "arithmetic" / "print" / "text" / "number" / "variable"
@@ -38,11 +38,11 @@ Add = AddVerb _ type:BlockType { return {
 AddVerb = "add" / "insert" / "make"
 
 Remove = RemoveVerb _ block:BlockToken { return {
-   "action": "Delete",
+   "action": "delete",
    "block": block
    } }
 
-RemoveVerb = "delete" / "remove"
+RemoveVerb = "delete" / "remove" / "erase"
 
 Change = "in" _ block:BlockToken _ ("please" _)? ChangeVerb _ pair:PropertyValuePair {
    pair["action"] = "modify"
