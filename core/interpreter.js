@@ -87,10 +87,15 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
         command.block = command.block.toString();
         if (command.where == 'trash')
             return this.deleteBlock(command.block);
+        else if (command.where == 'away') {
+            // doesn't work, waiting on Evan's API
+            this.controller_.moveBlock(command.block, new SpeechBlocks.Translation(0, 0));
+        }
         else if (command.where.block == null || !this.isBlockIdValid(command.where.block.toString()))
             return;
         else
             command.where.block = command.where.block.toString();
+
         switch (command.where.position) {
             case 'below':
                 this.controller_.moveBlock(command.block, new SpeechBlocks.Successor(command.where.block));

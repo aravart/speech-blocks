@@ -3,7 +3,7 @@ Start = ("please" _)? command:( Move / AddTo / Add / Remove / Change / Run / Und
 Article = "an" / "a" / "the"
 Type = "set" / "if" / "repeat" / "comparison" / "arithmetic" / "print" / "text" / "number" / "variable"
 
-Move = MoveVerb _ block:BlockToken _ where:Where { return {
+Move = MoveVerb _ block:BlockToken _ where:(Where / "away") { return {
    "action": "move",
    "block": block,
    "where": where
