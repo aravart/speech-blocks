@@ -91,16 +91,15 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
     if (this.isBlockIdValid(command.block.toString())) {
         command.block = command.block.toString();
         if (command.where == 'trash')
-        return this.deleteBlock(command.block);
+            return this.deleteBlock(command.block);
         else if (command.where == 'away') {
             // doesn't work, waiting on Evan's API
             this.controller_.moveBlock(command.block, new SpeechBlocks.Translation(0, 0));
         }
         else if (command.where.block == null || !this.isBlockIdValid(command.where.block.toString()))
-        return;
+            return;
         else
-        command.where.block = command.where.block.toString();
-
+            command.where.block = command.where.block.toString();
         switch (command.where.position) {
             case 'below':
             this.controller_.moveBlock(command.block, new SpeechBlocks.Successor(command.where.block));
@@ -154,14 +153,14 @@ SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
         var fields = this.controller_.getFieldsForBlock(command.block).getKeys();
         switch(command.property) {
             case 'number':
-               command.value = Number(command.value); // fall through
+            command.value = Number(command.value); // fall through
             case 'text':
             case 'comparison':
             case 'operation':
             case 'name':
             case 'value':
-               this.controller_.setBlockField(command.block, fields[0], command.value);
-               break;
+            this.controller_.setBlockField(command.block, fields[0], command.value);
+            break;
         }
     }
 };

@@ -24,7 +24,7 @@ BlockPosition = position:Position _ block:BlockToken { return {
 
 Trash = "to the trash" { return "trash" }
 
-Position = Above / Below / Inside / Left / Right / Top / Away
+Position = Above / Below / Left / Right / Top / Away / Inside / To
 
 Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 Word = value:[a-zA-Z]+ { return value.join("") }
@@ -125,11 +125,12 @@ FieldPair = ("field" / "middle" / "blank" / "value") _ "to" _ text:(Number/Words
 
 Above = ("above" / "before") { return "above" }
 Below = ("below" / "after") { return "below" }
-Inside = ("inside" _ ("of")?) / "to" { return "inside" }
 Left = ("to" / "into") _ "the" _ ("first blank" / "first field" / "lefthand side" / "left") _ "of" { return "lhs" }
 Right = ("to" / "into") _ "the" _ ("second blank" / "second field" /"last field" / "last blank"/ "righthand side" / "right") _ "of" { return "rhs" }
 Top = ("at" / "to" / "into") _ "the" _ "top" _ "of" { return "top" }
 Away = ("away")? _ "from" { return "away" }
+Inside = "inside" _ ("of")?  { return "inside" }
+To = "to" { return "inside" }
 
 Run = ("run the program" / "run it" / "run") { return {
    "action": "run"
