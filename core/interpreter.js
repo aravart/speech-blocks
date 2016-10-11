@@ -30,6 +30,7 @@ SpeechBlocks.Interpreter = function(controller) {
     this.blockTypeMap_.set('comparison','logic_compare');
     this.blockTypeMap_.set('repeat','controls_repeat_ext');
     this.blockTypeMap_.set('number','math_number');
+    this.blockTypeMap_.set('math','math_arithmetic');
     this.blockTypeMap_.set('arithmetic','math_arithmetic');
     this.blockTypeMap_.set('text','text');
     this.blockTypeMap_.set('print','text_print');
@@ -160,6 +161,7 @@ SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
             case 'comparison':
             case 'operation':
             case 'name':
+            case 'field':
             this.controller_.setBlockField(command.block, fields[0], command.value);
             break;
         }

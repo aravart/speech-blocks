@@ -1,7 +1,7 @@
 Start = ("please" _)? command:( Move / Add / Remove / Change / Run / Undo / Redo ) { return command }
 
 Article = "an" / "a" / "the"
-Type = "set" / "if" / "repeat" / "comparison" / "arithmetic" / "print" / "text" / "number" / "variable"
+Type = "set" / "if" / "repeat" / "comparison" / "math" / "arithmetic" / "print" / "text" / "number" / "variable"
 
 Move = MoveVerb _ block:BlockToken _ where:(Where / "away") { return {
    "action": "move",
@@ -13,7 +13,7 @@ MoveVerb = "move" / "attach"
 
 BlockType = Article _ type:Type (_ "block")? { return type }
 
-BlockToken = "block" _ ("number" _)? number:Number { return number }
+BlockToken = ("block")? _ ("number" _)? number:Number { return number }
 
 Where = BlockPosition / Trash
 
@@ -66,7 +66,7 @@ Remove = RemoveVerb _ block:BlockToken { return {
 
 RemoveVerb = "delete" / "remove" / "erase"
 
-Change = "in" _ block:BlockToken _ ("please" _)? ChangeVerb _ pair:PropertyValuePair {
+Change = "in" _ block:BlockToken _ ("please" _)? ChangeVerb _ ("the")? _ pair:PropertyValuePair {
    pair["action"] = "modify"
    pair["block"] = block
    return pair
@@ -74,9 +74,9 @@ Change = "in" _ block:BlockToken _ ("please" _)? ChangeVerb _ pair:PropertyValue
 
 ChangeVerb = "change" / "set"
 
-PropertyValuePair = OperationPair / ComparisonPair / NamePair / NumberPair / TextPair
+PropertyValuePair = OperationPair / ComparisonPair / NamePair / NumberPair / TextPair / FieldPair
 
-OperationPair = ("the" _)? (OperationName / OperationValue) _ "to" _ value:OperationValue { return {
+OperationPair = (OperationName / OperationValue) _ "to" _ value:OperationValue { return {
    "property": "operation",
    "value": value
 } }
@@ -89,12 +89,12 @@ Multiplication = ("multiply" / "times" / "multiplication") { return "*" }
 Division = ("divide" / "division") { return "/" }
 Exponentiation = ("power" / "exponentiation") { return "^" }
 
-NamePair = ("the" _)? "variable name to" _ name:Word { return {
+NamePair = "variable name to" _ name:Word { return {
    "property": "name",
    "value": name
 } }
 
-ComparisonPair = ("the" _)? (ComparisonName / ComparisonValue) _ "to" _ comparison:ComparisonValue { return {
+ComparisonPair = (ComparisonName / ComparisonValue) _ "to" _ comparison:ComparisonValue { return {
    "property": "comparison",
    "value": comparison
 } }
@@ -107,14 +107,19 @@ ComparisonValue = "equals" { return "==" } /
 "greater than" { return ">" } /
 "less than" { return "<" }
 
-NumberPair = ("the" _)? (NumberName / Number) _ "to" _ number:Number { return {
+NumberPair = (NumberName / Number) _ "to" _ number:Number { return {
    "property": "number",
    "value": number
 } }
 NumberName = "number"
 
-TextPair = ("the" _)? "text" _ "to" _ text:Words { return {
+TextPair = "text" _ "to" _ text:Words { return {
    "property": "text",
+   "value": text
+} }
+
+FieldPair = ("field" / "middle" / "blank" / "value") _ "to" _ text:(Number/Words) { return {
+   "property": "field",
    "value": text
 } }
 
