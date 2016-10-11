@@ -66,11 +66,15 @@ SpeechBlocks.Interpreter.prototype.run = function(command) {
 };
 
 /**
-* Adds a specified block.
+* Adds a specified block. Can be added to aspecific place.
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.addBlock = function(command) {
     this.controller_.addBlock(this.blockTypeMap_.get(command.type), (this.id_++).toString(), new SpeechBlocks.Translation(0,0));
+    if (command.where != null) {
+        command.block = (this.id_ - 1).toString();
+        this.moveBlock(command);
+    }
 };
 
 /**
@@ -88,10 +92,10 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
         else
             command.where.block = command.where.block.toString();
         switch (command.where.position) {
-            case 'after':
+            case 'below':
                 this.controller_.moveBlock(command.block, new SpeechBlocks.Successor(command.where.block));
                 break;
-            case 'before':
+            case 'above':
                 this.controller_.moveBlock(command.block, new SpeechBlocks.Predecessor(command.where.block));
                 break;
             case 'lhs':
@@ -107,18 +111,12 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
                     this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[0]));
                 break;
             case 'inside':
+                var inputList = this.controller_.getBlockValueInputs(command.where.block);
                 var statementList = this.controller_.getBlockStatementInputs(command.where.block);
-                if (statementList.length < 1) { // try add it to input list
-                    var inputList = this.controller_.getBlockValueInputs(command.where.block);
-                    if (inputList.length < 1)
-                        console.log('NO INPUTS FOR SPECIFIED BLOCK')
-                    else
-                        this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[0]));
-                }
-                else
-                    this.controller_.moveBlock(command.block, new SpeechBlocks.StatementInput(command.where.block, statementList[statementList.length-1]));
+                try { this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[0])); } catch(err) {}
+                try { this.controller_.moveBlock(command.block, new SpeechBlocks.StatementInput(command.where.block, statementList[statementList.length-1])); } catch(err) {}
                 break;
-            case 'separate': // not yet done; need API functions
+            case 'away': // not yet done; need API functions
                 var statementList, inputList, connectionsList;
                 try { statementList = this.controller_.getBlockStatementInputs(command.where.block); } catch(err) {}
                 try { inputList = this.controller_.getBlockValueInputs(command.where.block); } catch(err) {}
@@ -128,7 +126,7 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
                 else { console.log("NO INPUTS"); return; }
                 console.log(connectionsList);
                 connectionsList_.forEach(function() {
-
+                    // incomplete
                 });
                 this.controller_.moveBlock(command.block, new SpeechBlocks.Translation(0, 0));
                 break;
@@ -148,7 +146,7 @@ SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
             return this.controller_.setBlockField(command.block, fields[0], command.value);
         switch(command.property) {
             case 'number':
-                command.value = Number(command.value); // no break so fall through
+                command.value = Number(command.value); // fall through
             case 'text':
             case 'comparison':
             case 'operation':
@@ -178,8 +176,9 @@ SpeechBlocks.Interpreter.prototype.redo = function() {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.deleteBlock = function(blockId) {
-    if (this.isBlockIdValid(blockId.toString()))
+    if (this.isBlockIdValid(blockId.toString())) {
         this.controller_.removeBlock(blockId.toString());
+    }
 };
 
 /**

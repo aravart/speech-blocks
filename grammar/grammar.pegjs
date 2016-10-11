@@ -1,4 +1,4 @@
-Start = ("please" _)? command:( Move / Add / Remove / Change / Run / Undo / Redo ) { return command }
+Start = ("please" _)? command:( Move / AddTo / Add / Remove / Change / Run / Undo / Redo ) { return command }
 
 Article = "an" / "a" / "the"
 Type = "set" / "if" / "repeat" / "comparison" / "arithmetic" / "print" / "text" / "number" / "variable"
@@ -24,7 +24,7 @@ BlockPosition = position:Position _ block:BlockToken { return {
 
 Trash = "to the trash" { return "trash" }
 
-Position = "after" / "before" / "inside of" / "inside" / "to the right of" / LefthandSide / RighthandSide / Top
+Position = Above / Below / Inside / Left / Right / Top / Away
 
 Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 Word = value:[a-zA-Z]+ { return value.join("") }
@@ -33,6 +33,12 @@ Words = car:Word cdr:(" " w:Word { return w })* { return [car].concat(cdr).join(
 Add = AddVerb _ type:BlockType { return {
    "action": "add",
    "type": type
+   } }
+
+AddTo = AddVerb _ type:BlockType _ where:Where { return {
+   "action": "add",
+   "type": type,
+   "where": where
    } }
 
 AddVerb = "add" / "insert" / "make"
@@ -96,9 +102,13 @@ TextPair = ("the" _)? "text" _ "to" _ text:Words { return {
   "value": text
   } }
 
-LefthandSide = ("to" / "into") _ "the" _ ("first blank" / "first field" / "lefthand side") _ "of" { return "lhs" }
-RighthandSide = ("to" / "into") _ "the" _ ("second blank" / "second field" / "righthand side") _ "of" { return "rhs" }
-Top = ("to" / "into") _ "the" _ "top" _ "of" { return "top" }
+Above = ("above" / "before") { return "above" }
+Below = ("below" / "after") { return "below" }
+Inside = "inside" _ ("of")? { return "inside" }
+Left = ("to" / "into") _ "the" _ ("first blank" / "first field" / "lefthand side" / "left") _ "of" { return "lhs" }
+Right = ("to" / "into") _ "the" _ ("second blank" / "second field" /"last field" / "last blank"/ "righthand side" / "right") _ "of" { return "rhs" }
+Top = ("at" / "to" / "into") _ "the" _ "top" _ "of" { return "top" }
+Away = ("away")? _ "from" { return "away" }
 
 Run = ("run the program" / "run it" / "run") { return {
    "action": "run"
