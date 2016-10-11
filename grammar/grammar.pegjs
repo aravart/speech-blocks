@@ -119,13 +119,13 @@ TextPair = "text" _ "to" _ text:Words { return {
 } }
 
 FieldPair = ("field" / "middle" / "blank" / "value") _ "to" _ text:(Number/Words) { return {
-   "property": "field",
+   "property": "value",
    "value": text
 } }
 
 Above = ("above" / "before") { return "above" }
 Below = ("below" / "after") { return "below" }
-Inside = "inside" _ ("of")? { return "inside" }
+Inside = ("inside" _ ("of")?) / "to" { return "inside" }
 Left = ("to" / "into") _ "the" _ ("first blank" / "first field" / "lefthand side" / "left") _ "of" { return "lhs" }
 Right = ("to" / "into") _ "the" _ ("second blank" / "second field" /"last field" / "last blank"/ "righthand side" / "right") _ "of" { return "rhs" }
 Top = ("at" / "to" / "into") _ "the" _ "top" _ "of" { return "top" }

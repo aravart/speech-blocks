@@ -338,7 +338,7 @@
         peg$c149 = "value",
         peg$c150 = peg$literalExpectation("value", false),
         peg$c151 = function(text) { return {
-           "property": "field",
+           "property": "value",
            "value": text
         } },
         peg$c152 = "above",
@@ -2392,8 +2392,7 @@
             s3 = null;
           }
           if (s3 !== peg$FAILED) {
-            peg$savedPos = s0;
-            s1 = peg$c166();
+            s1 = [s1, s2, s3];
             s0 = s1;
           } else {
             peg$currPos = s0;
@@ -2406,6 +2405,21 @@
       } else {
         peg$currPos = s0;
         s0 = peg$FAILED;
+      }
+      if (s0 === peg$FAILED) {
+        s0 = peg$currPos;
+        if (input.substr(peg$currPos, 2) === peg$c80) {
+          s1 = peg$c80;
+          peg$currPos += 2;
+        } else {
+          s1 = peg$FAILED;
+          if (peg$silentFails === 0) { peg$fail(peg$c81); }
+        }
+        if (s1 !== peg$FAILED) {
+          peg$savedPos = s0;
+          s1 = peg$c166();
+        }
+        s0 = s1;
       }
 
       return s0;

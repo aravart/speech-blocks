@@ -152,18 +152,16 @@ SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
     if (this.isBlockIdValid(command.block.toString())) {
         command.block = command.block.toString();
         var fields = this.controller_.getFieldsForBlock(command.block).getKeys();
-        if (fields.length == 1)
-            return this.controller_.setBlockField(command.block, fields[0], command.value);
         switch(command.property) {
             case 'number':
-            command.value = Number(command.value); // fall through
+               command.value = Number(command.value); // fall through
             case 'text':
             case 'comparison':
             case 'operation':
             case 'name':
-            case 'field':
-            this.controller_.setBlockField(command.block, fields[0], command.value);
-            break;
+            case 'value':
+               this.controller_.setBlockField(command.block, fields[0], command.value);
+               break;
         }
     }
 };
