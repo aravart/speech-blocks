@@ -8,11 +8,13 @@ var controller = new SpeechBlocks.Controller(workspace);
 var interpreter = new SpeechBlocks.Interpreter(controller);
 
 
-QUnit.test("Add block inside of another block test", function(assert) {
+QUnit.test('Add block test', function(assert) {
+    var pre_exist = interpreter.controller_.workspace_.getBlockById(1);
     command = {
-        'action': "add",
-        'type': 'repeat'
+        'action': 'add',
+        'type': 'if'
     }
     interpreter.interpret(command);
-    assert.ok(interpreter.controller_.workspace_.getBlockById(1), "Passed");
+    var post_exist = interpreter.controller_.workspace_.getBlockById(1);
+    assert.ok(!pre_exist && post_exist, 'Block successfully added to workspace');
 });
