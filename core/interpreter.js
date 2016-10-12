@@ -7,7 +7,6 @@
 'use strict';
 
 goog.provide('SpeechBlocks.Interpreter');
-
 goog.require('SpeechBlocks.Predecessor');
 goog.require('SpeechBlocks.StatementInput')
 goog.require('SpeechBlocks.Successor');
@@ -43,15 +42,20 @@ SpeechBlocks.Interpreter = function(controller) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.interpret = function(command) {
-    switch (command.action) {
-        case 'run': this.run(command); break;
-        case 'add': this.addBlock(command); break;
-        case 'move': this.moveBlock(command); break;
-        case 'modify': this.modifyBlock(command); break;
-        case 'delete': this.deleteBlock(command.block); break;
-        case 'undo': this.undo(); break;
-        case 'redo': this.redo(); break;
-    }
+    var success = false;
+    try {
+        switch (command.action) {
+            case 'run': this.run(command); break;
+            case 'add': this.addBlock(command); break;
+            case 'move': this.moveBlock(command); break;
+            case 'modify': this.modifyBlock(command); break;
+            case 'delete': this.deleteBlock(command.block); break;
+            case 'undo': this.undo(); break;
+            case 'redo': this.redo(); break;
+        }
+        success = true;
+    } catch (err) { console.log(err.message); }
+    return success;
 };
 
 /**
@@ -61,7 +65,8 @@ SpeechBlocks.Interpreter.prototype.interpret = function(command) {
 SpeechBlocks.Interpreter.prototype.run = function(command) {
     Blockly.JavaScript.addReservedWords('code');
     try {
-        var code = Blockly.JavaScript.workspaceToCode(this.controller_.workspace);
+        var code = Blockly.JavaScript.workspaceToCode(this.controller_.workspace_);
+        console.log(code);
         eval(code);
     } catch (err) { console.log(err.message); }
 };
@@ -184,7 +189,15 @@ SpeechBlocks.Interpreter.prototype.redo = function() {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.deleteBlock = function(blockId) {
-    if (this.isBlockIdValid(blockId.toString())) {
+    if (blockId.toString() == 'all') {
+        for (var i = 1; i < 20; i++) {
+            if (this.isBlockIdValid(i.toString())) {
+                this.controller_.removeBlock(i.toString());
+            }
+        }
+        this.id_ = 1;
+    }
+    else if (this.isBlockIdValid(blockId.toString())) {
         this.controller_.removeBlock(blockId.toString());
     }
 };

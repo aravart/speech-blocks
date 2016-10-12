@@ -59,7 +59,7 @@ AddVarTo =  AddVerb _ type:BlockType _ NameVerb _  name:Word _ where:Where { ret
 AddVerb = "add" / "insert" / "make"
 NameVerb = "called" / "named"
 
-Remove = RemoveVerb _ block:BlockToken { return {
+Remove = RemoveVerb _ block:(BlockToken / "all") { return {
    "action": "delete",
    "block": block
 } }
