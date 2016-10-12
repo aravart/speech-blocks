@@ -13,7 +13,7 @@ MoveVerb = "move" / "attach"
 
 BlockType = Article _ type:Type (_ "block")? { return type }
 
-BlockToken = ("block")? _ ("number" _)? number:Number { return number }
+BlockToken = _ ("block")? _ ("number")? _ number:Number { return number }
 
 Where = BlockPosition / Trash
 
@@ -28,7 +28,7 @@ Position = Above / Below / Left / Right / Top / Away / Inside / To
 
 Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 Word = value:[a-zA-Z]+ { return value.join("") }
-Words = car:Word cdr:(" " w:Word { if (w != "in") {return w;} else {return null} })* _ &"in" _ { return [car].concat(cdr).join(" ") }
+Words = car:Word cdr:(" " w:Word { return w })* { return [car].concat(cdr).join(" ") }
 
 Add = AddVarTo / AddVar / AddTo / AddNew
 
