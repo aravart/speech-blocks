@@ -74,11 +74,11 @@ SpeechBlocks.Controller.constructFromXml = function(xml) {
  * @param {string} type Name of the language object containing
  *     type-specific functions for this block.
  * @param {string} blockId ID for the block.
- * @param {!SpeechBlocks.Where} where Location on the workspace
- *     to place the new block.
+ * @param {SpeechBlocks.Where=} opt_where Optional location on the 
+ *     workspace to place the new block.
  * @public
  */
-SpeechBlocks.Controller.prototype.addBlock = function(type, blockId, where) {
+SpeechBlocks.Controller.prototype.addBlock = function(type, blockId, opt_where) {
   var newBlock = this.workspace_.newBlock(type, blockId);
   newBlock.initSvg();
   this.moveBlock(blockId, where);
@@ -94,6 +94,16 @@ SpeechBlocks.Controller.prototype.addBlock = function(type, blockId, where) {
 SpeechBlocks.Controller.prototype.moveBlock = function(blockId, where) {
   where.place(blockId, this.workspace_);
   this.workspace_.render();
+};
+
+/**
+ * Disconnects the block from it superior (parent) block.
+ * @param {string} blockId ID of the block to disconnect.
+ * @public
+ */
+SpeechBlocks.Controller.prototype.disconnectBlock = function(blockId) {
+  SpeechBlocks.Blocks.getBlock(blockId, this.workspace_).unplug(true /* Heal stack! */);
+  this.moveBlock_(blockId, new SpeechBlocks.Translation(50, 0));
 };
 
 /**
