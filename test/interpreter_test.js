@@ -26,4 +26,6 @@ QUnit.test('Add block test', function(assert) {
     interpreter.interpret(command);
     var post_exist = interpreter.controller_.workspace_.getBlockById(2);
     assert.ok(!pre_exist && post_exist, 'Block 2 successfully added to workspace');
+
+
 });
