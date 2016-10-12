@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Interpreter</title>
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.0.1.css">
+
+    <script type="text/javascript" src="../external/closure-library/closure/goog/base.js"></script>
+
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+
+    <script type="text/javascript" src="../external/blockly/blockly_compressed.js"></script>
+    <script type="text/javascript" src="../external/blockly/javascript_compressed.js"></script>
+    <script type="text/javascript" src="../external/blockly/blocks_compressed.js"></script>
+    <script type="text/javascript" src="../external/blockly/msg/js/en.js"></script>
+
+    <script src="../core/controller.js"></script>
+    <script src="../core/blocks.js"></script>
+    <script src="../core/field_types.js"></script>
+    <script src="../core/where.js"></script>
+    <script src="../core/translation.js"></script>
+    <script src="../core/statement_input.js"></script>
+    <script src="../core/value_input.js"></script>
+    <script src="../core/successor.js"></script>
+    <script src="../core/predecessor.js"></script>
+
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <!-- <div id="blocklyDiv" style="height: 580px; width: 1000px; margin-left: 50px;"></div> -->
+
+    <xml id="toolbox" style="display: none">
+        <block type="variables_get"></block>
+        <block type="variables_set"></block>
+        <block type="controls_if"></block>
+        <block type="logic_compare"></block>
+        <block type="controls_repeat_ext"></block>
+        <block type="math_number"></block>
+        <block type="math_arithmetic"></block>
+        <block type="text"></block>
+        <block type="text_print"></block>
+    </xml>
+
+    <script src="../grammar/grammar.js"></script>
+    <script src="../js/jsDump.js"></script>
+    <script src="../core/interpreter.js"></script>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+    <script src="https://code.jquery.com/qunit/qunit-2.0.1.js"></script>
+    <script type="text/javascript" src="interpreter_test.js"></script>
+</body>
+</html>
