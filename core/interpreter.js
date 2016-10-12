@@ -63,12 +63,7 @@ SpeechBlocks.Interpreter.prototype.interpret = function(command) {
 * @param {Object=} command Object with command specifics from the parser.
 */
 SpeechBlocks.Interpreter.prototype.run = function(command) {
-    Blockly.JavaScript.addReservedWords('code');
-    try {
-        var code = Blockly.JavaScript.workspaceToCode(this.controller_.workspace_);
-        console.log(code);
-        eval(code);
-    } catch (err) { console.log(err.message); }
+    try { this.controller_.run(); } catch (err) { console.log(err.message); }
 };
 
 /**

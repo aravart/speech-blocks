@@ -16,6 +16,7 @@ goog.require('Blockly.FieldDropdown');
 goog.require('Blockly.FieldNumber');
 goog.require('Blockly.FieldTextInput');
 goog.require('Blockly.FieldVariable');
+goog.require('Blockly.JavaScript');
 goog.require('Blockly.Workspace');
 goog.require('Blockly.Xml');
 goog.require('Blockly.constants');
@@ -117,6 +118,16 @@ SpeechBlocks.Controller.prototype.undo = function() { this.workspace_.undo(false
  * @public
  */
 SpeechBlocks.Controller.prototype.redo = function() { this.workspace_.undo(true); };
+
+/**
+ * Transpiles the workspace into JavaScript code and evaluates it.
+ * @throws {Exception} if the code fails to run.
+ * @public
+ */
+SpeechBlocks.Controller.prototype.run = function() {
+  Blockly.JavaScript.addReservedWords('code');
+  eval(Blockly.JavaScript.workspaceToCode(this.workspace_)); 
+};
 
 /**
  * Returns the set of IDs for all blocks in the workspace.
