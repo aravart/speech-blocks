@@ -10,11 +10,20 @@ var interpreter = new SpeechBlocks.Interpreter(controller);
 
 QUnit.test('Add block test', function(assert) {
     var pre_exist = interpreter.controller_.workspace_.getBlockById(1);
-    command = {
+    var command = {
         'action': 'add',
         'type': 'if'
     }
     interpreter.interpret(command);
     var post_exist = interpreter.controller_.workspace_.getBlockById(1);
-    assert.ok(!pre_exist && post_exist, 'Block successfully added to workspace');
+    assert.ok(!pre_exist && post_exist, 'Block 1 successfully added to workspace');
+
+    var pre_exist = interpreter.controller_.workspace_.getBlockById(2);
+    var command = {
+        'action': 'add',
+        'type': 'repeat'
+    }
+    interpreter.interpret(command);
+    var post_exist = interpreter.controller_.workspace_.getBlockById(2);
+    assert.ok(!pre_exist && post_exist, 'Block 2 successfully added to workspace');
 });
