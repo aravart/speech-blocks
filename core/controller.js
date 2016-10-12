@@ -23,6 +23,7 @@ goog.require('Blockly.constants');
 goog.require('Blockly.inject');
 goog.require('SpeechBlocks.Blocks');
 goog.require('SpeechBlocks.FieldTypes');
+goog.require('SpeechBlocks.Translation');
 goog.require('SpeechBlocks.Where');
 goog.require('goog.asserts');
 goog.require('goog.structs.Map');
@@ -80,11 +81,13 @@ SpeechBlocks.Controller.constructFromXml = function(xml) {
  *     workspace to place the new block.
  * @public
  */
-SpeechBlocks.Controller.prototype.addBlock = function(type, blockId, opt_where) {
+SpeechBlocks.Controller.prototype.addBlock = function(type, blockId, opt_where  ) {
   var newBlock = this.workspace_.newBlock(type, blockId);
   newBlock.initSvg();
   if (opt_where) {
     this.moveBlock(blockId, goog.asserts.assertInstanceof(opt_where, SpeechBlocks.Where));
+  } else {
+    this.workspace_.render();
   }
 };
 
@@ -107,7 +110,7 @@ SpeechBlocks.Controller.prototype.moveBlock = function(blockId, where) {
  */
 SpeechBlocks.Controller.prototype.disconnectBlock = function(blockId) {
   SpeechBlocks.Blocks.getBlock(blockId, this.workspace_).unplug(true /* Heal stack! */);
-  this.moveBlock_(blockId, new SpeechBlocks.Translation(50, 0));
+  this.moveBlock(blockId, new SpeechBlocks.Translation(50, 0));
 };
 
 /**
