@@ -205,7 +205,7 @@
         peg$c54 = "in block",
         peg$c55 = peg$literalExpectation("in block", false),
         peg$c56 = peg$anyExpectation(),
-        peg$c57 = function(car, cdr) { var text = [car].concat(cdr.join("")).join(" ").replace(new RegExp(",","g"),"");  return text;  },
+        peg$c57 = function(car, cdr) { return [car].concat(cdr.join("")).join(" ").replace(new RegExp(",","g"),"").trim()  },
         peg$c58 = function(type) { return {
             "action": "add",
             "type": type
