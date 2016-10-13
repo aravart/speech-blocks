@@ -30,26 +30,26 @@ Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 Word = value:[a-zA-Z]+ { return value.join("") }
 Words = car:Word cdr:(" " w:Word { return w })* { return [car].concat(cdr).join(" ") }
 NewTextField = car:Word cdr:(!"in block" .)* { return [car].concat(cdr.join("")).join(" ").replace(new RegExp(",","g"),"").trim()  }
-Add = AddVarTo / AddVar / AddTo / AddNew
+Add = Add1 / Add2 / Add3 / Add4
 
-AddNew = AddVerb _ type:BlockType { return {
+Add1 = AddVerb _ type:BlockType { return {
     "action": "add",
     "type": type
 } }
 
-AddTo = AddVerb _ type:BlockType _ where:Where { return {
+Add2 = AddVerb _ type:BlockType _ where:Where { return {
     "action": "add",
     "type": type,
     "where": where
 } }
 
-AddVar = AddVerb _ type:BlockType _ NameVerb _  name:Word{ return {
+Add3 = AddVerb _ type:BlockType _ NameVerb _  name:Word{ return {
     "action": "add",
     "type": type,
     "value": name
 } }
 
-AddVarTo =  AddVerb _ type:BlockType _ NameVerb _  name:Word _ where:Where { return {
+Add4 =  AddVerb _ type:BlockType _ NameVerb _  name:Word _ where:Where { return {
     "action": "add",
     "type": type,
     "value": name,
@@ -126,7 +126,7 @@ ComparisonPair = (ComparisonName / ComparisonValue) _ "to" _ comparison:Comparis
 
 ComparisonName = "comparison"
 ComparisonValue = "equals" { return "==" } /
-("not equals" / "not equal to") { return "!=" } /
+("not equals" / "not equal to") { return "!=" /** this doesn't work yet :( */} /
 "greater than or equal to" { return ">=" } /
 "less than or equal to" { return "<=" } /
 "greater than" { return ">" } /
