@@ -29,7 +29,7 @@ Position = Above / Below / Left / Right / Top / Away / Inside / To
 Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 Word = value:[a-zA-Z]+ { return value.join("") }
 Words = car:Word cdr:(" " w:Word { return w })* { return [car].concat(cdr).join(" ") }
-
+NewTextField = car:Word cdr:(!"in block" .)* { return [car].concat(cdr.join("")).join(" ").replace(new RegExp(",","g"),"")  }
 Add = AddVarTo / AddVar / AddTo / AddNew
 
 AddNew = AddVerb _ type:BlockType { return {
@@ -138,7 +138,7 @@ NumberPair = (NumberName / Number) _ "to" _ number:Number { return {
 } }
 NumberName = "number"
 
-TextPair = "text" _ "to" _ text:Words { return {
+TextPair = "text" _ "to" _ text:(NewTextField) { return {
     "property": "text",
     "value": text
 } }
