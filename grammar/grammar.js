@@ -1314,11 +1314,11 @@
     function peg$parseAdd() {
       var s0;
 
-      s0 = peg$parseAdd2();
+      s0 = peg$parseAdd4();
       if (s0 === peg$FAILED) {
         s0 = peg$parseAdd3();
         if (s0 === peg$FAILED) {
-          s0 = peg$parseAdd4();
+          s0 = peg$parseAdd2();
           if (s0 === peg$FAILED) {
             s0 = peg$parseAdd1();
           }
