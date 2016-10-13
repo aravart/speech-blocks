@@ -42,20 +42,15 @@ SpeechBlocks.Interpreter = function(controller) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.interpret = function(command) {
-    var success = false;
-    try {
-        switch (command.action) {
-            case 'run': this.run(command); break;
-            case 'add': this.addBlock(command); break;
-            case 'move': this.moveBlock(command); break;
-            case 'modify': this.modifyBlock(command); break;
-            case 'delete': this.deleteBlock(command.block); break;
-            case 'undo': this.undo(); break;
-            case 'redo': this.redo(); break;
-        }
-        success = true;
-    } catch (err) { console.log(err.message); }
-    return success;
+    switch (command.action) {
+        case 'run': this.run(command); break;
+        case 'add': this.addBlock(command); break;
+        case 'move': this.moveBlock(command); break;
+        case 'modify': this.modifyBlock(command); break;
+        case 'delete': this.deleteBlock(command.block); break;
+        case 'undo': this.undo(); break;
+        case 'redo': this.redo(); break;
+    }
 };
 
 /**
@@ -72,12 +67,8 @@ SpeechBlocks.Interpreter.prototype.run = function(command) {
 */
 SpeechBlocks.Interpreter.prototype.addBlock = function(command) {
     this.controller_.addBlock(this.blockTypeMap_.get(command.type), (this.id_++).toString(), new SpeechBlocks.Translation(0,0));
-    command.block = (this.id_ - 1).toString();
-    if (command.value != null) {
-        command.property = 'name';
-        this.modifyBlock(command);
-    }
-    if (command.where != null) {
+    if(command.where != null) {
+        command.block = (this.id_ - 1).toString();
         this.moveBlock(command);
     }
 };
@@ -90,55 +81,46 @@ SpeechBlocks.Interpreter.prototype.addBlock = function(command) {
 SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
     if (this.isBlockIdValid(command.block.toString())) {
         command.block = command.block.toString();
-        if (command.where == 'trash')
+        if (command.where == 'trash') {
             return this.deleteBlock(command.block);
-        else if (command.where == 'away') {
-            // doesn't work, waiting on Evan's API
-            this.controller_.moveBlock(command.block, new SpeechBlocks.Translation(0, 0));
-        }
-        else if (command.where.block == null || !this.isBlockIdValid(command.where.block.toString()))
+        } else if (command.where == 'away') {
+            this.controller_.disconnectBlock(command.block);
+        } else if (command.where.block == null || !this.isBlockIdValid(command.where.block.toString())) {
             return;
-        else
+        } else {
             command.where.block = command.where.block.toString();
+        }
         switch (command.where.position) {
             case 'below':
-            this.controller_.moveBlock(command.block, new SpeechBlocks.Successor(command.where.block));
-            break;
+                this.controller_.moveBlock(command.block, new SpeechBlocks.Successor(command.where.block));
+                break;
             case 'above':
-            this.controller_.moveBlock(command.block, new SpeechBlocks.Predecessor(command.where.block));
-            break;
+                this.controller_.moveBlock(command.block, new SpeechBlocks.Predecessor(command.where.block));
+                break;
             case 'lhs':
             case 'rhs':
             case 'top':
             case 'to the right of':
-            var inputList = this.controller_.getBlockValueInputs(command.where.block);
-            if (inputList.length < 1)
-            console.log('NO VALUE INPUTS FOR SPECIFIED BLOCK');
-            else if (command.where.position == 'rhs' || command.where.position == 'to the right of')
-            this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[inputList.length-1]));
-            else if (command.where.position == 'lhs' || command.where.position == 'top')
-            this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[0]));
-            break;
+                var inputList = this.controller_.getBlockValueInputs(command.where.block);
+                if (inputList.length < 1) {
+                    console.log('NO VALUE INPUTS FOR SPECIFIED BLOCK');
+                }
+                else if (command.where.position == 'rhs' || command.where.position == 'to the right of') {
+                    this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[inputList.length-1]));
+                }
+                else if (command.where.position == 'lhs' || command.where.position == 'top') {
+                    this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[0]));
+                }
+                break;
             case 'inside':
-            var inputList = this.controller_.getBlockValueInputs(command.where.block);
-            var statementList = this.controller_.getBlockStatementInputs(command.where.block);
-            try { this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[0])); } catch(err) {}
-            try { this.controller_.moveBlock(command.block, new SpeechBlocks.StatementInput(command.where.block, statementList[statementList.length-1])); } catch(err) {}
-            break;
-            case 'away': // not yet done; need API functions
-            var statementList, inputList, connectionsList;
-            try { statementList = this.controller_.getBlockStatementInputs(command.where.block); } catch(err) {}
-            try { inputList = this.controller_.getBlockValueInputs(command.where.block); } catch(err) {}
-            if (statementList != null && inputList != null) { connectionsList = statementList.concat(inputList); }
-            else if (statementList != null) { connectionsList = statementList; }
-            else if (inputList != null) { connectionsList = inputList; }
-            else { console.log("NO INPUTS"); return; }
-            console.log(connectionsList);
-            connectionsList_.forEach(function() {
-                // incomplete
-            });
-            this.controller_.moveBlock(command.block, new SpeechBlocks.Translation(0, 0));
-            break;
+                var inputList = this.controller_.getBlockValueInputs(command.where.block);
+                var statementList = this.controller_.getBlockStatementInputs(command.where.block);
+                try { this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[0])); } catch(err) {}
+                try { this.controller_.moveBlock(command.block, new SpeechBlocks.StatementInput(command.where.block, statementList[statementList.length-1])); } catch(err) {}
+                break;
+            case 'away':
+                this.controller_.disconnectBlock(command.block);
+                break;
         }
     }
 };
@@ -151,6 +133,7 @@ SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
     if (this.isBlockIdValid(command.block.toString())) {
         command.block = command.block.toString();
         var fields = this.controller_.getFieldsForBlock(command.block).getKeys();
+        console.log(fields);
         switch(command.property) {
             case 'number':
             command.value = Number(command.value); // fall through

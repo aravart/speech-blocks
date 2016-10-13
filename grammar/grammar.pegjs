@@ -1,4 +1,4 @@
-Start = ("please" _)? command:( Move / Add / Remove / Change / Run / Undo / Redo ) { return command }
+Start = ("please" _)? command:( Move / Add / Remove / Change / Run / Undo / Redo / Separate) { return command }
 
 Article = "an" / "a" / "the"
 Type = "set" / "if" / "repeat" / "comparison" / "math" / "arithmetic" / "print" / "text" / "number" / "variable"
@@ -13,7 +13,7 @@ MoveVerb = "move" / "attach"
 
 BlockType = Article _ type:Type (_ "block")? { return type }
 
-BlockToken = _ ("block")? _ ("number")? _ number:Number { return number }
+BlockToken = _ ("blocks"/"block")? _ ("number")? _ number:Number { return number }
 
 Where = BlockPosition / Trash
 
@@ -30,7 +30,7 @@ Number = digits:[0-9]+ { return parseInt(digits.join(""), 10); }
 Word = value:[a-zA-Z]+ { return value.join("") }
 Words = car:Word cdr:(" " w:Word { return w })* { return [car].concat(cdr).join(" ") }
 NewTextField = car:Word cdr:(!"in block" .)* { return [car].concat(cdr.join("")).join(" ").replace(new RegExp(",","g"),"").trim()  }
-Add = Add1 / Add2 / Add3 / Add4
+Add = Add2 / Add3 / Add4 / Add1
 
 Add1 = AddVerb _ type:BlockType { return {
     "action": "add",
@@ -66,7 +66,7 @@ Remove = RemoveVerb _ block:(BlockToken / "all") { return {
 
 RemoveVerb = "delete" / "remove" / "erase"
 
-Change = Change1 / Change3 / Change2 / Change4
+Change = Change1 / Change2 / Change3 / Change4
 
 Change1 = "in" _ block:BlockToken _ ("please" _)? ChangeVerb _ ("the")? _ pair:PropertyValuePair {
     pair["action"] = "modify"
@@ -74,18 +74,18 @@ Change1 = "in" _ block:BlockToken _ ("please" _)? ChangeVerb _ ("the")? _ pair:P
     return pair
 }
 
-Change2 = ChangeVerb _ ("the")? _ property:Property _ "in" _ block:BlockToken _ "to" _ value:Value ( _ "please")? { return {
+Change2 = ChangeVerb _ ("the")? _ pair:PropertyValuePair _ "in" block:BlockToken ( _ "please")? {
+    pair["action"] = "modify"
+    pair["block"] = block
+    return pair;
+}
+
+Change3 = ChangeVerb _ ("the")? _ property:Property _ "in" _ block:BlockToken _ "to" _ value:Value ( _ "please")? { return {
     "action": "modify",
     "block": block,
     "property": property,
     "value": value
 } }
-
-Change3 = ChangeVerb _ ("the")? _ pair:PropertyValuePair _ "in" block:BlockToken ( _ "please")? {
-    pair["action"] = "modify"
-    pair["block"] = block
-    return pair;
-}
 
 Change4 = ChangeVerb _ "in" _ block:BlockToken _ ("the")? _ pair:PropertyValuePair (_ "please")? {
     pair["action"] = "modify"
@@ -169,4 +169,13 @@ Undo = "undo" { return {
 Redo = "redo" { return {
     "action": "redo"
 } }
+
+Separate = SeparateVerb _ block:BlockToken _ (("from"/"and") _ BlockToken)? { return {
+    "action": "move",
+    "block": block,
+    "where": "away"
+} }
+
+SeparateVerb = "separate" / "disconnect" / "break apart"
+
 _   = ' '*
