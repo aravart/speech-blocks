@@ -43,7 +43,7 @@ SpeechBlocks.Controller = function(workspace) {
     if (event.type == Blockly.Events.CREATE) {
       var newBlock =
           SpeechBlocks.Blocks.getBlock(event.blockId, this.workspace_);
-      newBlock.appendDummyInput().appendField('id').appendField(newBlock.id);
+      newBlock.appendDummyInput().appendField('(' + newBlock.id + ')');
     }
   }.bind(this));
 };
