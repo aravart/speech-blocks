@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "SpeechBlocks Interpreter Injector",
+    "version": "0.1",
+    "content_scripts": [
+        {
+            "matches": [
+                "https://aravart.github.io/speech-blocks/demo/demo.html",
+                "file:///C:/Users/David/OneDrive/Academic/workspace/SpeechBlocks/speech-blocks/demo/demo.html",
+                "https://blockly-games.appspot.com/*"
+            ],
+            "js": [
+                "chrome.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "speech-blocks/*",
+        "chromeinit.js"
+    ]
+}
