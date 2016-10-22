@@ -4,12 +4,10 @@ if (sessionStorage.length == 0) {
 }
 
 window.addEventListener("load", function(event) {
-    console.log("loading...");
     initialize();
 });
 
 initialize = function() {
-    console.log("INIT");
     setTimeout(function() {
         var setClass = function(el, clazz) {
             el.setAttribute('class', clazz);
@@ -77,53 +75,51 @@ initialize = function() {
         var toolboxdiv;
         for (var i = 0; i < nodes.length; i++) {
             if (nodes[i].className == 'blocklyToolboxDiv') {
-                console.log(i);
                 toolboxdiv = nodes[i];
                 i = nodes.length;
             }
         }
         toolboxdiv.style.top = '250px';
 
-        //SCRIPT STUFF
         var base = document.createElement('script');
-        base.src = chrome.extension.getURL('speech-blocks/external/closure-library/closure/goog/base.js');
+        base.src = chrome.extension.getURL('speech-blocks-symlink/external/closure-library/closure/goog/base.js');
         document.head.appendChild(base);
 
         var jquery = document.createElement('script');
-        jquery.src = chrome.extension.getURL('speech-blocks/external/jquery.js');
+        jquery.src = chrome.extension.getURL('speech-blocks-symlink/external/jquery.js');
         document.head.appendChild(jquery);
 
         var bootstrap = document.createElement('script');
-        bootstrap.src = chrome.extension.getURL('speech-blocks/external/bootstrap-3.3.7-dist/js/bootstrap.min.js');
+        bootstrap.src = chrome.extension.getURL('speech-blocks-symlink/external/bootstrap-3.3.7-dist/js/bootstrap.min.js');
         document.head.appendChild(bootstrap);
 
         var blockly_compressed = document.createElement('script');
-        blockly_compressed.src = chrome.extension.getURL('speech-blocks/external/blockly/blockly_compressed.js');
+        blockly_compressed.src = chrome.extension.getURL('speech-blocks-symlink/external/blockly/blockly_compressed.js');
         document.head.appendChild(blockly_compressed);
 
         setTimeout(function() {
             var javascript_compressed = document.createElement('script');
-            javascript_compressed.src = chrome.extension.getURL('speech-blocks/external/blockly/javascript_compressed.js');
+            javascript_compressed.src = chrome.extension.getURL('speech-blocks-symlink/external/blockly/javascript_compressed.js');
             document.head.appendChild(javascript_compressed);
 
             var blocks_compressed = document.createElement('script');
-            blocks_compressed.src = chrome.extension.getURL('speech-blocks/external/blockly/blocks_compressed.js');
+            blocks_compressed.src = chrome.extension.getURL('speech-blocks-symlink/external/blockly/blocks_compressed.js');
 
             document.head.appendChild(blocks_compressed);
             var msg_compressed = document.createElement('script');
-            msg_compressed.src = chrome.extension.getURL('speech-blocks/external/blockly/msg/js/en.js');
+            msg_compressed.src = chrome.extension.getURL('speech-blocks-symlink/external/blockly/msg/js/en.js');
             document.head.appendChild(msg_compressed);
 
             [
-                'speech-blocks/core/controller.js',
-                'speech-blocks/core/blocks.js',
-                'speech-blocks/core/field_types.js',
-                'speech-blocks/core/where.js',
-                'speech-blocks/core/translation.js',
-                'speech-blocks/core/statement_input.js',
-                'speech-blocks/core/value_input.js',
-                'speech-blocks/core/successor.js',
-                'speech-blocks/core/predecessor.js'
+                'speech-blocks-symlink/core/controller.js',
+                'speech-blocks-symlink/core/blocks.js',
+                'speech-blocks-symlink/core/field_types.js',
+                'speech-blocks-symlink/core/where.js',
+                'speech-blocks-symlink/core/translation.js',
+                'speech-blocks-symlink/core/statement_input.js',
+                'speech-blocks-symlink/core/value_input.js',
+                'speech-blocks-symlink/core/successor.js',
+                'speech-blocks-symlink/core/predecessor.js'
             ].forEach(function(src) {
                 var scriptTag = document.createElement('script');
                 scriptTag.src = chrome.extension.getURL(src);
@@ -131,9 +127,9 @@ initialize = function() {
             });
 
             [
-                'speech-blocks/grammar/grammar.js',
-                'speech-blocks/js/jsDump.js',
-                'speech-blocks/core/interpreter.js'
+                'speech-blocks-symlink/grammar/grammar.js',
+                'speech-blocks-symlink/js/jsDump.js',
+                'speech-blocks-symlink/core/interpreter.js'
             ].forEach(function(src) {
                 var scriptTag = document.createElement('script');
                 scriptTag.src = chrome.extension.getURL(src);

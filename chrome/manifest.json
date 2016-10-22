@@ -15,7 +15,7 @@
         }
     ],
     "web_accessible_resources": [
-        "speech-blocks/*",
+        "speech-blocks-symlink/*",
         "chromeinit.js"
     ]
 }

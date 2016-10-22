@@ -4,20 +4,13 @@
 */
 'use strict';
 
-
-
-var controller;
-var interpreter;
-// var dialog = document.getElementById('dialog');
-// dialog.parentNode.removeChild(dialog);
-// var dialogShadow = document.getElementById('dialogShadow');
-// dialogShadow.parentNode.removeChild(dialogShadow);
 $(document).ready(function() {
     var oldQ = null;
     var parseTimer = null;
     var output = null;
-    controller = new SpeechBlocks.Controller(BlocklyGames.workspace);
-    interpreter = new SpeechBlocks.Interpreter(controller);
+    var controller = new SpeechBlocks.Controller(BlocklyGames.workspace);
+    var interpreter = new SpeechBlocks.Interpreter(controller);
+
     function startDictation() {
         if (window.hasOwnProperty('webkitSpeechRecognition')) {
             var mic_animate = 'http://www.google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif';
@@ -27,7 +20,6 @@ $(document).ready(function() {
             recognition.interimResults = false;
             recognition.lang = "en-US";
             document.getElementById('microphone').src = mic_animate;
-            recognition.start();
             recognition.onresult = function(e) {
                 document.getElementById('q').value = e.results[0][0].transcript;
                 recognition.stop();
@@ -38,6 +30,7 @@ $(document).ready(function() {
                 recognition.stop();
                 document.getElementById('microphone').src = mic;
             }
+            recognition.start();
         }
     }
 
@@ -49,7 +42,6 @@ $(document).ready(function() {
 
     function parseSpeech() {
         Blockly.mainWorkspace = BlocklyGames.workspace;
-
         oldQ = $("#q").val();
 
         $("#parse-message").attr("class", "message progress").text("Parsing the input...");
