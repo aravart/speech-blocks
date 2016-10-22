@@ -29,10 +29,10 @@ goog.require('goog.asserts');
 goog.require('goog.structs.Map');
 goog.require('goog.structs.Set');
 
-/** 
+/**
  * @param {!Blockly.Workspace} workspace
- * @private  
- * @constructor 
+ * @private
+ * @constructor
  */
 SpeechBlocks.Controller = function(workspace) {
   /** @private @const {!Blockly.Workspace} */
@@ -61,7 +61,7 @@ SpeechBlocks.Controller.injectIntoDiv = function(container, opt_options) {
 };
 
 /**
- * Parses the headless XML into a Blockly workspace and returns 
+ * Parses the headless XML into a Blockly workspace and returns
  * a corresponding SpeechBlocks controller.
  * @param {!Element} xml XML element to convert to workspace.
  * @return {!SpeechBlocks.Controller} Controller for the Blockly workspace.
@@ -77,12 +77,13 @@ SpeechBlocks.Controller.constructFromXml = function(xml) {
  * @param {string} type Name of the language object containing
  *     type-specific functions for this block.
  * @param {string} blockId ID for the block.
- * @param {SpeechBlocks.Where=} opt_where Optional location on the 
+ * @param {SpeechBlocks.Where=} opt_where Optional location on the
  *     workspace to place the new block.
  * @public
  */
 SpeechBlocks.Controller.prototype.addBlock = function(type, blockId, opt_where  ) {
   var newBlock = this.workspace_.newBlock(type, blockId);
+  newBlock.appendDummyInput().appendField('(' + newBlock.id + ')')
   newBlock.initSvg();
   if (opt_where) {
     this.moveBlock(blockId, goog.asserts.assertInstanceof(opt_where, SpeechBlocks.Where));
@@ -143,7 +144,7 @@ SpeechBlocks.Controller.prototype.redo = function() { this.workspace_.undo(true)
  */
 SpeechBlocks.Controller.prototype.run = function() {
   Blockly.JavaScript.addReservedWords('code');
-  eval(Blockly.JavaScript.workspaceToCode(this.workspace_)); 
+  eval(Blockly.JavaScript.workspaceToCode(this.workspace_));
 };
 
 /**
@@ -154,7 +155,7 @@ SpeechBlocks.Controller.prototype.run = function() {
 SpeechBlocks.Controller.prototype.getAllBlockIds = function() {
   var blockIds = new goog.structs.Set();
   this.workspace_.getAllBlocks().forEach(function(block) {
-    blockIds.add(block.id); 
+    blockIds.add(block.id);
   });
   return blockIds;
 };
@@ -231,7 +232,7 @@ SpeechBlocks.Controller.prototype.getBlockXInputs_ = function (blockId, type) {
 };
 
 /**
- * Returns a mapping from field names to field types for the given block. 
+ * Returns a mapping from field names to field types for the given block.
  * Note that all field types are enumerated in SpeechBlocks.FieldTypes.
  * @param {string} blockId The ID of the block.
  * @return {!goog.structs.Map<string, number>} A mapping of field names to field types.
@@ -276,9 +277,9 @@ SpeechBlocks.Controller.getFieldType_ = function(field) {
 
 /**
  * Sets the field with the given name to the given value.
- * 
+ *
  * Formatting of the value is very important:
- * 
+ *
  * _______________________________________
  * FIELD TYPE         | VALUE FORMAT
  * ___________________|___________________
@@ -289,7 +290,7 @@ SpeechBlocks.Controller.getFieldType_ = function(field) {
  * Angle Picker       | 'x' where 0 <= x <= 360
  * Colour Picker      | '#HHH' where H is a hex digit
  * Variable Picker    | existing variable name
- * 
+ *
  * @param {string} blockId ID of the block.
  * @param {string} fieldName Name of the field.
  * @param {string} fieldValue New value for the field.
