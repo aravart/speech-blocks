@@ -7,3 +7,9 @@
 [submodule "external/closure-library"]
 	path = external/closure-library
 	url = https://github.com/google/closure-library.git
+[submodule "chrome/speech-blocks"]
+	path = chrome/speech-blocks
+	url = git@github.com:aravart/speech-blocks.git
+[submodule "chrome/--recursive"]
+	path = chrome/--recursive
+	url = git@github.com:aravart/speech-blocks.git
