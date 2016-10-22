@@ -83,7 +83,6 @@ SpeechBlocks.Controller.constructFromXml = function(xml) {
  */
 SpeechBlocks.Controller.prototype.addBlock = function(type, blockId, opt_where  ) {
   var newBlock = this.workspace_.newBlock(type, blockId);
-  newBlock.appendDummyInput().appendField('(' + newBlock.id + ')')
   newBlock.initSvg();
   if (opt_where) {
     this.moveBlock(blockId, goog.asserts.assertInstanceof(opt_where, SpeechBlocks.Where));
