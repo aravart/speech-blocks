@@ -7,6 +7,3 @@
 [submodule "external/closure-library"]
 	path = external/closure-library
 	url = https://github.com/google/closure-library.git
-[submodule "chrome/speech-blocks-symlink"]
-	path = chrome/speech-blocks-symlink
-	url = git@github.com:aravart/speech-blocks.git
