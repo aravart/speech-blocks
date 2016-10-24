@@ -5,16 +5,18 @@
 'use strict';
 
 $(document).ready(function() {
-    var dialog = document.getElementById('dialog');
-    dialog.parentNode.removeChild(dialog);
-    document.getElementById('dialogShadow').style.opacity = 0;
-    document.getElementById('dialogShadow').style.visibility = 'hidden';
-    
+   //  var dialog = document.getElementById('dialog');
+   //  dialog.parentNode.removeChild(dialog);
+   //  document.getElementById('dialogShadow').style.opacity = 0;
+   //  document.getElementById('dialogShadow').style.visibility = 'hidden';
+
     var oldQ = null;
     var parseTimer = null;
     var output = null;
+    BlocklyGames.workspace.clear();
     var controller = new SpeechBlocks.Controller(BlocklyGames.workspace);
     var interpreter = new SpeechBlocks.Interpreter(controller);
+
 
     function startDictation() {
         if (window.hasOwnProperty('webkitSpeechRecognition')) {

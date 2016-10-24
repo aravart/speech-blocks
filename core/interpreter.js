@@ -37,8 +37,6 @@ SpeechBlocks.Interpreter = function(controller) {
     this.blockTypeMap_.set('variable','variables_get');
     this.blockTypeMap_.set('turn','turtle_turn_internal');
     this.blockTypeMap_.set('move','turtle_move_internal');
-
-
 }
 
 /**
