@@ -69,9 +69,10 @@ SpeechBlocks.Interpreter.prototype.run = function(command) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.addBlock = function(command) {
-    // this.controller_.addBlock(this.blockTypeMap_.get(command.type), (this.id_++).toString(), new SpeechBlocks.Translation(0,0));
     this.controller_.addBlock(this.blockTypeMap_.get(command.type), (this.id_++).toString());
-    if(command.where != null) {
+
+    if(command.where != null)
+    {
         command.block = (this.id_ - 1).toString();
         this.moveBlock(command);
     }
@@ -83,18 +84,27 @@ SpeechBlocks.Interpreter.prototype.addBlock = function(command) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
-    if (this.isBlockIdValid(command.block.toString())) {
+    if (this.isBlockIdValid(command.block.toString()))
+    {
         command.block = command.block.toString();
-        if (command.where == 'trash') {
+        if (command.where == 'trash')
+        {
             return this.deleteBlock(command.block);
-        } else if (command.where == 'away') {
+        }
+        else if (command.where == 'away')
+        {
             this.controller_.disconnectBlock(command.block);
-        } else if (command.where.block == null || !this.isBlockIdValid(command.where.block.toString())) {
+        }
+        else if (command.where.block == null || !this.isBlockIdValid(command.where.block.toString()))
+        {
             return;
-        } else {
+        }
+        else
+        {
             command.where.block = command.where.block.toString();
         }
-        switch (command.where.position) {
+        switch (command.where.position)
+        {
             case 'below':
             this.controller_.moveBlock(command.block, new SpeechBlocks.Successor(command.where.block));
             break;
@@ -106,21 +116,32 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
             case 'top':
             case 'to the right of':
             var inputList = this.controller_.getBlockValueInputs(command.where.block);
-            if (inputList.length < 1) {
+            if (inputList.length < 1)
+            {
                 console.log('NO VALUE INPUTS FOR SPECIFIED BLOCK');
             }
-            else if (command.where.position == 'rhs' || command.where.position == 'to the right of') {
+            else if (command.where.position == 'rhs' || command.where.position == 'to the right of')
+            {
                 this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[inputList.length-1]));
             }
-            else if (command.where.position == 'lhs' || command.where.position == 'top') {
+            else if (command.where.position == 'lhs' || command.where.position == 'top')
+            {
                 this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[0]));
             }
             break;
             case 'inside':
             var inputList = this.controller_.getBlockValueInputs(command.where.block);
             var statementList = this.controller_.getBlockStatementInputs(command.where.block);
-            try { this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[0])); } catch(err) {}
-            try { this.controller_.moveBlock(command.block, new SpeechBlocks.StatementInput(command.where.block, statementList[statementList.length-1])); } catch(err) {}
+            try
+            {
+               this.controller_.moveBlock(command.block, new SpeechBlocks.ValueInput(command.where.block, inputList[0]));
+            }
+            catch(err) {}
+            try
+            {
+               this.controller_.moveBlock(command.block, new SpeechBlocks.StatementInput(command.where.block, statementList[statementList.length-1]));
+            }
+            catch(err) {}
             break;
             case 'away':
             this.controller_.disconnectBlock(command.block);
@@ -134,11 +155,13 @@ SpeechBlocks.Interpreter.prototype.moveBlock = function(command) {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.modifyBlock = function(command) {
-    if (this.isBlockIdValid(command.block.toString())) {
+    if (this.isBlockIdValid(command.block.toString()))
+    {
         command.block = command.block.toString();
         var fields = this.controller_.getFieldsForBlock(command.block).getKeys();
         console.log(fields);
-        switch(command.property) {
+        switch(command.property)
+        {
             case 'number':
             command.value = Number(command.value); // fall through
             case 'text':
@@ -171,15 +194,19 @@ SpeechBlocks.Interpreter.prototype.redo = function() {
 * @param {Object=} command Command object from parser.
 */
 SpeechBlocks.Interpreter.prototype.deleteBlock = function(blockId) {
-    if (blockId.toString() == 'all') {
-        for (var i = 1; i < 20; i++) {
-            if (this.isBlockIdValid(i.toString())) {
+    if (blockId.toString() == 'all')
+    {
+        for (var i = 1; i < 20; i++)
+        {
+            if (this.isBlockIdValid(i.toString()))
+            {
                 this.controller_.removeBlock(i.toString());
             }
         }
         this.id_ = 1;
     }
-    else if (this.isBlockIdValid(blockId.toString())) {
+    else if (this.isBlockIdValid(blockId.toString()))
+    {
         this.controller_.removeBlock(blockId.toString());
     }
 };
@@ -218,11 +245,8 @@ SpeechBlocks.Interpreter.prototype.initializeBlockTypeMap = function() {
         rawFile.onreadystatechange = function () {
             //console.log(rawFile.readyState);
             if(rawFile.readyState == 4) {
-                //console.log('b')
                 if(rawFile.status == 200 || rawFile.status == 0) {
-                    //console.log('c');
                     if (!inputReceived) {
-                        //console.log('INPUT BEING SET');
                         inputText = rawFile.responseText;
                         inputReceived = true;
                         // console.log('INPUT SET');

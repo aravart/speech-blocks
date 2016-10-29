@@ -6,7 +6,6 @@
         {
             "matches": [
                 "https://aravart.github.io/speech-blocks/demo/demo.html",
-                "file:///C:/Users/David/OneDrive/Academic/workspace/SpeechBlocks/speech-blocks/demo/demo.html",
                 "https://blockly-games.appspot.com/*"
             ],
             "js": [

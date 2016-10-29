@@ -13,10 +13,9 @@ $(document).ready(function() {
     var oldQ = null;
     var parseTimer = null;
     var output = null;
-    BlocklyGames.workspace.clear();
     var controller = new SpeechBlocks.Controller(BlocklyGames.workspace);
     var interpreter = new SpeechBlocks.Interpreter(controller);
-
+    BlocklyGames.workspace.clear();
 
     function startDictation() {
         if (window.hasOwnProperty('webkitSpeechRecognition')) {

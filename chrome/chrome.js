@@ -4,10 +4,7 @@ if (sessionStorage.length == 0) {
 }
 
 window.addEventListener("load", function(event) {
-   initialize();
-});
 
-var initialize = function() {
    setTimeout(function() {
       var container = document.createElement('div');
       container.setAttribute('class','container');
@@ -66,8 +63,10 @@ var initialize = function() {
       document.getElementById('blockly').style.top = '250px'
       nodes = toolbox.parentNode.children;
       var toolboxdiv;
-      for (var i = 0; i < nodes.length; i++) {
-         if (nodes[i].className == 'blocklyToolboxDiv') {
+      for (var i = 0; i < nodes.length; i++)
+      {
+         if (nodes[i].className == 'blocklyToolboxDiv')
+         {
             toolboxdiv = nodes[i];
             i = nodes.length;
          }
@@ -75,45 +74,43 @@ var initialize = function() {
       toolboxdiv.style.top = '250px';
 
       var jquery = document.createElement('script');
-      jquery.src = chrome.extension.getURL('speech-blocks/external/jquery.js');
+      jquery.src = chrome.extension.getURL('speech-blocks/js/jquery.js');
       document.head.appendChild(jquery);
 
       var bootstrap = document.createElement('script');
-      bootstrap.src = chrome.extension.getURL('speech-blocks/external/bootstrap-3.3.7-dist/js/bootstrap.min.js');
+      bootstrap.src = chrome.extension.getURL('speech-blocks/js/bootstrap.min.js');
       document.head.appendChild(bootstrap);
 
+      [
+         'speech-blocks/core/blocks.js',
+         'speech-blocks/core/field_types.js',
+         'speech-blocks/core/where.js',
+         'speech-blocks/core/translation.js',
+         'speech-blocks/core/statement_input.js',
+         'speech-blocks/core/value_input.js',
+         'speech-blocks/core/successor.js',
+         'speech-blocks/core/predecessor.js',
+         'speech-blocks/core/controller.js'
+      ].forEach(function(src) {
+         var scriptTag = document.createElement('script');
+         scriptTag.src = chrome.extension.getURL(src);
+         document.head.appendChild(scriptTag);
+      });
+
+      [
+         'speech-blocks/grammar/grammar.js',
+         'speech-blocks/js/jsDump.js',
+         'speech-blocks/core/interpreter.js'
+      ].forEach(function(src) {
+         var scriptTag = document.createElement('script');
+         scriptTag.src = chrome.extension.getURL(src);
+         document.body.appendChild(scriptTag);
+      });
+
       setTimeout(function() {
-         [
-            'speech-blocks/core/blocks.js',
-            'speech-blocks/core/field_types.js',
-            'speech-blocks/core/where.js',
-            'speech-blocks/core/translation.js',
-            'speech-blocks/core/statement_input.js',
-            'speech-blocks/core/value_input.js',
-            'speech-blocks/core/successor.js',
-            'speech-blocks/core/predecessor.js',
-            'speech-blocks/core/controller.js'
-         ].forEach(function(src) {
-            var scriptTag = document.createElement('script');
-            scriptTag.src = chrome.extension.getURL(src);
-            document.head.appendChild(scriptTag);
-         });
-
-         [
-            'speech-blocks/grammar/grammar.js',
-            'speech-blocks/js/jsDump.js',
-            'speech-blocks/core/interpreter.js'
-         ].forEach(function(src) {
-            var scriptTag = document.createElement('script');
-            scriptTag.src = chrome.extension.getURL(src);
-            document.body.appendChild(scriptTag);
-         });
-
-         setTimeout(function() {
-            var init = document.createElement('script');
-            init.src = chrome.extension.getURL('init.js');
-            document.body.appendChild(init);
-         }, 1);
-      }, 1);
-   }, 1);
-};
+         var init = document.createElement('script');
+         init.src = chrome.extension.getURL('init.js');
+         document.body.appendChild(init);
+      }, 100);
+   }, 100);
+});
