@@ -213,7 +213,7 @@ SpeechBlocks.Interpreter.prototype.redo_ = function() {
  */
 SpeechBlocks.Interpreter.prototype.deleteBlock_ = function(blockId) {
   if (blockId.toString() == 'all') {
-    this.controller_.removeAllBlocks;
+    this.controller_.removeAllBlocks();
     this.id_ = 1;
   } else if (this.isBlockIdValid_(blockId.toString())) {
     this.controller_.removeBlock(blockId.toString());
