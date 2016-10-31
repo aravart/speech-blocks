@@ -67,7 +67,7 @@ window.addEventListener('load', function (event) {
     for (var i = 0; i < nodes.length; i++) {
       if (nodes[i].className == 'blocklyToolboxDiv') {
         toolboxdiv = nodes[i];
-        i = nodes.length;
+        break;
       }
     }
     toolboxdiv.style.top = '250px';
