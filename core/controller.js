@@ -306,7 +306,3 @@ SpeechBlocks.Controller.getFieldType_ = function(field) {
 SpeechBlocks.Controller.prototype.setBlockField = function(blockId, fieldName, fieldValue) {
   SpeechBlocks.Blocks.getBlock(blockId, this.workspace_).setFieldValue(fieldValue, fieldName);
 };
-ieldValue, fieldName);
-};
-ieldName);
-};
