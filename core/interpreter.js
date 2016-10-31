@@ -104,13 +104,14 @@ SpeechBlocks.Interpreter.prototype.addBlock_ = function(command) {
  */
 SpeechBlocks.Interpreter.prototype.moveBlock_ = function(command) {
   // TODO: Add error checking.
-  if (this.isBlockIdValid(command.block.toString())) {
+  if (this.isBlockIdValid_(command.block.toString())) {
     command.block = command.block.toString();
     if (command.where == 'trash') {
       return this.deleteBlock(command.block);
     } else if (command.where == 'away') {
       this.controller_.disconnectBlock(command.block);
-    } else if (command.where.block == null || !this.isBlockIdValid(command.where.block.toString())) {
+    } else if (command.where.block == null
+        || !this.isBlockIdValid_(command.where.block.toString())) {
       return;
     } else {
       command.where.block = command.where.block.toString();
