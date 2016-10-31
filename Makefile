@@ -1,6 +1,8 @@
 COFFEE_SRC := $(shell find . -name '*.coffee')
 COFFEE_JS := $(COFFEE_SRC:.coffee=.js)
 
+.PHONY: chrome
+
 %.js: %.coffee
 	coffee -c $<
 
@@ -14,8 +16,6 @@ chrome: grammar/grammar.js core/*.js external/*.js
 	cp grammar/grammar.js chrome/speech-blocks/grammar
 	cp core/* chrome/speech-blocks/core
 	cp js/jsDump.js chrome/speech-blocks/js
-	cp external/bootstrap-3.3.7-dist/js/bootstrap.min.js chrome/speech-blocks/js
-	cp external/jquery.js chrome/speech-blocks/js
 
 grammar/grammar.js: grammar/grammar.pegjs
 	pegjs --format globals --export-var parser -o $@ $<

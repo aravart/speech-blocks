@@ -4,13 +4,8 @@
     "version": "0.1",
     "content_scripts": [
         {
-            "matches": [
-                "https://aravart.github.io/speech-blocks/demo/demo.html",
-                "https://blockly-games.appspot.com/*"
-            ],
-            "js": [
-                "chrome.js"
-            ]
+            "matches": ["https://blockly-games.appspot.com/*"],
+            "js": ["chrome.js"]
         }
     ],
     "web_accessible_resources": [
