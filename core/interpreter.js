@@ -93,7 +93,7 @@ SpeechBlocks.Interpreter.prototype.addBlock_ = function(command) {
 
   if (command.where != null) {
     command.block = (this.id_ - 1).toString();
-    this.moveBlock(command);
+    this.moveBlock_(command);
   }
 };
 
@@ -107,7 +107,7 @@ SpeechBlocks.Interpreter.prototype.moveBlock_ = function(command) {
   if (this.isBlockIdValid_(command.block.toString())) {
     command.block = command.block.toString();
     if (command.where == 'trash') {
-      return this.deleteBlock(command.block);
+      return this.deleteBlock_(command.block);
     } else if (command.where == 'away') {
       this.controller_.disconnectBlock(command.block);
     } else if (command.where.block == null
