@@ -8,7 +8,7 @@ COFFEE_JS := $(COFFEE_SRC:.coffee=.js)
 
 all: grammar/grammar.js $(COFFEE_JS)
 
-chrome: grammar/grammar.js core/*.js external/*.js
+chrome: grammar/grammar.js
 	mkdir -p chrome/speech-blocks
 	mkdir -p chrome/speech-blocks/core
 	mkdir -p chrome/speech-blocks/grammar
