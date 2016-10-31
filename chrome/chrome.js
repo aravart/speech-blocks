@@ -88,7 +88,7 @@ window.addEventListener('load', function (event) {
       'speech-blocks/core/controller.js',
       'speech-blocks/core/interpreter.js',
       'speech-blocks/grammar/grammar.js',
-      'speech-blocks/js/jsDump.js'
+      'speech-blocks/external/jsDump.js'
     ].forEach(function (src) {
       var scriptTag = document.createElement('script');
       scriptTag.src = chrome.extension.getURL(src);

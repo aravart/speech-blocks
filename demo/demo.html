@@ -17,10 +17,11 @@
   <script src="../external/blockly/javascript_compressed.js"></script>
   <script src="../external/blockly/blocks_compressed.js"></script>
   <script src="../external/blockly/msg/js/en.js"></script>
-
+  <script src="../external/jsDump.js"></script>
+  
   <!-- Speech blocks. -->
   <!-- TODO(evanfredhernandez): Compress SpeechBlocks JavaScript. -->
-  <script src="../core/controller.js"></script>
+  <script src="../grammar/grammar.js"></script>
   <script src="../core/blocks.js"></script>
   <script src="../core/field_types.js"></script>
   <script src="../core/where.js"></script>
@@ -29,6 +30,8 @@
   <script src="../core/value_input.js"></script>
   <script src="../core/successor.js"></script>
   <script src="../core/predecessor.js"></script>
+  <script src="../core/controller.js"></script>
+  <script src="../core/interpreter.js"></script>
 
   <!-- Styles -->
   <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -73,9 +76,6 @@
     <block type="text_print"></block>
   </xml>
 
-  <script src="../grammar/grammar.js"></script>
-  <script src="../js/jsDump.js"></script>
-  <script src="../core/interpreter.js"></script>
   <script src="init.js"></script>
 </body>
 
