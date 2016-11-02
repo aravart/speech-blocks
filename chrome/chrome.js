@@ -60,8 +60,10 @@ window.addEventListener('load', function (event) {
     pre.setAttribute('id', 'output');
     pre.innerText = 'Record some speech or type some text to display parser results.';
 
+    container.style.height = '150px';
+
     toolbox.parentNode.insertBefore(container, dialog.parentNode.childNodes[0]);
-    document.getElementById('blockly').style.top = '250px'
+    document.getElementById('blockly').style.top = '150px';
     nodes = toolbox.parentNode.children;
     var toolboxdiv;
     for (var i = 0; i < nodes.length; i++) {
@@ -70,7 +72,7 @@ window.addEventListener('load', function (event) {
         break;
       }
     }
-    toolboxdiv.style.top = '250px';
+    toolboxdiv.style.top = '150px';
 
     var jquery = document.createElement('script');
     jquery.src = '//code.jquery.com/jquery-2.1.4.min.js';
