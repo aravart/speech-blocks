@@ -5,9 +5,9 @@
 'use strict';
 
 $(document).ready(function () {
-   document.getElementById('dialog').parentNode.removeChild(dialog);
-   document.getElementById('dialogShadow').style.opacity = 0;
-   document.getElementById('dialogShadow').style.visibility = 'hidden';
+   // document.getElementById('dialog').parentNode.removeChild(dialog);
+   // document.getElementById('dialogShadow').style.opacity = 0;
+   // document.getElementById('dialogShadow').style.visibility = 'hidden';
 
    var oldQ = null;
    var parseTimer = null;
