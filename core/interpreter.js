@@ -1,7 +1,7 @@
 /**
  * @fileoverview Interprets a given command and calls workspace controller_.functions.
- * @author pandori@wisc.edu (Sahib Pandori)
  * @author david.liang@wisc.edu (David Liang)
+ * @author pandori@wisc.edu (Sahib Pandori)
  */
 'use strict';
 
