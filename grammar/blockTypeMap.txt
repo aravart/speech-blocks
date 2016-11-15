@@ -1,4 +1,4 @@
-if:controls_if
+f:controls_if
 comparison:logic_compare
 repeat for:controls_repeat_ext
 number:math_number

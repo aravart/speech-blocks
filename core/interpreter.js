@@ -49,6 +49,7 @@ SpeechBlocks.Interpreter = function(controller) {
 * @public
 */
 SpeechBlocks.Interpreter.prototype.interpret = function(command) {
+   console.log(command)
    switch (command.action) {
       case 'run':
       this.run_(command);
@@ -81,7 +82,6 @@ SpeechBlocks.Interpreter.prototype.interpret = function(command) {
 */
 SpeechBlocks.Interpreter.prototype.run_ = function(command) {
    // TODO: Provide a way to override this function locally.
-   // try { this.controller_.run(); } catch (err) { console.log(err.message); }
    Turtle.runButtonClick(1);
 };
 
@@ -118,7 +118,8 @@ SpeechBlocks.Interpreter.prototype.moveBlock_ = function(command) {
          command.where.block = command.where.block.toString();
       }
 
-      switch (command.where.position) {
+      switch (command.where.position)
+      {
          case 'below':
          this.controller_.moveBlock(command.block, new SpeechBlocks.Successor(command.where.block));
          break;
@@ -149,7 +150,7 @@ SpeechBlocks.Interpreter.prototype.moveBlock_ = function(command) {
          }
 
          try {
-            this.controller_.moveBlock(command.block, new SpeechBlocks.StatementInput(command.where.block,s statementList[statementList.length - 1]));
+            this.controller_.moveBlock(command.block, new SpeechBlocks.StatementInput(command.where.block, statementList[statementList.length - 1]));
          } catch (err) {
             console.log(err);
          }
@@ -170,8 +171,24 @@ SpeechBlocks.Interpreter.prototype.modifyBlock_ = function(command) {
    if (this.isBlockIdValid_(command.block.toString())) {
       command.block = command.block.toString();
       var fields = this.controller_.getFieldsForBlock(command.block).getKeys();
-
-      switch (command.property) {
+      var fieldIndex = fields.length - 1;
+      switch (command.ordinal)
+      {
+         case 'first':
+         fieldIndex = 0;
+         break;
+         case 'second':
+         fieldIndex = 1;
+         break;
+         case 'third':
+         fieldIndex = 2;
+         break;
+         case 'fourth':
+         fieldIndex = 3;
+         break;
+      }
+      switch (command.property)
+      {
          case 'number':
          command.value = Number(command.value); // fall through
          case 'text':
@@ -179,7 +196,12 @@ SpeechBlocks.Interpreter.prototype.modifyBlock_ = function(command) {
          case 'operation':
          case 'name':
          case 'value':
-         this.controller_.setBlockField(command.block, fields[fields.length - 1], command.value);
+         case 'field':
+         try {
+            this.controller_.setBlockField(command.block, fields[fieldIndex], command.value);
+         } catch (e) {
+            this.controller_.setBlockField(command.block, fields[fields.length - 1], command.value);
+         }
          break;
       }
    }
